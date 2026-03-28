@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAT Math Topic Master Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #4f46e5;
+            --accent: #10b981;
+            --accent2: #f59e0b;
+            --bg: #f0f4ff;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 24px 16px 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 960px;
+            width: 100%;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        header h1 {
+            font-weight: 900;
+            color: var(--primary);
+            font-size: 2.4rem;
+            margin: 0 0 4px;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            position: sticky;
+            top: 12px;
+            z-index: 100;
+            background: var(--primary);
+            color: white;
+            padding: 18px 24px;
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(30, 58, 138, 0.25);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .dash-stats {
+            display: flex;
+            gap: 20px;
+            flex-shrink: 0;
+        }
+
+        .stat-pill {
+            background: rgba(255,255,255,0.15);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .stat-pill span {
+            font-size: 1.1rem;
+            font-weight: 900;
+        }
+
+        .progress-wrap {
+            flex: 1;
+        }
+
+        .progress-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .progress-bar-bg {
+            background: rgba(255,255,255,0.2);
+            height: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            background: linear-gradient(90deg, #10b981, #34d399);
+            width: 0%;
+            height: 100%;
+            transition: width 0.5s cubic-bezier(.4,0,.2,1);
+            border-radius: 10px;
+        }
+
+        /* Reset button */
+        .reset-btn {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+
+        .reset-btn:hover { background: rgba(255,255,255,0.22); }
+
+        /* Sections */
+        .section {
+            background: var(--card);
+            padding: 24px 26px;
+            margin-bottom: 22px;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .section-header h2 {
+            color: var(--primary);
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header h2::before {
+            content: '';
+            display: inline-block;
+            width: 5px;
+            height: 22px;
+            border-radius: 3px;
+            background: var(--accent-color, var(--accent));
+            flex-shrink: 0;
+        }
+
+        .section-count {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--muted);
+            background: var(--bg);
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        /* Sub-sections */
+        .subsection {
+            margin-bottom: 16px;
+        }
+
+        .subsection-title {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 800;
+            color: var(--muted);
+            margin: 0 0 8px;
+            padding-left: 2px;
+        }
+
+        /* Topics */
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 8px;
+        }
+
+        .topic {
+            background: #f8fafc;
+            padding: 10px 14px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: 1.5px solid transparent;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            user-select: none;
+        }
+
+        .topic:hover {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            transform: translateY(-1px);
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .topic.completed {
+            text-decoration: line-through;
+            opacity: 0.5;
+            background: #f1f5f9;
+        }
+
+        /* Section color accents */
+        .sec-algebra   { --accent-color: #3b82f6; }
+        .sec-advanced  { --accent-color: #8b5cf6; }
+        .sec-data      { --accent-color: #f59e0b; }
+        .sec-geometry  { --accent-color: #10b981; }
+        .sec-trig      { --accent-color: #ef4444; }
+        .sec-advanced2 { --accent-color: #ec4899; }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .sig-box {
+            display: inline-block;
+            border-top: 1px solid #cbd5e1;
+            padding-top: 10px;
+        }
+
+        .assessed-label {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #94a3b8;
+            margin: 0 0 4px;
+        }
+
+        .signature-name {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 2.6rem;
+            margin: 0;
+            background: linear-gradient(45deg, #1e3a8a, #4f46e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @media (max-width: 600px) {
+            .dashboard { flex-direction: column; gap: 12px; }
+            .dash-stats { flex-wrap: wrap; }
+            header h1 { font-size: 1.8rem; }
+            .topic-grid { grid-template-columns: 1fr; }
+        }
+
+        @media print {
+            .dashboard { display: none; }
+            body { background: white; padding: 0; }
+            .section { box-shadow: none; border: 1px solid #eee; break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>📐 SAT Math Mastery</h1>
+        <p>Track every topic — check off what you've mastered</p>
+    </header>
+
+    <div class="dashboard">
+        <div class="dash-stats">
+            <div class="stat-pill">✅ Done: <span id="stat-checked">0</span></div>
+            <div class="stat-pill">📋 Total: <span id="stat-total">0</span></div>
+            <div class="stat-pill">🎯 <span id="stat-pct">0</span>%</div>
+        </div>
+        <div class="progress-wrap">
+            <div class="progress-label">Overall Progress</div>
+            <div class="progress-bar-bg">
+                <div id="progress-fill"></div>
+            </div>
+        </div>
+        <button class="reset-btn" onclick="resetAll()">↺ Reset</button>
+    </div>
+
+    <!-- ───────────────────────── ALGEBRA ───────────────────────── -->
+    <div class="section sec-algebra">
+        <div class="section-header">
+            <h2>Heart of Algebra</h2>
+            <span class="section-count" id="count-algebra"></span>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Linear Equations & Inequalities</p>
+            <div class="topic-grid" data-section="algebra">
+                <label class="topic"><input type="checkbox" class="task">Solving One-Variable Linear Equations</label>
+                <label class="topic"><input type="checkbox" class="task">Solving Multi-Step Linear Equations</label>
+                <label class="topic"><input type="checkbox" class="task">Equations with Variables on Both Sides</label>
+                <label class="topic"><input type="checkbox" class="task">Linear Equations with No or Infinite Solutions</label>
+                <label class="topic"><input type="checkbox" class="task">Solving Linear Inequalities</label>
+                <label class="topic"><input type="checkbox" class="task">Compound Inequalities</label>
+                <label class="topic"><input type="checkbox" class="task">Absolute Value Equations</label>
+                <label class="topic"><input type="checkbox" class="task">Absolute Value Inequalities</label>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Linear Functions & Graphs</p>
+            <div class="topic-grid" data-section="algebra">
+                <label class="topic"><input type="checkbox" class="task">Slope of a Line</label>
+                <label class="topic"><input type="checkbox" class="task">Slope-Intercept Form (y = mx + b)</label>
+                <label class="topic"><input type="checkbox" class="task">Point-Slope Form</label>
+                <label class="topic"><input type="checkbox" class="task">Standard Form of a Line (Ax + By = C)</label>
+                <label class="topic"><input type="checkbox" class="task">Graphing Linear Equations</label>
+                <label class="topic"><input type="checkbox" class="task">Parallel & Perpendicular Lines</label>
+                <label class="topic"><input type="checkbox" class="task">x-intercept & y-intercept</label>
+                <label class="topic"><input type="checkbox" class="task">Interpreting Slope & Intercept in Context</label>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Systems of Equations & Inequalities</p>
+            <div class="topic-grid" data-section="algebra">
+                <label class="topic"><input type="checkbox" class="task">Systems of Linear Equations (Substitution)</label>
+                <label class="topic"><input type="checkbox" class="task">Systems of Linear Equations (Elimination)</label>
+                <label class="topic"><input type="checkbox" class="task">Graphing Systems of Equations</label>
+                <label class="topic"><input type="checkbox" class="task">Systems with No Solution / Infinite Solutions</label>
+                <label class="topic"><input type="checkbox" class="task">Systems of Linear Inequalities</label>
+                <label class="topic"><input type="checkbox" class="task">Linear Word Problems (Distance, Rate, Mixture)</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- ───────────────────────── ADVANCED MATH ───────────────────────── -->
+    <div class="section sec-advanced">
+        <div class="section-header">
+            <h2>Passport to Advanced Math</h2>
+            <span class="section-count" id="count-advanced"></span>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Quadratics</p>
+            <div class="topic-grid" data-section="advanced">
+                <label class="topic"><input type="checkbox" class="task">Standard Form of a Quadratic</label>
+                <label class="topic"><input type="checkbox" class="task">Factoring Quadratics (Simple)</label>
+                <label class="topic"><input type="checkbox" class="task">Factoring Quadratics (Complex / AC Method)</label>
+                <label class="topic"><input type="checkbox" class="task">Factoring Difference of Squares</label>
+                <label class="topic"><input type="checkbox" class="task">Perfect Square Trinomials</label>
+                <label class="topic"><input type="checkbox" class="task">Completing the Square</label>
+                <label class="topic"><input type="checkbox" class="task">Quadratic Formula</label>
+                <label class="topic"><input type="checkbox" class="task">Discriminant & Nature of Roots</label>
+                <label class="topic"><input type="checkbox" class="task">Vertex Form of a Quadratic</label>
+                <label class="topic"><input type="checkbox" class="task">Graphing Parabolas (Vertex, Axis, Intercepts)</label>
+                <label class="topic"><input type="checkbox" class="task">Maximum & Minimum Values</label>
+                <label class="topic"><input type="checkbox" class="task">Systems of Linear & Quadratic Equations</label>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Polynomials & Rational Expressions</p>
+            <div class="topic-grid" data-section="advanced">
+                <label class="topic"><input type="checkbox" class="task">Adding & Subtracting Polynomials</label>
+                <label class="topic"><input type="checkbox" class="task">Multiplying Polynomials (FOIL & Distribution)</label>
+                <label class="topic"><input type="checkbox" class="task">Polynomial Long Division</label>
+                <label class="topic"><input type="checkbox" class="task">Remainder Theorem & Factor Theorem</label>
+                <label class="topic"><input type="checkbox" class="task">Zeros / Roots of Polynomials</label>
+                <label class="topic"><input type="checkbox" class="task">Simplifying Rational Expressions</label>
+                <label class="topic"><input type="checkbox" class="task">Multiplying & Dividing Rational Expressions</label>
+                <label class="topic"><input type="checkbox" class="task">Adding & Subtracting Rational Expressions</label>
+                <label class="topic"><input type="checkbox" class="task">Solving Rational Equations</label>
+                <label class="topic"><input type="checkbox" class="task">Undefined / Extraneous Solutions</label>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Exponents, Radicals & Functions</p>
+            <div class="topic-grid" data-section="advanced">
+                <label class="topic"><input type="checkbox" class="task">Integer Exponent Rules</label>
+                <label class="topic"><input type="checkbox" class="task">Negative & Zero Exponents</label>
+                <label class="topic"><input type="checkbox" class="task">Rational (Fractional) Exponents</label>
+                <label class="topic"><input type="checkbox" class="task">Simplifying Radical Expressions</label>
+                <label class="topic"><input type="checkbox" class="task">Solving Radical Equations</label>
+                <label class="topic"><input type="checkbox" class="task">Function Notation f(x)</label>
+                <label class="topic"><input type="checkbox" class="task">Evaluating Functions</label>
+                <label class="topic"><input type="checkbox" class="task">Domain & Range</label>
+                <label class="topic"><input type="checkbox" class="task">Composite Functions f(g(x))</label>
+                <label class="topic"><input type="checkbox" class="task">Inverse Functions</label>
+                <label class="topic"><input type="checkbox" class="task">Function Transformations (Shifts, Reflections, Stretches)</label>
+                <label class="topic"><input type="checkbox" class="task">Linear vs. Exponential Growth</label>
+                <label class="topic"><input type="checkbox" class="task">Exponential Equations & Functions</label>
+                <label class="topic"><input type="checkbox" class="task">Interpreting Graphs of Functions</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- ───────────────────────── PROBLEM SOLVING & DATA ───────────────────────── -->
+    <div class="section sec-data">
+        <div class="section-header">
+            <h2>Problem Solving &amp; Data Analysis</h2>
+            <span class="section-count" id="count-data"></span>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Ratios, Rates & Proportions</p>
+            <div class="topic-grid" data-section="data">
+                <label class="topic"><input type="checkbox" class="task">Ratios & Proportions</label>
+                <label class="topic"><input type="checkbox" class="task">Unit Rates</label>
+                <label class="topic"><input type="checkbox" class="task">Unit Conversions (Single & Multi-Step)</label>
+                <label class="topic"><input type="checkbox" class="task">Scale Factors & Similar Figures</label>
+                <label class="topic"><input type="checkbox" class="task">Percentages (Part / Whole / Rate)</label>
+                <label class="topic"><input type="checkbox" class="task">Percentage Increase & Decrease</label>
+                <label class="topic"><input type="checkbox" class="task">Percent Change vs. Percent Error</label>
+                <label class="topic"><input type="checkbox" class="task">Density, Speed & Other Rates in Context</label>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Statistics & Data Interpretation</p>
+            <div class="topic-grid" data-section="data">
+                <label class="topic"><input type="checkbox" class="task">Mean, Median, Mode, Range</label>
+                <label class="topic"><input type="checkbox" class="task">Weighted Average</label>
+                <label class="topic"><input type="checkbox" class="task">Standard Deviation & Spread</label>
+                <label class="topic"><input type="checkbox" class="task">Interpreting Tables & Bar Graphs</label>
+                <label class="topic"><input type="checkbox" class="task">Interpreting Line Graphs & Histograms</label>
+                <label class="topic"><input type="checkbox" class="task">Two-Way Frequency Tables</label>
+                <label class="topic"><input type="checkbox" class="task">Conditional Probability from Tables</label>
+                <label class="topic"><input type="checkbox" class="task">Scatterplots & Lines of Best Fit</label>
+                <label class="topic"><input type="checkbox" class="task">Positive vs. Negative Correlation</label>
+                <label class="topic"><input type="checkbox" class="task">Linear vs. Nonlinear Association</label>
+                <label class="topic"><input type="checkbox" class="task">Interpreting Slope & Intercept of Best-Fit Line</label>
+                <label class="topic"><input type="checkbox" class="task">Outliers & Influential Points</label>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Probability & Sampling</p>
+            <div class="topic-grid" data-section="data">
+                <label class="topic"><input type="checkbox" class="task">Basic Probability</label>
+                <label class="topic"><input type="checkbox" class="task">Probability of Compound Events (AND / OR)</label>
+                <label class="topic"><input type="checkbox" class="task">Mutually Exclusive Events</label>
+                <label class="topic"><input type="checkbox" class="task">Independent vs. Dependent Events</label>
+                <label class="topic"><input type="checkbox" class="task">Relative Frequency & Empirical Probability</label>
+                <label class="topic"><input type="checkbox" class="task">Random Sampling & Survey Design</label>
+                <label class="topic"><input type="checkbox" class="task">Making Inferences from Sample Data</label>
+                <label class="topic"><input type="checkbox" class="task">Margin of Error</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- ───────────────────────── GEOMETRY ───────────────────────── -->
+    <div class="section sec-geometry">
+        <div class="section-header">
+            <h2>Geometry &amp; Measurement</h2>
+            <span class="section-count" id="count-geometry"></span>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Angles & Lines</p>
+            <div class="topic-grid" data-section="geometry">
+                <label class="topic"><input type="checkbox" class="task">Angle Types (Acute, Right, Obtuse, Straight)</label>
+                <label class="topic"><input type="checkbox" class="task">Complementary & Supplementary Angles</label>
+                <label class="topic"><input type="checkbox" class="task">Vertical Angles</label>
+                <label class="topic"><input type="checkbox" class="task">Angles on Parallel Lines (Transversal)</label>
+                <label class="topic"><input type="checkbox" class="task">Corresponding, Alternate & Co-interior Angles</label>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Triangles</p>
+            <div class="topic-grid" data-section="geometry">
+                <label class="topic"><input type="checkbox" class="task">Triangle Angle Sum Theorem</label>
+                <label class="topic"><input type="checkbox" class="task">Exterior Angle Theorem</label>
+                <label class="topic"><input type="checkbox" class="task">Pythagorean Theorem</label>
+                <label class="topic"><input type="checkbox" class="task">Pythagorean Triples</label>
+                <label class="topic"><input type="checkbox" class="task">45-45-90 Special Right Triangle</label>
+                <label class="topic"><input type="checkbox" class="task">30-60-90 Special Right Triangle</label>
+                <label class="topic"><input type="checkbox" class="task">Similar Triangles & Proportionality</label>
+                <label class="topic"><input type="checkbox" class="task">Triangle Congruence (SSS, SAS, ASA, AAS)</label>
+                <label class="topic"><input type="checkbox" class="task">Area of a Triangle (½ base × height)</label>
+                <label class="topic"><input type="checkbox" class="task">Triangle Inequality Theorem</label>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Circles</p>
+            <div class="topic-grid" data-section="geometry">
+                <label class="topic"><input type="checkbox" class="task">Circumference of a Circle</label>
+                <label class="topic"><input type="checkbox" class="task">Area of a Circle</label>
+                <label class="topic"><input type="checkbox" class="task">Arc Length</label>
+                <label class="topic"><input type="checkbox" class="task">Sector Area</label>
+                <label class="topic"><input type="checkbox" class="task">Central Angles & Inscribed Angles</label>
+                <label class="topic"><input type="checkbox" class="task">Tangent Lines to a Circle</label>
+                <label class="topic"><input type="checkbox" class="task">Chord Properties</label>
+                <label class="topic"><input type="checkbox" class="task">Standard Equation of a Circle</label>
+                <label class="topic"><input type="checkbox" class="task">Completing the Square for Circle Equations</label>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Area, Surface Area & Volume</p>
+            <div class="topic-grid" data-section="geometry">
+                <label class="topic"><input type="checkbox" class="task">Perimeter & Area of Rectangles, Parallelograms</label>
+                <label class="topic"><input type="checkbox" class="task">Area of Trapezoids</label>
+                <label class="topic"><input type="checkbox" class="task">Area of Composite Figures</label>
+                <label class="topic"><input type="checkbox" class="task">Volume of Rectangular Prism / Cube</label>
+                <label class="topic"><input type="checkbox" class="task">Volume of Cylinder</label>
+                <label class="topic"><input type="checkbox" class="task">Volume of Cone</label>
+                <label class="topic"><input type="checkbox" class="task">Volume of Sphere</label>
+                <label class="topic"><input type="checkbox" class="task">Volume of Pyramid</label>
+                <label class="topic"><input type="checkbox" class="task">Surface Area of 3D Solids</label>
+                <label class="topic"><input type="checkbox" class="task">Effect of Scaling on Area & Volume</label>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Coordinate Geometry</p>
+            <div class="topic-grid" data-section="geometry">
+                <label class="topic"><input type="checkbox" class="task">Distance Formula</label>
+                <label class="topic"><input type="checkbox" class="task">Midpoint Formula</label>
+                <label class="topic"><input type="checkbox" class="task">Slope Between Two Points</label>
+                <label class="topic"><input type="checkbox" class="task">Equation of a Line Through Two Points</label>
+                <label class="topic"><input type="checkbox" class="task">Reflection of Points Across Axes</label>
+                <label class="topic"><input type="checkbox" class="task">Graphing Quadratics on the Coordinate Plane</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- ───────────────────────── TRIGONOMETRY ───────────────────────── -->
+    <div class="section sec-trig">
+        <div class="section-header">
+            <h2>Trigonometry</h2>
+            <span class="section-count" id="count-trig"></span>
+        </div>
+
+        <div class="topic-grid" data-section="trig">
+            <label class="topic"><input type="checkbox" class="task">Sine, Cosine & Tangent Ratios (SOH-CAH-TOA)</label>
+            <label class="topic"><input type="checkbox" class="task">Finding Missing Sides Using Trig Ratios</label>
+            <label class="topic"><input type="checkbox" class="task">Finding Missing Angles (Inverse Trig)</label>
+            <label class="topic"><input type="checkbox" class="task">Trig Ratios in Special Right Triangles</label>
+            <label class="topic"><input type="checkbox" class="task">Complementary Angle Trig Identity: sin θ = cos(90°−θ)</label>
+            <label class="topic"><input type="checkbox" class="task">Pythagorean Identity: sin²θ + cos²θ = 1</label>
+            <label class="topic"><input type="checkbox" class="task">Radian Measure & Converting Degrees ↔ Radians</label>
+            <label class="topic"><input type="checkbox" class="task">Unit Circle Basics (Key Angles 0°, 30°, 45°, 60°, 90°)</label>
+            <label class="topic"><input type="checkbox" class="task">Graphs of Sine & Cosine Functions</label>
+            <label class="topic"><input type="checkbox" class="task">Amplitude, Period & Frequency</label>
+            <label class="topic"><input type="checkbox" class="task">Phase Shift & Vertical Shift of Trig Functions</label>
+            <label class="topic"><input type="checkbox" class="task">Solving Right Triangles (All Sides & Angles)</label>
+        </div>
+    </div>
+
+    <!-- ───────────────────────── ADDITIONAL / SPECIAL TOPICS ───────────────────────── -->
+    <div class="section sec-advanced2">
+        <div class="section-header">
+            <h2>Additional &amp; Special Topics</h2>
+            <span class="section-count" id="count-advanced2"></span>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Number Theory & Arithmetic</p>
+            <div class="topic-grid" data-section="advanced2">
+                <label class="topic"><input type="checkbox" class="task">Properties of Integers (Even/Odd/Prime)</label>
+                <label class="topic"><input type="checkbox" class="task">Divisibility Rules & Factors/Multiples</label>
+                <label class="topic"><input type="checkbox" class="task">GCF & LCM</label>
+                <label class="topic"><input type="checkbox" class="task">Order of Operations (PEMDAS)</label>
+                <label class="topic"><input type="checkbox" class="task">Operations with Fractions & Mixed Numbers</label>
+                <label class="topic"><input type="checkbox" class="task">Decimal Operations & Rounding</label>
+                <label class="topic"><input type="checkbox" class="task">Scientific Notation</label>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Complex Numbers</p>
+            <div class="topic-grid" data-section="advanced2">
+                <label class="topic"><input type="checkbox" class="task">Imaginary Unit i (i² = −1)</label>
+                <label class="topic"><input type="checkbox" class="task">Adding & Subtracting Complex Numbers</label>
+                <label class="topic"><input type="checkbox" class="task">Multiplying Complex Numbers</label>
+                <label class="topic"><input type="checkbox" class="task">Dividing Complex Numbers (Conjugates)</label>
+                <label class="topic"><input type="checkbox" class="task">Complex Solutions to Quadratic Equations</label>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Word Problems & Modelling</p>
+            <div class="topic-grid" data-section="advanced2">
+                <label class="topic"><input type="checkbox" class="task">Setting Up Equations from Word Problems</label>
+                <label class="topic"><input type="checkbox" class="task">Age Problems</label>
+                <label class="topic"><input type="checkbox" class="task">Mixture & Concentration Problems</label>
+                <label class="topic"><input type="checkbox" class="task">Distance-Rate-Time Problems</label>
+                <label class="topic"><input type="checkbox" class="task">Work Rate Problems</label>
+                <label class="topic"><input type="checkbox" class="task">Direct & Inverse Variation</label>
+                <label class="topic"><input type="checkbox" class="task">Optimization Problems (Max/Min in Context)</label>
+                <label class="topic"><input type="checkbox" class="task">Interpreting Algebraic Expressions in Context</label>
+            </div>
+        </div>
+
+        <div class="subsection">
+            <p class="subsection-title">Sequences, Logic & Other Topics</p>
+            <div class="topic-grid" data-section="advanced2">
+                <label class="topic"><input type="checkbox" class="task">Arithmetic Sequences & Series</label>
+                <label class="topic"><input type="checkbox" class="task">Geometric Sequences & Series</label>
+                <label class="topic"><input type="checkbox" class="task">Recursive Formulas</label>
+                <label class="topic"><input type="checkbox" class="task">Logical Reasoning & Counterexamples</label>
+                <label class="topic"><input type="checkbox" class="task">Venn Diagrams & Set Notation</label>
+                <label class="topic"><input type="checkbox" class="task">Counting Principle & Combinations</label>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="sig-box">
+            <p class="assessed-label">Assessed By</p>
+            <h2 class="signature-name">Kingshuk Chatterjee</h2>
+        </div>
+    </footer>
+
+</div>
+
+<script>
+    const checkboxes = document.querySelectorAll('.task');
+    const fill = document.getElementById('progress-fill');
+    const statChecked = document.getElementById('stat-checked');
+    const statTotal = document.getElementById('stat-total');
+    const statPct = document.getElementById('stat-pct');
+
+    const sectionIds = ['algebra', 'advanced', 'data', 'geometry', 'trig', 'advanced2'];
+
+    function updateProgress() {
+        const total = checkboxes.length;
+        const checked = document.querySelectorAll('.task:checked').length;
+        const pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+
+        fill.style.width = pct + '%';
+        statChecked.textContent = checked;
+        statTotal.textContent = total;
+        statPct.textContent = pct;
+
+        checkboxes.forEach(cb => {
+            cb.parentElement.classList.toggle('completed', cb.checked);
+        });
+
+        // Update per-section counts
+        sectionIds.forEach(sec => {
+            const grids = document.querySelectorAll(`[data-section="${sec}"] .task`);
+            const doneInSec = document.querySelectorAll(`[data-section="${sec}"] .task:checked`).length;
+            const el = document.getElementById(`count-${sec}`);
+            if (el) el.textContent = `${doneInSec} / ${grids.length}`;
+        });
+
+        const state = Array.from(checkboxes).map(cb => cb.checked);
+        try { localStorage.setItem('sat_math_v2', JSON.stringify(state)); } catch(e) {}
+    }
+
+    function resetAll() {
+        if (!confirm('Reset all progress?')) return;
+        checkboxes.forEach(cb => cb.checked = false);
+        try { localStorage.removeItem('sat_math_v2'); } catch(e) {}
+        updateProgress();
+    }
+
+    window.addEventListener('load', () => {
+        statTotal.textContent = checkboxes.length;
+        try {
+            const saved = JSON.parse(localStorage.getItem('sat_math_v2'));
+            if (saved) checkboxes.forEach((cb, i) => { if (saved[i] !== undefined) cb.checked = saved[i]; });
+        } catch(e) {}
+        updateProgress();
+    });
+
+    checkboxes.forEach(cb => cb.addEventListener('change', updateProgress));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Savoring Money ATS — People Operations</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Cabinet+Grotesk:wght@300;400;500;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080c10;--bg2:#0d1117;--surface:#111820;--surface2:#161f2b;--surface3:#1d2838;
+  --gold:#f5c842;--gold2:#ffdd70;--emerald:#00e5a0;--violet:#a78bfa;--cyan:#38bdf8;--rose:#fb7185;--coral:#ff6b6b;--amber:#f59e0b;
+  --text:#e8edf5;--text2:#96a3b4;--text3:#5a6a7e;
+  --ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
+  --sidebar:240px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Cabinet Grotesk',sans-serif;background:var(--bg);color:var(--text);display:flex;}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;}
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(245,200,66,.2);border-radius:4px;}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar);flex-shrink:0;background:var(--bg2);border-right:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;height:100vh;overflow-y:auto;}
+.sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,.05);}
+.logo-text{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2;}
+.logo-sub{font-size:.65rem;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-top:3px;}
+.sidebar-section{padding:16px 12px 8px;}
+.sidebar-label{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);padding:0 8px;margin-bottom:6px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:background .2s,color .2s;color:var(--text2);font-size:.84rem;font-weight:500;border:none;background:none;width:100%;text-align:left;}
+.nav-item:hover{background:rgba(255,255,255,.04);color:var(--text);}
+.nav-item.active{background:rgba(245,200,66,.1);color:var(--gold);}
+.nav-icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0;}
+.nav-badge{margin-left:auto;font-size:.65rem;font-weight:700;background:var(--gold);color:var(--bg);padding:2px 7px;border-radius:10px;}
+.nav-badge.emerald{background:var(--emerald);}
+.nav-badge.rose{background:var(--rose);}
+.sidebar-footer{margin-top:auto;padding:16px;border-top:1px solid rgba(255,255,255,.05);}
+.founder-chip{display:flex;align-items:center;gap:10px;}
+.founder-avi{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--emerald));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.founder-info .name{font-size:.82rem;font-weight:700;color:var(--text);}
+.founder-info .role{font-size:.68rem;color:var(--text3);}
+
+/* ── MAIN ── */
+.main{flex:1;overflow-y:auto;height:100vh;display:flex;flex-direction:column;}
+.topbar{padding:16px 28px;background:rgba(8,12,16,.8);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:sticky;top:0;z-index:100;}
+.topbar-left h2{font-size:1.4rem;color:var(--text);}
+.topbar-left p{font-size:.78rem;color:var(--text3);margin-top:2px;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.tb-btn{padding:9px 18px;border-radius:10px;font-family:'Cabinet Grotesk',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;border:none;transition:transform .2s var(--spring);}
+.tb-btn:hover{transform:translateY(-2px);}
+.tb-primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg);}
+.tb-ghost{background:rgba(255,255,255,.05);color:var(--text2);border:1px solid rgba(255,255,255,.08);}
+.content{padding:28px;flex:1;}
+
+/* ── PANELS ── */
+.panel{display:none;}
+.panel.active{display:block;}
+
+/* ── STATS ROW ── */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{background:var(--surface);border-radius:14px;padding:20px;border:1px solid rgba(255,255,255,.05);position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.stat-card.gold::before{background:linear-gradient(90deg,var(--gold),var(--gold2));}
+.stat-card.emerald::before{background:linear-gradient(90deg,var(--emerald),var(--cyan));}
+.stat-card.violet::before{background:linear-gradient(90deg,var(--violet),var(--cyan));}
+.stat-card.rose::before{background:linear-gradient(90deg,var(--rose),var(--coral));}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;line-height:1;margin-bottom:4px;}
+.stat-card.gold .stat-num{color:var(--gold);}
+.stat-card.emerald .stat-num{color:var(--emerald);}
+.stat-card.violet .stat-num{color:var(--violet);}
+.stat-card.rose .stat-num{color:var(--rose);}
+.stat-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);}
+.stat-sub{font-size:.75rem;color:var(--text3);margin-top:6px;}
+
+/* ── SECTION HEADER ── */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.sec-header h3{font-size:1.3rem;color:var(--text);}
+.sec-actions{display:flex;gap:8px;}
+
+/* ── SEARCH/FILTER BAR ── */
+.filter-bar{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+.search-input{flex:1;min-width:200px;padding:10px 16px;background:var(--surface2);border:1px solid rgba(255,255,255,.08);border-radius:10px;color:var(--text);font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;outline:none;transition:border-color .2s;}
+.search-input:focus{border-color:rgba(245,200,66,.3);}
+.filter-select{padding:10px 14px;background:var(--surface2);border:1px solid rgba(255,255,255,.08);border-radius:10px;color:var(--text2);font-family:'Cabinet Grotesk',sans-serif;font-size:.82rem;outline:none;cursor:pointer;appearance:none;}
+.filter-select:focus{border-color:rgba(245,200,66,.3);}
+
+/* ── KANBAN ── */
+.kanban{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;overflow-x:auto;padding-bottom:8px;}
+.kanban-col{background:var(--surface);border-radius:14px;padding:14px;border:1px solid rgba(255,255,255,.05);min-width:200px;}
+.kanban-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.kanban-title{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.k-new .kanban-title{color:var(--text2);}
+.k-screen .kanban-title{color:var(--cyan);}
+.k-interview .kanban-title{color:var(--violet);}
+.k-offer .kanban-title{color:var(--gold);}
+.k-hired .kanban-title{color:var(--emerald);}
+.kanban-count{font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:8px;background:rgba(255,255,255,.06);color:var(--text3);}
+.kanban-cards{display:flex;flex-direction:column;gap:8px;min-height:100px;}
+.k-card{background:var(--surface2);border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,.05);cursor:pointer;transition:transform .2s var(--spring),box-shadow .2s,border-color .2s;}
+.k-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.3);border-color:rgba(245,200,66,.15);}
+.k-card-name{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:4px;}
+.k-card-role{font-size:.72rem;color:var(--text3);margin-bottom:8px;}
+.k-card-meta{display:flex;gap:6px;flex-wrap:wrap;}
+.k-tag{font-size:.62rem;font-weight:600;padding:2px 8px;border-radius:8px;}
+.tag-part{background:rgba(245,200,66,.1);color:var(--gold);}
+.tag-free{background:rgba(0,229,160,.1);color:var(--emerald);}
+.tag-cont{background:rgba(167,139,250,.1);color:var(--violet);}
+.tag-comm{background:rgba(251,113,133,.1);color:var(--rose);}
+.k-card-date{font-size:.65rem;color:var(--text3);margin-top:8px;display:flex;align-items:center;gap:4px;}
+
+/* ── PEOPLE TABLE ── */
+.people-table{background:var(--surface);border-radius:14px;border:1px solid rgba(255,255,255,.05);overflow:hidden;}
+.pt-head{display:grid;padding:12px 20px;background:rgba(255,255,255,.02);border-bottom:1px solid rgba(255,255,255,.05);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);}
+.pt-row{display:grid;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.04);transition:background .2s;cursor:pointer;align-items:center;}
+.pt-row:last-child{border-bottom:none;}
+.pt-row:hover{background:rgba(255,255,255,.02);}
+.people-table.cols-5 .pt-head,.people-table.cols-5 .pt-row{grid-template-columns:2fr 1.5fr 1fr 1fr 1.2fr;}
+.people-table.cols-6 .pt-head,.people-table.cols-6 .pt-row{grid-template-columns:2fr 1.5fr 1fr 1fr 1fr 1.2fr;}
+.people-table.cols-4 .pt-head,.people-table.cols-4 .pt-row{grid-template-columns:2fr 1.5fr 1.5fr 1.2fr;}
+.cell-name{display:flex;align-items:center;gap:10px;}
+.avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0;}
+.av-gold{background:rgba(245,200,66,.15);color:var(--gold);}
+.av-emerald{background:rgba(0,229,160,.15);color:var(--emerald);}
+.av-violet{background:rgba(167,139,250,.15);color:var(--violet);}
+.av-cyan{background:rgba(56,189,248,.15);color:var(--cyan);}
+.av-rose{background:rgba(251,113,133,.15);color:var(--rose);}
+.name-block .primary{font-size:.85rem;font-weight:700;color:var(--text);}
+.name-block .secondary{font-size:.72rem;color:var(--text3);}
+.cell-text{font-size:.83rem;color:var(--text2);}
+.cell-mono{font-family:'DM Mono',monospace;font-size:.78rem;color:var(--text2);}
+.status-pill{display:inline-flex;align-items:center;gap:5px;font-size:.68rem;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;}
+.sp-active{background:rgba(0,229,160,.1);color:var(--emerald);border:1px solid rgba(0,229,160,.2);}
+.sp-training{background:rgba(245,200,66,.1);color:var(--gold);border:1px solid rgba(245,200,66,.2);}
+.sp-onboard{background:rgba(56,189,248,.1);color:var(--cyan);border:1px solid rgba(56,189,248,.2);}
+.sp-risk{background:rgba(251,113,133,.1);color:var(--rose);border:1px solid rgba(251,113,133,.2);}
+.sp-offboard{background:rgba(255,107,107,.1);color:var(--coral);border:1px solid rgba(255,107,107,.2);}
+.sp-terminated{background:rgba(90,106,126,.1);color:var(--text3);border:1px solid rgba(90,106,126,.2);}
+.cell-actions{display:flex;gap:6px;justify-content:flex-end;}
+.action-btn{padding:5px 12px;border-radius:8px;font-size:.72rem;font-weight:700;cursor:pointer;border:none;font-family:'Cabinet Grotesk',sans-serif;transition:transform .15s var(--spring);}
+.action-btn:hover{transform:scale(1.06);}
+.ab-gold{background:rgba(245,200,66,.15);color:var(--gold);}
+.ab-emerald{background:rgba(0,229,160,.15);color:var(--emerald);}
+.ab-rose{background:rgba(251,113,133,.15);color:var(--rose);}
+.ab-cyan{background:rgba(56,189,248,.15);color:var(--cyan);}
+
+/* ── PROGRESS BARS ── */
+.prog-wrap{margin-top:4px;}
+.prog-track{height:4px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;width:100px;}
+.prog-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--emerald));}
+
+/* ── RATING STARS ── */
+.stars{color:var(--gold);font-size:.8rem;letter-spacing:1px;}
+
+/* ── TRAINING GRID ── */
+.training-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
+.training-card{background:var(--surface);border-radius:14px;padding:20px;border:1px solid rgba(255,255,255,.05);position:relative;overflow:hidden;transition:transform .2s var(--spring);}
+.training-card:hover{transform:translateY(-3px);}
+.training-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.tc-gold::before{background:linear-gradient(90deg,var(--gold),var(--gold2));}
+.tc-emerald::before{background:linear-gradient(90deg,var(--emerald),var(--cyan));}
+.tc-violet::before{background:linear-gradient(90deg,var(--violet),var(--cyan));}
+.tc-icon{font-size:1.6rem;margin-bottom:10px;}
+.tc-title{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px;}
+.tc-meta{font-size:.76rem;color:var(--text3);margin-bottom:12px;}
+.tc-progress{margin-bottom:12px;}
+.tc-progress-label{display:flex;justify-content:space-between;font-size:.72rem;color:var(--text3);margin-bottom:5px;}
+.tc-track{height:5px;background:rgba(255,255,255,.06);border-radius:5px;overflow:hidden;}
+.tc-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--gold),var(--emerald));transition:width 1s var(--ease);}
+.tc-assignees{display:flex;gap:-4px;}
+.tc-av{width:24px;height:24px;border-radius:50%;background:rgba(245,200,66,.15);border:2px solid var(--surface);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;color:var(--gold);margin-left:-6px;}
+.tc-av:first-child{margin-left:0;}
+
+/* ── ONBOARD CHECKLIST ── */
+.onboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ob-card{background:var(--surface);border-radius:14px;padding:20px;border:1px solid rgba(255,255,255,.05);}
+.ob-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.ob-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--emerald));display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.ob-name{font-size:1rem;font-weight:700;color:var(--text);}
+.ob-role{font-size:.75rem;color:var(--text3);}
+.ob-progress-bar{height:6px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;margin-bottom:14px;}
+.ob-progress-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--gold),var(--emerald));}
+.checklist{display:flex;flex-direction:column;gap:8px;}
+.check-item{display:flex;align-items:center;gap:10px;font-size:.82rem;cursor:pointer;user-select:none;}
+.check-box{width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s,border-color .2s;}
+.check-item.done .check-box{background:var(--emerald);border-color:var(--emerald);}
+.check-item.done .check-box::after{content:'✓';font-size:.65rem;color:var(--bg);font-weight:900;}
+.check-item.done .check-label{text-decoration:line-through;color:var(--text3);}
+.check-label{color:var(--text2);}
+
+/* ── RETAIN PANEL ── */
+.retain-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;}
+.retain-card{background:var(--surface);border-radius:14px;padding:22px;border:1px solid rgba(255,255,255,.05);}
+.retain-card h4{font-size:1.1rem;color:var(--text);margin-bottom:14px;}
+.morale-bar-wrap{display:flex;flex-direction:column;gap:10px;}
+.morale-row{display:flex;align-items:center;gap:10px;}
+.morale-name{font-size:.8rem;color:var(--text2);width:130px;flex-shrink:0;}
+.morale-track{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:6px;overflow:hidden;}
+.morale-fill{height:100%;border-radius:6px;}
+.mf-high{background:linear-gradient(90deg,var(--emerald),var(--cyan));}
+.mf-med{background:linear-gradient(90deg,var(--gold),var(--gold2));}
+.mf-low{background:linear-gradient(90deg,var(--rose),var(--coral));}
+.morale-pct{font-family:'DM Mono',monospace;font-size:.72rem;color:var(--text3);width:36px;text-align:right;}
+.feedback-list{display:flex;flex-direction:column;gap:10px;}
+.feedback-item{background:var(--surface2);border-radius:10px;padding:12px;border-left:3px solid var(--gold);}
+.feedback-item.good{border-left-color:var(--emerald);}
+.feedback-item.concern{border-left-color:var(--rose);}
+.fi-text{font-size:.82rem;color:var(--text2);line-height:1.5;margin-bottom:6px;}
+.fi-meta{font-size:.68rem;color:var(--text3);}
+.action-plan-list{display:flex;flex-direction:column;gap:8px;}
+.ap-item{display:flex;align-items:flex-start;gap:10px;font-size:.82rem;color:var(--text2);}
+.ap-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.ap-dot.gold{background:var(--gold);}
+.ap-dot.emerald{background:var(--emerald);}
+.ap-dot.violet{background:var(--violet);}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border-radius:20px;border:1px solid rgba(255,255,255,.08);width:100%;max-width:560px;max-height:90vh;overflow-y:auto;position:relative;}
+.modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--emerald));border-radius:20px 20px 0 0;}
+.modal-head{padding:28px 28px 20px;border-bottom:1px solid rgba(255,255,255,.06);}
+.modal-head h3{font-size:1.4rem;color:var(--text);}
+.modal-head p{font-size:.82rem;color:var(--text3);margin-top:4px;}
+.modal-body{padding:24px 28px;}
+.modal-footer{padding:20px 28px;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:10px;justify-content:flex-end;}
+.modal-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.06);border:none;color:var(--text2);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;}
+.modal-close:hover{background:rgba(255,255,255,.1);}
+.form-group{margin-bottom:18px;}
+.form-group label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:7px;}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;background:var(--surface2);border:1px solid rgba(255,255,255,.08);border-radius:10px;color:var(--text);font-family:'Cabinet Grotesk',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;appearance:none;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:rgba(245,200,66,.4);}
+.form-group textarea{resize:vertical;min-height:80px;}
+.form-group select option{background:var(--surface2);}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.btn-primary{padding:11px 22px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg);font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:800;border:none;cursor:pointer;transition:transform .2s var(--spring);}
+.btn-primary:hover{transform:translateY(-2px);}
+.btn-danger{padding:11px 22px;border-radius:10px;background:rgba(251,113,133,.15);color:var(--rose);font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:700;border:1px solid rgba(251,113,133,.2);cursor:pointer;transition:transform .2s var(--spring);}
+.btn-danger:hover{transform:translateY(-2px);}
+.btn-cancel{padding:11px 22px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--text2);font-family:'Cabinet Grotesk',sans-serif;font-size:.85rem;font-weight:600;border:1px solid rgba(255,255,255,.08);cursor:pointer;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:28px;right:28px;background:var(--surface);border:1px solid rgba(0,229,160,.3);border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:12px;z-index:2000;transform:translateY(80px);opacity:0;transition:transform .4s var(--spring),opacity .3s;font-size:.85rem;color:var(--text);max-width:320px;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast-icon{font-size:1.2rem;}
+
+/* ── EMPTY STATE ── */
+.empty{text-align:center;padding:48px 24px;color:var(--text3);}
+.empty-icon{font-size:2.5rem;margin-bottom:12px;}
+.empty p{font-size:.88rem;}
+
+/* ── TABS ── */
+.tab-row{display:flex;gap:4px;margin-bottom:20px;background:var(--surface);padding:4px;border-radius:12px;width:fit-content;}
+.tab{padding:8px 18px;border-radius:9px;font-size:.8rem;font-weight:700;cursor:pointer;color:var(--text3);background:none;border:none;font-family:'Cabinet Grotesk',sans-serif;transition:background .2s,color .2s;}
+.tab.active{background:var(--surface2);color:var(--text);}
+
+/* scrollable content */
+.scroll-x{overflow-x:auto;}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-text">Savoring Money</div>
+    <div class="logo-sub">People Operations · ATS</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Overview</div>
+    <button class="nav-item active" onclick="showPanel('dashboard')">
+      <span class="nav-icon">📊</span>Dashboard
+    </button>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Pipeline</div>
+    <button class="nav-item" onclick="showPanel('hiring')">
+      <span class="nav-icon">🎯</span>Hiring
+      <span class="nav-badge" id="hiring-badge">8</span>
+    </button>
+    <button class="nav-item" onclick="showPanel('training')">
+      <span class="nav-icon">📚</span>Training
+    </button>
+    <button class="nav-item" onclick="showPanel('onboarding')">
+      <span class="nav-icon">🚀</span>Onboarding
+      <span class="nav-badge emerald" id="onboard-badge">2</span>
+    </button>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">People</div>
+    <button class="nav-item" onclick="showPanel('retention')">
+      <span class="nav-icon">💛</span>Retain
+    </button>
+    <button class="nav-item" onclick="showPanel('termination')">
+      <span class="nav-icon">🔴</span>Offboard
+      <span class="nav-badge rose" id="term-badge">1</span>
+    </button>
+    <button class="nav-item" onclick="showPanel('directory')">
+      <span class="nav-icon">👥</span>Directory
+    </button>
+  </div>
+  <div class="sidebar-footer">
+    <div class="founder-chip">
+      <div class="founder-avi">🧑‍🍳</div>
+      <div class="founder-info">
+        <div class="name">Founder</div>
+        <div class="role">Admin · Savoring Money</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- ── DASHBOARD ── -->
+  <div id="panel-dashboard" class="panel active">
+    <div class="topbar">
+      <div class="topbar-left"><h2>Dashboard</h2><p>People operations at a glance</p></div>
+      <div class="topbar-right">
+        <button class="tb-btn tb-ghost" onclick="showPanel('hiring')">View Pipeline</button>
+        <button class="tb-btn tb-primary" onclick="openModal('add-applicant')">+ Add Applicant</button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="stats-row">
+        <div class="stat-card gold"><div class="stat-num" id="db-applicants">8</div><div class="stat-label">Active Applicants</div><div class="stat-sub">↑ 3 this week</div></div>
+        <div class="stat-card emerald"><div class="stat-num" id="db-team">6</div><div class="stat-label">Active Contractors</div><div class="stat-sub">All flexible roles</div></div>
+        <div class="stat-card violet"><div class="stat-num" id="db-onboard">2</div><div class="stat-label">Being Onboarded</div><div class="stat-sub">Started this month</div></div>
+        <div class="stat-card rose"><div class="stat-num" id="db-risk">1</div><div class="stat-label">Retention Risk</div><div class="stat-sub">Needs attention</div></div>
+      </div>
+      <div class="sec-header"><h3>Recent Activity</h3></div>
+      <div class="people-table cols-5" style="margin-bottom:24px;">
+        <div class="pt-head"><span>Person</span><span>Role</span><span>Stage</span><span>Updated</span><span style="text-align:right">Action</span></div>
+        <div class="pt-row" onclick="showPanel('hiring')">
+          <div class="cell-name"><div class="avatar av-gold">PR</div><div class="name-block"><div class="primary">Priya Rao</div><div class="secondary"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0e7e7c67776f4e6b636f6762206d6163">[email&#160;protected]</a></div></div></div>
+          <div class="cell-text">Maths Tutor</div>
+          <div><span class="status-pill sp-onboard">Offer Sent</span></div>
+          <div class="cell-mono">Today</div>
+          <div class="cell-actions"><button class="action-btn ab-gold" onclick="event.stopPropagation();openModal('move-stage')">Move →</button></div>
+        </div>
+        <div class="pt-row" onclick="showPanel('onboarding')">
+          <div class="cell-name"><div class="avatar av-emerald">AS</div><div class="name-block"><div class="primary">Aryan Shah</div><div class="secondary"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="debfaca7bfb09ebbb3bfb7b2f0bdb1b3">[email&#160;protected]</a></div></div></div>
+          <div class="cell-text">Content Writer</div>
+          <div><span class="status-pill sp-onboard">Onboarding</span></div>
+          <div class="cell-mono">Yesterday</div>
+          <div class="cell-actions"><button class="action-btn ab-emerald" onclick="event.stopPropagation();showPanel('onboarding')">View →</button></div>
+        </div>
+        <div class="pt-row" onclick="showPanel('retention')">
+          <div class="cell-name"><div class="avatar av-rose">MK</div><div class="name-block"><div class="primary">Meera Kulkarni</div><div class="secondary"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="375a5252455677525a565e5b1954585a">[email&#160;protected]</a></div></div></div>
+          <div class="cell-text">Finance Mentor</div>
+          <div><span class="status-pill sp-risk">At Risk</span></div>
+          <div class="cell-mono">2 days ago</div>
+          <div class="cell-actions"><button class="action-btn ab-rose" onclick="event.stopPropagation();openModal('retain-action')">Retain →</button></div>
+        </div>
+        <div class="pt-row">
+          <div class="cell-name"><div class="avatar av-violet">DJ</div><div class="name-block"><div class="primary">Dev Joshi</div><div class="secondary"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c4a0a1b284a1a9a5ada8eaa7aba9">[email&#160;protected]</a></div></div></div>
+          <div class="cell-text">Web Developer</div>
+          <div><span class="status-pill sp-active">Active</span></div>
+          <div class="cell-mono">3 days ago</div>
+          <div class="cell-actions"><button class="action-btn ab-cyan" onclick="event.stopPropagation()">View →</button></div>
+        </div>
+        <div class="pt-row">
+          <div class="cell-name"><div class="avatar av-cyan">NB</div><div class="name-block"><div class="primary">Nisha Bansal</div><div class="secondary"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="89e7e0fae1e8c9ece4e8e0e5a7eae6e4">[email&#160;protected]</a></div></div></div>
+          <div class="cell-text">Social Media</div>
+          <div><span class="status-pill sp-training">Training</span></div>
+          <div class="cell-mono">4 days ago</div>
+          <div class="cell-actions"><button class="action-btn ab-gold" onclick="event.stopPropagation();showPanel('training')">Train →</button></div>
+        </div>
+      </div>
+
+      <div class="stats-row" style="grid-template-columns:repeat(3,1fr);">
+        <div class="stat-card emerald"><div class="stat-num">₹0</div><div class="stat-label">Fixed Payroll Cost</div><div class="stat-sub">All flexible arrangements</div></div>
+        <div class="stat-card gold"><div class="stat-num">8</div><div class="stat-label">Open Roles</div><div class="stat-sub">Part-time, freelance, contract</div></div>
+        <div class="stat-card violet"><div class="stat-num">14d</div><div class="stat-label">Avg. Time to Hire</div><div class="stat-sub">From apply to agreement</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HIRING PANEL ── -->
+  <div id="panel-hiring" class="panel">
+    <div class="topbar">
+      <div class="topbar-left"><h2>Hiring Pipeline</h2><p>Track all applicants from application to offer</p></div>
+      <div class="topbar-right">
+        <button class="tb-btn tb-ghost" onclick="openModal('add-applicant')">Import CSV</button>
+        <button class="tb-btn tb-primary" onclick="openModal('add-applicant')">+ New Applicant</button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="filter-bar">
+        <input class="search-input" placeholder="🔍  Search applicants…" oninput="filterKanban(this.value)">
+        <select class="filter-select"><option>All Roles</option><option>Maths Tutor</option><option>Finance Mentor</option><option>Curriculum Writer</option><option>Web Developer</option><option>UI/UX Designer</option><option>Social Media</option><option>Acquisition Partner</option><option>Support Assistant</option></select>
+        <select class="filter-select"><option>All Types</option><option>Part-Time</option><option>Freelance</option><option>Contract</option><option>Commission</option></select>
+      </div>
+      <div class="scroll-x">
+        <div class="kanban" id="kanban-board">
+          <div class="kanban-col k-new">
+            <div class="kanban-head"><span class="kanban-title">New</span><span class="kanban-count" id="cnt-new">3</span></div>
+            <div class="kanban-cards" id="col-new">
+              <div class="k-card" onclick="openModal('view-applicant')" data-name="Sunita Ghosh" data-role="Maths Tutor">
+                <div class="k-card-name">Sunita Ghosh</div><div class="k-card-role">Maths Tutor (6–12)</div>
+                <div class="k-card-meta"><span class="k-tag tag-part">Part-Time</span></div>
+                <div class="k-card-date">📅 Applied 2 days ago</div>
+              </div>
+              <div class="k-card" onclick="openModal('view-applicant')">
+                <div class="k-card-name">Rohit Mehra</div><div class="k-card-role">Web Developer</div>
+                <div class="k-card-meta"><span class="k-tag tag-cont">Contract</span></div>
+                <div class="k-card-date">📅 Applied 3 days ago</div>
+              </div>
+              <div class="k-card" onclick="openModal('view-applicant')">
+                <div class="k-card-name">Aisha Patel</div><div class="k-card-role">Social Media Creator</div>
+                <div class="k-card-meta"><span class="k-tag tag-part">Part-Time</span></div>
+                <div class="k-card-date">📅 Applied today</div>
+              </div>
+            </div>
+          </div>
+          <div class="kanban-col k-screen">
+            <div class="kanban-head"><span class="kanban-title">Screening</span><span class="kanban-count" id="cnt-screen">2</span></div>
+            <div class="kanban-cards" id="col-screen">
+              <div class="k-card" onclick="openModal('view-applicant')">
+                <div class="k-card-name">Karan Bose</div><div class="k-card-role">Curriculum Writer</div>
+                <div class="k-card-meta"><span class="k-tag tag-free">Freelance</span></div>
+                <div class="k-card-date">📅 Call: Tomorrow 3pm</div>
+              </div>
+              <div class="k-card" onclick="openModal('view-applicant')">
+                <div class="k-card-name">Fatima Nair</div><div class="k-card-role">Support Assistant</div>
+                <div class="k-card-meta"><span class="k-tag tag-part">Part-Time</span></div>
+                <div class="k-card-date">📅 Call: Thu 11am</div>
+              </div>
+            </div>
+          </div>
+          <div class="kanban-col k-interview">
+            <div class="kanban-head"><span class="kanban-title">Mini Task</span><span class="kanban-count" id="cnt-interview">2</span></div>
+            <div class="kanban-cards" id="col-interview">
+              <div class="k-card" onclick="openModal('view-applicant')">
+                <div class="k-card-name">Vikram Rao</div><div class="k-card-role">Finance Mentor</div>
+                <div class="k-card-meta"><span class="k-tag tag-part">Part-Time</span></div>
+                <div class="k-card-date">📅 Task due: Fri</div>
+              </div>
+              <div class="k-card" onclick="openModal('view-applicant')">
+                <div class="k-card-name">Tanya Singh</div><div class="k-card-role">UI/UX Designer</div>
+                <div class="k-card-meta"><span class="k-tag tag-free">Freelance</span></div>
+                <div class="k-card-date">📅 Task submitted</div>
+              </div>
+            </div>
+          </div>
+          <div class="kanban-col k-offer">
+            <div class="kanban-head"><span class="kanban-title">Offer</span><span class="kanban-count" id="cnt-offer">1</span></div>
+            <div class="kanban-cards" id="col-offer">
+              <div class="k-card" onclick="openModal('view-applicant')">
+                <div class="k-card-name">Priya Rao</div><div class="k-card-role">Maths Tutor</div>
+                <div class="k-card-meta"><span class="k-tag tag-part">Part-Time</span></div>
+                <div class="k-card-date">✉️ Offer sent today</div>
+              </div>
+            </div>
+          </div>
+          <div class="kanban-col k-hired">
+            <div class="kanban-head"><span class="kanban-title">Hired</span><span class="kanban-count" id="cnt-hired">0</span></div>
+            <div class="kanban-cards" id="col-hired"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TRAINING PANEL ── -->
+  <div id="panel-training" class="panel">
+    <div class="topbar">
+      <div class="topbar-left"><h2>Training</h2><p>Track learning progress for all contractors</p></div>
+      <div class="topbar-right">
+        <button class="tb-btn tb-primary" onclick="openModal('add-training')">+ New Module</button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="training-grid">
+        <div class="training-card tc-gold">
+          <div class="tc-icon">📐</div>
+          <div class="tc-title">Savoring Money Brand & Voice</div>
+          <div class="tc-meta">Mandatory · All roles · Est. 2 hrs</div>
+          <div class="tc-progress">
+            <div class="tc-progress-label"><span>Completion</span><span>83%</span></div>
+            <div class="tc-track"><div class="tc-fill" style="width:83%"></div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="tc-assignees">
+              <div class="tc-av">DJ</div><div class="tc-av">NB</div><div class="tc-av">AS</div><div class="tc-av">MK</div><div class="tc-av">+2</div>
+            </div>
+            <button class="action-btn ab-gold">Manage →</button>
+          </div>
+        </div>
+        <div class="training-card tc-emerald">
+          <div class="tc-icon">💰</div>
+          <div class="tc-title">Financial Literacy Foundations</div>
+          <div class="tc-meta">Teaching roles · Est. 4 hrs</div>
+          <div class="tc-progress">
+            <div class="tc-progress-label"><span>Completion</span><span>50%</span></div>
+            <div class="tc-track"><div class="tc-fill" style="width:50%"></div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="tc-assignees"><div class="tc-av">MK</div><div class="tc-av">NB</div></div>
+            <button class="action-btn ab-emerald">Manage →</button>
+          </div>
+        </div>
+        <div class="training-card tc-violet">
+          <div class="tc-icon">🎯</div>
+          <div class="tc-title">Curriculum Design Workshop</div>
+          <div class="tc-meta">Content team · Est. 3 hrs</div>
+          <div class="tc-progress">
+            <div class="tc-progress-label"><span>Completion</span><span>25%</span></div>
+            <div class="tc-track"><div class="tc-fill" style="width:25%"></div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="tc-assignees"><div class="tc-av">AS</div></div>
+            <button class="action-btn ab-cyan">Manage →</button>
+          </div>
+        </div>
+        <div class="training-card tc-gold">
+          <div class="tc-icon">🌐</div>
+          <div class="tc-title">Platform & Tools Orientation</div>
+          <div class="tc-meta">All roles · Est. 1 hr</div>
+          <div class="tc-progress">
+            <div class="tc-progress-label"><span>Completion</span><span>100%</span></div>
+            <div class="tc-track"><div class="tc-fill" style="width:100%"></div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="tc-assignees"><div class="tc-av">DJ</div><div class="tc-av">NB</div><div class="tc-av">AS</div></div>
+            <button class="action-btn ab-gold">View →</button>
+          </div>
+        </div>
+        <div class="training-card tc-emerald">
+          <div class="tc-icon">📱</div>
+          <div class="tc-title">Social Media for EdTech</div>
+          <div class="tc-meta">Growth & Content · Est. 2 hrs</div>
+          <div class="tc-progress">
+            <div class="tc-progress-label"><span>Completion</span><span>60%</span></div>
+            <div class="tc-track"><div class="tc-fill" style="width:60%"></div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="tc-assignees"><div class="tc-av">NB</div></div>
+            <button class="action-btn ab-emerald">Manage →</button>
+          </div>
+        </div>
+        <div class="training-card tc-violet" style="display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;border:2px dashed rgba(255,255,255,.08);" onclick="openModal('add-training')">
+          <div style="font-size:2rem;margin-bottom:8px;">＋</div>
+          <div style="font-size:.88rem;color:var(--text3);">Add Training Module</div>
+        </div>
+      </div>
+
+      <div class="sec-header"><h3>Individual Progress</h3></div>
+      <div class="people-table cols-6">
+        <div class="pt-head"><span>Contractor</span><span>Role</span><span>Brand & Voice</span><span>Role Module</span><span>Overall</span><span style="text-align:right">Action</span></div>
+        <div class="pt-row">
+          <div class="cell-name"><div class="avatar av-violet">DJ</div><div class="name-block"><div class="primary">Dev Joshi</div><div class="secondary">Web Developer</div></div></div>
+          <div class="cell-text">Contract</div>
+          <div><div class="prog-wrap"><div class="prog-track"><div class="prog-fill" style="width:100%"></div></div><div style="font-size:.68rem;color:var(--text3);margin-top:3px;">100%</div></div></div>
+          <div><div class="prog-wrap"><div class="prog-track"><div class="prog-fill" style="width:100%"></div></div><div style="font-size:.68rem;color:var(--text3);margin-top:3px;">100%</div></div></div>
+          <div><span class="status-pill sp-active">Complete</span></div>
+          <div class="cell-actions"><button class="action-btn ab-emerald">Certificate</button></div>
+        </div>
+        <div class="pt-row">
+          <div class="cell-name"><div class="avatar av-cyan">NB</div><div class="name-block"><div class="primary">Nisha Bansal</div><div class="secondary">Social Media</div></div></div>
+          <div class="cell-text">Part-Time</div>
+          <div><div class="prog-wrap"><div class="prog-track"><div class="prog-fill" style="width:80%"></div></div><div style="font-size:.68rem;color:var(--text3);margin-top:3px;">80%</div></div></div>
+          <div><div class="prog-wrap"><div class="prog-track"><div class="prog-fill" style="width:60%"></div></div><div style="font-size:.68rem;color:var(--text3);margin-top:3px;">60%</div></div></div>
+          <div><span class="status-pill sp-training">In Progress</span></div>
+          <div class="cell-actions"><button class="action-btn ab-gold">Nudge</button></div>
+        </div>
+        <div class="pt-row">
+          <div class="cell-name"><div class="avatar av-emerald">AS</div><div class="name-block"><div class="primary">Aryan Shah</div><div class="secondary">Curriculum Writer</div></div></div>
+          <div class="cell-text">Freelance</div>
+          <div><div class="prog-wrap"><div class="prog-track"><div class="prog-fill" style="width:70%"></div></div><div style="font-size:.68rem;color:var(--text3);margin-top:3px;">70%</div></div></div>
+          <div><div class="prog-wrap"><div class="prog-track"><div class="prog-fill" style="width:25%"></div></div><div style="font-size:.68rem;color:var(--text3);margin-top:3px;">25%</div></div></div>
+          <div><span class="status-pill sp-onboard">Onboarding</span></div>
+          <div class="cell-actions"><button class="action-btn ab-gold">Nudge</button></div>
+        </div>
+        <div class="pt-row">
+          <div class="cell-name"><div class="avatar av-rose">MK</div><div class="name-block"><div class="primary">Meera Kulkarni</div><div class="secondary">Finance Mentor</div></div></div>
+          <div class="cell-text">Part-Time</div>
+          <div><div class="prog-wrap"><div class="prog-track"><div class="prog-fill" style="width:100%"></div></div><div style="font-size:.68rem;color:var(--text3);margin-top:3px;">100%</div></div></div>
+          <div><div class="prog-wrap"><div class="prog-track"><div class="prog-fill" style="width:50%"></div></div><div style="font-size:.68rem;color:var(--text3);margin-top:3px;">50%</div></div></div>
+          <div><span class="status-pill sp-training">In Progress</span></div>
+          <div class="cell-actions"><button class="action-btn ab-gold">Nudge</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ONBOARDING PANEL ── -->
+  <div id="panel-onboarding" class="panel">
+    <div class="topbar">
+      <div class="topbar-left"><h2>Onboarding</h2><p>Structured start for every new contractor</p></div>
+      <div class="topbar-right">
+        <button class="tb-btn tb-primary" onclick="openModal('start-onboard')">+ Start Onboarding</button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="onboard-grid">
+        <!-- Person 1 -->
+        <div class="ob-card">
+          <div class="ob-header">
+            <div class="ob-avatar">🧑</div>
+            <div><div class="ob-name">Aryan Shah</div><div class="ob-role">Curriculum Writer · Freelance · Started 3 days ago</div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:.72rem;color:var(--text3);margin-bottom:6px;"><span>Onboarding Progress</span><span>58%</span></div>
+          <div class="ob-progress-bar"><div class="ob-progress-fill" style="width:58%"></div></div>
+          <div class="checklist">
+            <div class="check-item done" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Welcome email sent</span></div>
+            <div class="check-item done" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Contract signed</span></div>
+            <div class="check-item done" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Added to WhatsApp group</span></div>
+            <div class="check-item done" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Brand & Voice module started</span></div>
+            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">First deliverable briefed</span></div>
+            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Intro call with founder</span></div>
+            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Invoice template shared</span></div>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:8px;">
+            <button class="action-btn ab-emerald" style="flex:1;" onclick="showToast('✅ Checklist updated!')">Save Progress</button>
+            <button class="action-btn ab-cyan" onclick="openModal('view-profile')">Profile →</button>
+          </div>
+        </div>
+        <!-- Person 2 -->
+        <div class="ob-card">
+          <div class="ob-header">
+            <div class="ob-avatar">👩</div>
+            <div><div class="ob-name">Priya Rao</div><div class="ob-role">Maths Tutor · Part-Time · Starting Monday</div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:.72rem;color:var(--text3);margin-bottom:6px;"><span>Onboarding Progress</span><span>28%</span></div>
+          <div class="ob-progress-bar"><div class="ob-progress-fill" style="width:28%"></div></div>
+          <div class="checklist">
+            <div class="check-item done" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Welcome email sent</span></div>
+            <div class="check-item done" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Contract signed</span></div>
+            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Added to WhatsApp group</span></div>
+            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Brand & Voice module started</span></div>
+            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Student roster shared</span></div>
+            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">First session scheduled</span></div>
+            <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Invoice template shared</span></div>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:8px;">
+            <button class="action-btn ab-emerald" style="flex:1;" onclick="showToast('✅ Checklist updated!')">Save Progress</button>
+            <button class="action-btn ab-cyan" onclick="openModal('view-profile')">Profile →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec-header" style="margin-top:8px;"><h3>Onboarding Template</h3><button class="action-btn ab-gold" onclick="openModal('edit-template')">Edit Template</button></div>
+      <div style="background:var(--surface);border-radius:14px;padding:24px;border:1px solid rgba(255,255,255,.05);">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+          <div style="padding:14px;background:var(--surface2);border-radius:10px;border-left:3px solid var(--gold);">
+            <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">Day 1</div>
+            <div style="font-size:.82rem;color:var(--text2);display:flex;flex-direction:column;gap:5px;">
+              <div>✉️ Welcome email</div><div>📄 Contract</div><div>💬 Group add</div>
+            </div>
+          </div>
+          <div style="padding:14px;background:var(--surface2);border-radius:10px;border-left:3px solid var(--emerald);">
+            <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--emerald);margin-bottom:8px;">Week 1</div>
+            <div style="font-size:.82rem;color:var(--text2);display:flex;flex-direction:column;gap:5px;">
+              <div>📚 Brand training</div><div>📞 Founder call</div><div>📋 First brief</div>
+            </div>
+          </div>
+          <div style="padding:14px;background:var(--surface2);border-radius:10px;border-left:3px solid var(--violet);">
+            <div style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--violet);margin-bottom:8px;">Week 2</div>
+            <div style="font-size:.82rem;color:var(--text2);display:flex;flex-direction:column;gap:5px;">
+              <div>🎯 First deliverable</div><div>💬 Check-in call</div><div>🌟 Feedback loop</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RETENTION PANEL ── -->
+  <div id="panel-retention" class="panel">
+    <div class="topbar">
+      <div class="topbar-left"><h2>Retention</h2><p>Keep your best people engaged and valued</p></div>
+      <div class="topbar-right">
+        <button class="tb-btn tb-primary" onclick="openModal('log-feedback')">+ Log Check-in</button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="retain-grid">
+        <div class="retain-card">
+          <h4>Engagement Scores</h4>
+          <div class="morale-bar-wrap">
+            <div class="morale-row"><span class="morale-name">Dev Joshi</span><div class="morale-track"><div class="morale-fill mf-high" style="width:90%"></div></div><span class="morale-pct">90%</span></div>
+            <div class="morale-row"><span class="morale-name">Aryan Shah</span><div class="morale-track"><div class="morale-fill mf-high" style="width:78%"></div></div><span class="morale-pct">78%</span></div>
+            <div class="morale-row"><span class="morale-name">Nisha Bansal</span><div class="morale-track"><div class="morale-fill mf-med" style="width:65%"></div></div><span class="morale-pct">65%</span></div>
+            <div class="morale-row"><span class="morale-name">Meera Kulkarni</span><div class="morale-track"><div class="morale-fill mf-low" style="width:38%"></div></div><span class="morale-pct">38%</span></div>
+            <div class="morale-row"><span class="morale-name">Priya Rao</span><div class="morale-track"><div class="morale-fill mf-high" style="width:85%"></div></div><span class="morale-pct">85%</span></div>
+          </div>
+        </div>
+        <div class="retain-card">
+          <h4>Recent Feedback</h4>
+          <div class="feedback-list">
+            <div class="feedback-item good"><div class="fi-text">"Really enjoying the autonomy and the mission. Would love more student sessions per week."</div><div class="fi-meta">Dev Joshi · Web Developer · This week</div></div>
+            <div class="feedback-item concern"><div class="fi-text">"Feeling a bit disconnected from the team. Haven't had a check-in in 3 weeks."</div><div class="fi-meta">Meera Kulkarni · Finance Mentor · 2 days ago</div></div>
+            <div class="feedback-item"><div class="fi-text">"The brand training was excellent. Briefs could be more detailed sometimes."</div><div class="fi-meta">Aryan Shah · Curriculum Writer · This week</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="retain-grid">
+        <div class="retain-card">
+          <h4>⚠️ At-Risk: Meera Kulkarni</h4>
+          <div style="font-size:.85rem;color:var(--text2);margin-bottom:14px;line-height:1.6;">Engagement dropped from 72% to 38% in the last 2 weeks. Last check-in: 3 weeks ago. Risk of disengagement.</div>
+          <div class="action-plan-list">
+            <div class="ap-item"><div class="ap-dot rose"></div>Schedule a personal check-in call this week</div>
+            <div class="ap-item"><div class="ap-dot gold"></div>Acknowledge her contributions publicly in team chat</div>
+            <div class="ap-item"><div class="ap-dot emerald"></div>Offer additional sessions or scope expansion</div>
+            <div class="ap-item"><div class="ap-dot violet"></div>Ask for feedback on her working experience</div>
+          </div>
+          <div style="margin-top:16px;display:flex;gap:8px;">
+            <button class="action-btn ab-gold" style="flex:1;" onclick="openModal('retain-action')">Take Action</button>
+            <button class="action-btn ab-rose" onclick="openModal('termination')">Offboard</button>
+          </div>
+        </div>
+        <div class="retain-card">
+          <h4>Retention Toolkit</h4>
+          <div class="action-plan-list" style="gap:12px;">
+            <div class="ap-item"><div class="ap-dot gold"></div><div><strong style="color:var(--text)">Monthly check-ins</strong><br>Schedule recurring 15-min calls. Relationships prevent churn.</div></div>
+            <div class="ap-item"><div class="ap-dot emerald"></div><div><strong style="color:var(--text)">Public recognition</strong><br>Shout out great work in the team WhatsApp group.</div></div>
+            <div class="ap-item"><div class="ap-dot violet"></div><div><strong style="color:var(--text)">Scope growth</strong><br>Offer more hours or new projects to engaged contractors.</div></div>
+            <div class="ap-item"><div class="ap-dot cyan" style="background:var(--cyan)"></div><div><strong style="color:var(--text)">Honest conversations</strong><br>Address concerns early. Don't wait for resignation.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TERMINATION/OFFBOARD ── -->
+  <div id="panel-termination" class="panel">
+    <div class="topbar">
+      <div class="topbar-left"><h2>Offboarding</h2><p>Graceful exits, done with care</p></div>
+      <div class="topbar-right">
+        <button class="tb-btn tb-primary" onclick="openModal('termination')">+ Initiate Offboard</button>
+      </div>
+    </div>
+    <div class="content">
+      <div style="background:rgba(251,113,133,.05);border:1px solid rgba(251,113,133,.15);border-radius:14px;padding:20px 24px;margin-bottom:24px;display:flex;align-items:center;gap:16px;">
+        <div style="font-size:1.5rem;">⚠️</div>
+        <div><div style="font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:3px;">1 Active Offboarding in Progress</div><div style="font-size:.8rem;color:var(--text3);">Ravi Desai · Acquisition Partner · Initiated 2 days ago</div></div>
+        <button class="action-btn ab-rose" style="margin-left:auto;" onclick="openModal('termination')">View →</button>
+      </div>
+
+      <!-- Active offboard -->
+      <div class="sec-header"><h3>Active Offboarding</h3></div>
+      <div class="ob-card" style="margin-bottom:24px;">
+        <div class="ob-header">
+          <div class="ob-avatar" style="background:linear-gradient(135deg,var(--rose),var(--coral));">👨</div>
+          <div><div class="ob-name">Ravi Desai</div><div class="ob-role">Student Acquisition Partner · Commission · Last day: Friday</div></div>
+          <span class="status-pill sp-offboard" style="margin-left:auto;">Offboarding</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:.72rem;color:var(--text3);margin-bottom:6px;"><span>Offboarding Checklist</span><span>40%</span></div>
+        <div class="ob-progress-bar"><div class="ob-progress-fill" style="width:40%;background:linear-gradient(90deg,var(--rose),var(--coral));"></div></div>
+        <div class="checklist">
+          <div class="check-item done" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Exit conversation held</span></div>
+          <div class="check-item done" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Final invoice requested</span></div>
+          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Pending commissions calculated</span></div>
+          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Access revoked (WhatsApp, Notion, etc.)</span></div>
+          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Student contacts transferred</span></div>
+          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Farewell message sent</span></div>
+          <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span class="check-label">Exit notes recorded</span></div>
+        </div>
+        <div style="margin-top:14px;display:flex;gap:8px;">
+          <button class="action-btn ab-rose" style="flex:1;" onclick="showToast('💼 Offboard progress saved')">Save Progress</button>
+          <button class="action-btn ab-gold" onclick="openModal('exit-notes')">Exit Notes</button>
+        </div>
+      </div>
+
+      <div class="sec-header"><h3>Offboarding History</h3></div>
+      <div class="people-table cols-4">
+        <div class="pt-head"><span>Person</span><span>Role</span><span>Reason</span><span style="text-align:right">Date</span></div>
+        <div class="pt-row">
+          <div class="cell-name"><div class="avatar" style="background:rgba(90,106,126,.2);color:var(--text3);">LM</div><div class="name-block"><div class="primary">Lata Mishra</div><div class="secondary">Support Assistant</div></div></div>
+          <div class="cell-text">Part-Time</div>
+          <div><span class="status-pill sp-terminated">Contract End</span></div>
+          <div class="cell-mono" style="text-align:right;">Nov 2024</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DIRECTORY ── -->
+  <div id="panel-directory" class="panel">
+    <div class="topbar">
+      <div class="topbar-left"><h2>People Directory</h2><p>All contractors across flexible arrangements</p></div>
+      <div class="topbar-right">
+        <button class="tb-btn tb-primary" onclick="openModal('add-applicant')">+ Add Person</button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="filter-bar">
+        <input class="search-input" placeholder="🔍  Search people…">
+        <select class="filter-select"><option>All Roles</option><option>Teaching</option><option>Content</option><option>Tech</option><option>Growth</option><option>Ops</option></select>
+        <select class="filter-select"><option>All Status</option><option>Active</option><option>Training</option><option>Onboarding</option><option>At Risk</option></select>
+      </div>
+      <div class="people-table cols-6">
+        <div class="pt-head"><span>Person</span><span>Role</span><span>Type</span><span>Rate</span><span>Status</span><span style="text-align:right">Actions</span></div>
+        <div class="pt-row">
+          <div class="cell-name"><div class="avatar av-violet">DJ</div><div class="name-block"><div class="primary">Dev Joshi</div><div class="secondary"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5a3e3f2c1a3f373b333674393537">[email&#160;protected]</a></div></div></div>
+          <div class="cell-text">Web Developer</div>
+          <div><span class="k-tag tag-cont">Contract</span></div>
+          <div class="cell-mono">₹1,200/hr</div>
+          <div><span class="status-pill sp-active">Active</span></div>
+          <div class="cell-actions"><button class="action-btn ab-gold">View</button><button class="action-btn ab-rose" onclick="openModal('termination')">Offboard</button></div>
+        </div>
+        <div class="pt-row">
+          <div class="cell-name"><div class="avatar av-cyan">NB</div><div class="name-block"><div class="primary">Nisha Bansal</div><div class="secondary"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="355b5c465d54755058545c591b565a58">[email&#160;protected]</a></div></div></div>
+          <div class="cell-text">Social Media</div>
+          <div><span class="k-tag tag-part">Part-Time</span></div>
+          <div class="cell-mono">₹400/hr</div>
+          <div><span class="status-pill sp-training">Training</span></div>
+          <div class="cell-actions"><button class="action-btn ab-gold">View</button><button class="action-btn ab-rose" onclick="openModal('termination')">Offboard</button></div>
+        </div>
+        <div class="pt-row">
+          <div class="cell-name"><div class="avatar av-emerald">AS</div><div class="name-block"><div class="primary">Aryan Shah</div><div class="secondary"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c1a0b3b8a0af81a4aca0a8adefa2aeac">[email&#160;protected]</a></div></div></div>
+          <div class="cell-text">Curriculum Writer</div>
+          <div><span class="k-tag tag-free">Freelance</span></div>
+          <div class="cell-mono">₹1,500/hr</div>
+          <div><span class="status-pill sp-onboard">Onboarding</span></div>
+          <div class="cell-actions"><button class="action-btn ab-gold">View</button><button class="action-btn ab-rose" onclick="openModal('termination')">Offboard</button></div>
+        </div>
+        <div class="pt-row">
+          <div class="cell-name"><div class="avatar av-rose">MK</div><div class="name-block"><div class="primary">Meera Kulkarni</div><div class="secondary"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cca1a9a9bead8ca9a1ada5a0e2afa3a1">[email&#160;protected]</a></div></div></div>
+          <div class="cell-text">Finance Mentor</div>
+          <div><span class="k-tag tag-part">Part-Time</span></div>
+          <div class="cell-mono">₹650/hr</div>
+          <div><span class="status-pill sp-risk">At Risk</span></div>
+          <div class="cell-actions"><button class="action-btn ab-gold">View</button><button class="action-btn ab-rose" onclick="openModal('termination')">Offboard</button></div>
+        </div>
+        <div class="pt-row">
+          <div class="cell-name"><div class="avatar av-gold">PR</div><div class="name-block"><div class="primary">Priya Rao</div><div class="secondary"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bececcd7c7dffedbd3dfd7d290ddd1d3">[email&#160;protected]</a></div></div></div>
+          <div class="cell-text">Maths Tutor</div>
+          <div><span class="k-tag tag-part">Part-Time</span></div>
+          <div class="cell-mono">₹550/hr</div>
+          <div><span class="status-pill sp-onboard">Onboarding</span></div>
+          <div class="cell-actions"><button class="action-btn ab-gold">View</button><button class="action-btn ab-rose" onclick="openModal('termination')">Offboard</button></div>
+        </div>
+        <div class="pt-row">
+          <div class="cell-name"><div class="avatar" style="background:rgba(245,200,66,.15);color:var(--gold);">RD</div><div class="name-block"><div class="primary">Ravi Desai</div><div class="secondary"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="acdecddac5ecc9c1cdc5c082cfc3c1">[email&#160;protected]</a></div></div></div>
+          <div class="cell-text">Acquisition Partner</div>
+          <div><span class="k-tag tag-comm">Commission</span></div>
+          <div class="cell-mono">₹1,000/enrol</div>
+          <div><span class="status-pill sp-offboard">Offboarding</span></div>
+          <div class="cell-actions"><button class="action-btn ab-gold">View</button><button class="action-btn ab-rose" onclick="showPanel('termination')">Manage</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- ══════════ MODALS ══════════ -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+
+  <!-- Add Applicant -->
+  <div class="modal" id="modal-add-applicant" style="display:none;">
+    <div class="modal-head"><h3>Add New Applicant</h3><p>Manually add someone to the hiring pipeline</p><button class="modal-close" onclick="closeAllModals()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-row-2"><div class="form-group"><label>First Name *</label><input type="text" placeholder="First name"></div><div class="form-group"><label>Last Name *</label><input type="text" placeholder="Last name"></div></div>
+      <div class="form-group"><label>Email *</label><input type="email" placeholder="email@example.com"></div>
+      <div class="form-group"><label>Role Applying For *</label><select><option>— Select —</option><option>Maths Tutor</option><option>Finance Mentor</option><option>Curriculum Writer</option><option>Social Media Creator</option><option>Web Developer</option><option>UI/UX Designer</option><option>Acquisition Partner</option><option>Support Assistant</option></select></div>
+      <div class="form-row-2">
+        <div class="form-group"><label>Type</label><select><option>Part-Time</option><option>Freelance</option><option>Contract</option><option>Commission</option></select></div>
+        <div class="form-group"><label>Pipeline Stage</label><select><option>New</option><option>Screening</option><option>Mini Task</option><option>Offer</option><option>Hired</option></select></div>
+      </div>
+      <div class="form-group"><label>Notes</label><textarea placeholder="Any notes about this applicant…"></textarea></div>
+    </div>
+    <div class="modal-footer"><button class="btn-cancel" onclick="closeAllModals()">Cancel</button><button class="btn-primary" onclick="addApplicant()">Add to Pipeline</button></div>
+  </div>
+
+  <!-- Move Stage -->
+  <div class="modal" id="modal-move-stage" style="display:none;">
+    <div class="modal-head"><h3>Move Priya Rao</h3><p>Change her pipeline stage</p><button class="modal-close" onclick="closeAllModals()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Move to Stage</label><select><option>New</option><option>Screening</option><option>Mini Task</option><option selected>Offer</option><option>Hired</option></select></div>
+      <div class="form-group"><label>Note (optional)</label><textarea placeholder="Any context about this move…"></textarea></div>
+      <div class="form-group"><label>Send Email Notification?</label><select><option>Yes — notify applicant</option><option>No — internal only</option></select></div>
+    </div>
+    <div class="modal-footer"><button class="btn-cancel" onclick="closeAllModals()">Cancel</button><button class="btn-primary" onclick="moveStage()">Move Stage</button></div>
+  </div>
+
+  <!-- Retain Action -->
+  <div class="modal" id="modal-retain-action" style="display:none;">
+    <div class="modal-head"><h3>Retention Action: Meera Kulkarni</h3><p>Log what steps you're taking to re-engage</p><button class="modal-close" onclick="closeAllModals()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Action Taken</label><select><option>Scheduled check-in call</option><option>Sent encouraging message</option><option>Offered more hours/scope</option><option>Asked for feedback</option><option>Recognised publicly</option></select></div>
+      <div class="form-group"><label>Date</label><input type="date"></div>
+      <div class="form-group"><label>Notes</label><textarea placeholder="What was discussed or decided?"></textarea></div>
+      <div class="form-group"><label>Outcome</label><select><option>Pending</option><option>Positive — resolved</option><option>Neutral — monitoring</option><option>Negative — escalating</option></select></div>
+    </div>
+    <div class="modal-footer"><button class="btn-cancel" onclick="closeAllModals()">Cancel</button><button class="btn-primary" onclick="saveRetain()">Save Action</button></div>
+  </div>
+
+  <!-- Termination -->
+  <div class="modal" id="modal-termination" style="display:none;">
+    <div class="modal-head"><h3>Initiate Offboarding</h3><p>Handle this carefully — always with respect and clarity</p><button class="modal-close" onclick="closeAllModals()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Contractor *</label><select><option>— Select —</option><option>Dev Joshi</option><option>Nisha Bansal</option><option>Aryan Shah</option><option>Meera Kulkarni</option><option>Priya Rao</option></select></div>
+      <div class="form-group"><label>Reason *</label><select><option>— Select reason —</option><option>Contract ended (natural)</option><option>Mutual agreement</option><option>Performance concerns</option><option>Role no longer needed</option><option>Contractor's choice</option><option>Code of conduct</option></select></div>
+      <div class="form-row-2"><div class="form-group"><label>Notice Period</label><select><option>Immediate</option><option>1 week</option><option>2 weeks</option></select></div><div class="form-group"><label>Last Day</label><input type="date"></div></div>
+      <div class="form-group"><label>Exit Notes (internal)</label><textarea placeholder="Document what led to this decision. Be factual and fair."></textarea></div>
+      <div style="background:rgba(251,113,133,.06);border:1px solid rgba(251,113,133,.15);border-radius:10px;padding:14px;font-size:.8rem;color:var(--text2);line-height:1.6;margin-bottom:4px;">⚠️ Once initiated, an offboarding checklist will be created. Always ensure any pending payments are settled before closing access.</div>
+    </div>
+    <div class="modal-footer"><button class="btn-cancel" onclick="closeAllModals()">Cancel</button><button class="btn-danger" onclick="startOffboard()">Initiate Offboarding</button></div>
+  </div>
+
+  <!-- Log Feedback -->
+  <div class="modal" id="modal-log-feedback" style="display:none;">
+    <div class="modal-head"><h3>Log Check-In</h3><p>Record a feedback conversation or pulse check</p><button class="modal-close" onclick="closeAllModals()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Contractor</label><select><option>— Select —</option><option>Dev Joshi</option><option>Nisha Bansal</option><option>Aryan Shah</option><option>Meera Kulkarni</option><option>Priya Rao</option></select></div>
+      <div class="form-row-2"><div class="form-group"><label>Date</label><input type="date"></div><div class="form-group"><label>Engagement Score (1–10)</label><input type="number" min="1" max="10" placeholder="7"></div></div>
+      <div class="form-group"><label>What they said</label><textarea placeholder="Key quotes or themes from the conversation…"></textarea></div>
+      <div class="form-group"><label>Sentiment</label><select><option>Positive 😊</option><option>Neutral 😐</option><option>Concern 😟</option></select></div>
+      <div class="form-group"><label>Follow-up needed?</label><select><option>No — all good</option><option>Yes — schedule action</option></select></div>
+    </div>
+    <div class="modal-footer"><button class="btn-cancel" onclick="closeAllModals()">Cancel</button><button class="btn-primary" onclick="saveCheckin()">Save Check-In</button></div>
+  </div>
+
+  <!-- Add Training -->
+  <div class="modal" id="modal-add-training" style="display:none;">
+    <div class="modal-head"><h3>Add Training Module</h3><p>Create a new learning module for your contractors</p><button class="modal-close" onclick="closeAllModals()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Module Title *</label><input type="text" placeholder="e.g. Student Communication Best Practices"></div>
+      <div class="form-row-2"><div class="form-group"><label>Applicable Roles</label><select><option>All Roles</option><option>Teaching only</option><option>Content only</option><option>Tech only</option><option>Growth only</option></select></div><div class="form-group"><label>Estimated Duration</label><input type="text" placeholder="e.g. 2 hrs"></div></div>
+      <div class="form-group"><label>Description</label><textarea placeholder="What will contractors learn from this module?"></textarea></div>
+      <div class="form-group"><label>Link to Materials (Google Drive, Notion, etc.)</label><input type="url" placeholder="https://docs.google.com/…"></div>
+      <div class="form-group"><label>Mandatory?</label><select><option>Yes — required for all assigned</option><option>No — recommended</option></select></div>
+    </div>
+    <div class="modal-footer"><button class="btn-cancel" onclick="closeAllModals()">Cancel</button><button class="btn-primary" onclick="showToast('📚 Module created!');closeAllModals();">Create Module</button></div>
+  </div>
+
+  <!-- Start Onboarding -->
+  <div class="modal" id="modal-start-onboard" style="display:none;">
+    <div class="modal-head"><h3>Start Onboarding</h3><p>Kick off a structured onboarding for a new hire</p><button class="modal-close" onclick="closeAllModals()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Contractor</label><select><option>— Select newly hired —</option><option>Priya Rao</option><option>Rohit Mehra</option></select></div>
+      <div class="form-group"><label>Start Date</label><input type="date"></div>
+      <div class="form-group"><label>Use Template?</label><select><option>Yes — standard 2-week template</option><option>No — create custom</option></select></div>
+      <div class="form-group"><label>Notes for this person</label><textarea placeholder="Any specific things to cover for this contractor…"></textarea></div>
+    </div>
+    <div class="modal-footer"><button class="btn-cancel" onclick="closeAllModals()">Cancel</button><button class="btn-primary" onclick="showToast('🚀 Onboarding started!');closeAllModals();">Start Onboarding</button></div>
+  </div>
+
+</div><!-- /modal overlay -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"><span class="toast-icon">✅</span><span id="toast-msg">Done!</span></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ─── STATE ───────────────────────────────
+const state = {
+  applicants: [
+    {name:'Sunita Ghosh',role:'Maths Tutor',type:'Part-Time',stage:'new',email:'sunita@email.com'},
+    {name:'Rohit Mehra',role:'Web Developer',type:'Contract',stage:'new',email:'rohit@email.com'},
+    {name:'Aisha Patel',role:'Social Media Creator',type:'Part-Time',stage:'new',email:'aisha@email.com'},
+    {name:'Karan Bose',role:'Curriculum Writer',type:'Freelance',stage:'screen',email:'karan@email.com'},
+    {name:'Fatima Nair',role:'Support Assistant',type:'Part-Time',stage:'screen',email:'fatima@email.com'},
+    {name:'Vikram Rao',role:'Finance Mentor',type:'Part-Time',stage:'interview',email:'vikram@email.com'},
+    {name:'Tanya Singh',role:'UI/UX Designer',type:'Freelance',stage:'interview',email:'tanya@email.com'},
+    {name:'Priya Rao',role:'Maths Tutor',type:'Part-Time',stage:'offer',email:'priya@email.com'},
+  ]
+};
+
+// ─── NAV ─────────────────────────────────
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick')?.includes("'"+id+"'")) n.classList.add('active');
+  });
+}
+
+// ─── MODALS ──────────────────────────────
+function openModal(id) {
+  document.getElementById('modal-overlay').classList.add('open');
+  document.querySelectorAll('.modal').forEach(m => m.style.display='none');
+  const m = document.getElementById('modal-'+id);
+  if (m) m.style.display='block';
+}
+function closeAllModals() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.querySelectorAll('.modal').forEach(m => m.style.display='none');
+}
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeAllModals();
+}
+
+// ─── TOAST ───────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ─── ACTIONS ─────────────────────────────
+function addApplicant() {
+  showToast('✅ Applicant added to pipeline!');
+  const badge = document.getElementById('hiring-badge');
+  badge.textContent = parseInt(badge.textContent) + 1;
+  document.getElementById('db-applicants').textContent = parseInt(document.getElementById('db-applicants').textContent) + 1;
+  closeAllModals();
+}
+function moveStage() {
+  showToast('➡️ Stage updated for Priya Rao!');
+  closeAllModals();
+}
+function saveRetain() {
+  showToast('💛 Retention action logged!');
+  closeAl

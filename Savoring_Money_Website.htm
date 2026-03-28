@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Savoring Money | The Global Polymath Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Cabinet+Grotesk:wght@300;400;500;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]},options:{skipHtmlTags:['script','noscript','style','textarea']}};</script>
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════ */
+:root {
+  --bg:        #080c10;
+  --bg2:       #0d1117;
+  --surface:   #111820;
+  --surface2:  #161f2b;
+  --surface3:  #1d2838;
+  --gold:      #f5c842;
+  --gold2:     #ffdd70;
+  --gold-dim:  #a8892d;
+  --emerald:   #00e5a0;
+  --emerald2:  #00c87d;
+  --emerald-dim:#005f3d;
+  --coral:     #ff6b6b;
+  --violet:    #a78bfa;
+  --cyan:      #38bdf8;
+  --sky:       #0ea5e9;
+  --rose:      #fb7185;
+  --text:      #e8edf5;
+  --text2:     #96a3b4;
+  --text3:     #5a6a7e;
+  --ease:      cubic-bezier(.4,0,.2,1);
+  --spring:    cubic-bezier(.34,1.56,.64,1);
+  --bounce:    cubic-bezier(.68,-0.55,.27,1.55);
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Cabinet Grotesk',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;line-height:1.1;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold),var(--emerald));border-radius:5px;}
+
+/* ═══════════════════════════════════════
+   ANIMATED GRADIENT BACKGROUND
+═══════════════════════════════════════ */
+.bg-aura{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.aura-orb{position:absolute;border-radius:50%;filter:blur(120px);animation:orbDrift 20s ease-in-out infinite;}
+.aura-orb:nth-child(1){width:600px;height:600px;background:radial-gradient(circle,rgba(245,200,66,.07),transparent 70%);top:-200px;right:-100px;animation-delay:0s;animation-duration:22s;}
+.aura-orb:nth-child(2){width:500px;height:500px;background:radial-gradient(circle,rgba(0,229,160,.06),transparent 70%);bottom:-150px;left:-100px;animation-delay:-8s;animation-duration:18s;}
+.aura-orb:nth-child(3){width:400px;height:400px;background:radial-gradient(circle,rgba(167,139,250,.05),transparent 70%);top:40%;left:40%;animation-delay:-4s;animation-duration:25s;}
+@keyframes orbDrift{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(60px,-40px) scale(1.1);}66%{transform:translate(-40px,60px) scale(0.95);}}
+
+#particleCanvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;}
+
+body::after{
+  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.35;
+}
+
+/* ═══════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;height:70px;
+  background:rgba(8,12,16,.7);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(245,200,66,.08);
+  transition:background .4s,border-color .4s;
+}
+nav.solid{background:rgba(8,12,16,.95);border-color:rgba(245,200,66,.15);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.nav-logo .l-sav{color:var(--text);}
+.nav-logo .l-ing{color:var(--text2);}
+.nav-logo .l-mon{color:var(--gold);}
+.nav-logo .l-ey{color:var(--gold2);}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:.85rem;font-weight:500;padding:7px 15px;border-radius:30px;transition:color .2s,background .2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:5px;left:50%;right:50%;height:1.5px;background:var(--gold);transition:left .3s var(--ease),right .3s var(--ease);border-radius:2px;}
+.nav-links a:hover{color:var(--text);}
+.nav-links a:hover::after{left:15px;right:15px;}
+.nav-cta{background:linear-gradient(135deg,var(--gold),var(--gold2)) !important;color:var(--bg) !important;font-weight:700 !important;border-radius:30px;padding:9px 22px !important;box-shadow:0 0 20px rgba(245,200,66,.25);transition:transform .2s,box-shadow .2s !important;}
+.nav-cta::after{display:none !important;}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(245,200,66,.4) !important;}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:5px;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:.3s;}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero{
+  position:relative;z-index:1;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:100px 5% 80px;overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(245,200,66,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(245,200,66,.04) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,black 40%,transparent 100%);
+  animation:gridShift 8s linear infinite;
+}
+@keyframes gridShift{0%{background-position:0 0;}100%{background-position:60px 60px;}}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.2);padding:6px 18px;border-radius:30px;margin-bottom:32px;animation:popIn .6s var(--spring) both;}
+.live-pill{width:7px;height:7px;border-radius:50%;background:var(--emerald);box-shadow:0 0 8px var(--emerald);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 8px var(--emerald);}50%{opacity:.3;box-shadow:none;}}
+.hero h1{font-size:clamp(3rem,8vw,6.5rem);font-weight:700;line-height:1.0;letter-spacing:-0.03em;margin-bottom:24px;animation:fadeUp .8s .1s var(--ease) both;}
+.h1-line1{display:block;color:var(--text);}
+.h1-line2{display:block;background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 30%,var(--emerald) 70%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% auto;animation:gradShift 4s linear infinite;}
+@keyframes gradShift{0%{background-position:0% 50%;}100%{background-position:200% 50%;}}
+.hero-sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--text2);max-width:580px;margin:0 auto 44px;line-height:1.75;font-weight:400;animation:fadeUp .8s .2s var(--ease) both;}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .3s var(--ease) both;}
+.btn-gold{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg);font-weight:700;font-size:.9rem;padding:15px 34px;border-radius:50px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 0 30px rgba(245,200,66,.3);transition:transform .25s var(--spring),box-shadow .25s;position:relative;overflow:hidden;}
+.btn-gold::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);opacity:0;transition:opacity .3s;}
+.btn-gold:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 50px rgba(245,200,66,.5);}
+.btn-gold:hover::before{opacity:1;}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--text);font-weight:500;font-size:.9rem;padding:15px 34px;border-radius:50px;text-decoration:none;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:border-color .25s,background .25s,transform .25s var(--spring);}
+.btn-ghost:hover{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.05);transform:translateY(-2px);}
+.hero-stats{display:flex;gap:50px;justify-content:center;flex-wrap:wrap;margin-top:72px;padding-top:48px;border-top:1px solid rgba(255,255,255,.07);animation:fadeUp .8s .45s var(--ease) both;}
+.stat{text-align:center;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;line-height:1;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-top:5px;}
+.scroll-cue{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text3);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;animation:fadeIn 1.5s 1.5s both;}
+.scroll-line{width:1px;height:44px;background:linear-gradient(var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:.3;height:44px;}50%{opacity:1;height:60px;}}
+@keyframes popIn{from{opacity:0;transform:scale(.8);}to{opacity:1;transform:scale(1);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+/* ═══════════════════════════════════════
+   TICKER
+═══════════════════════════════════════ */
+.ticker-wrap{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);background:rgba(245,200,66,.04);padding:14px 0;overflow:hidden;}
+.ticker{display:flex;width:max-content;animation:tickerRoll 30s linear infinite;}
+.ticker-item{white-space:nowrap;padding:0 40px;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);opacity:.65;display:flex;align-items:center;gap:16px;}
+.ticker-item::after{content:'◆';font-size:.5rem;}
+@keyframes tickerRoll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+/* ═══════════════════════════════════════
+   SECTION SHARED
+═══════════════════════════════════════ */
+.section{padding:100px 5%;position:relative;z-index:1;}
+.section-tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--emerald);margin-bottom:12px;}
+.section-head{text-align:center;margin-bottom:60px;}
+.section-head h2{font-size:clamp(2.2rem,4.5vw,3.4rem);color:var(--text);letter-spacing:-0.02em;}
+.section-head p{margin-top:14px;color:var(--text2);font-size:.95rem;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.75;}
+
+/* ═══════════════════════════════════════
+   WHY CHOOSE US (USP SECTION)
+═══════════════════════════════════════ */
+.usp-section{
+  background:var(--bg2);
+  padding:100px 5%;
+  position:relative;z-index:1;
+  overflow:hidden;
+}
+.usp-section::before{
+  content:'';position:absolute;bottom:-200px;left:-200px;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,229,160,.05),transparent 70%);
+  pointer-events:none;
+}
+.usp-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  max-width:1200px;margin:0 auto;
+}
+.usp-card{
+  background:var(--surface);
+  border-radius:20px;
+  padding:30px 26px;
+  border:1px solid rgba(255,255,255,.05);
+  position:relative;overflow:hidden;
+  transition:transform .3s var(--spring),box-shadow .3s,border-color .3s;
+}
+.usp-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--emerald));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s var(--ease);
+}
+.usp-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.4);border-color:rgba(245,200,66,.1);}
+.usp-card:hover::before{transform:scaleX(1);}
+.usp-icon-wrap{
+  width:54px;height:54px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;
+  background:rgba(245,200,66,.07);
+  border:1px solid rgba(245,200,66,.12);
+  margin-bottom:18px;
+  transition:transform .3s var(--spring),background .3s;
+}
+.usp-card:hover .usp-icon-wrap{transform:scale(1.12) rotate(-5deg);background:rgba(245,200,66,.14);}
+.usp-card:nth-child(2) .usp-icon-wrap,.usp-card:nth-child(5) .usp-icon-wrap{background:rgba(0,229,160,.07);border-color:rgba(0,229,160,.12);}
+.usp-card:nth-child(2):hover .usp-icon-wrap,.usp-card:nth-child(5):hover .usp-icon-wrap{background:rgba(0,229,160,.14);}
+.usp-card:nth-child(3) .usp-icon-wrap,.usp-card:nth-child(6) .usp-icon-wrap{background:rgba(167,139,250,.07);border-color:rgba(167,139,250,.12);}
+.usp-card:nth-child(3):hover .usp-icon-wrap,.usp-card:nth-child(6):hover .usp-icon-wrap{background:rgba(167,139,250,.14);}
+.usp-card h3{font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:9px;}
+.usp-card p{font-size:.85rem;color:var(--text2);line-height:1.72;}
+.usp-number{
+  position:absolute;top:22px;right:22px;
+  font-family:'DM Mono',monospace;
+  font-size:.7rem;color:var(--text3);opacity:.4;
+  font-weight:500;
+}
+
+/* ═══════════════════════════════════════
+   ACADEMY PILLARS (BENTO)
+═══════════════════════════════════════ */
+.pillars-bg{background:var(--bg);}
+.bento-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.bento-card{background:var(--surface);border-radius:22px;padding:28px;border:1px solid rgba(255,255,255,.05);position:relative;overflow:hidden;cursor:default;transition:transform .3s var(--spring),box-shadow .3s,border-color .3s;}
+.bento-card::before{content:'';position:absolute;inset:0;border-radius:22px;background:linear-gradient(135deg,var(--gold),var(--emerald),var(--violet));opacity:0;transition:opacity .4s;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:1px;}
+.bento-card::after{content:'';position:absolute;top:-50%;left:-60%;width:40%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);transform:skewX(-20deg);transition:left .6s var(--ease);}
+.bento-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.4);}
+.bento-card:hover::before{opacity:1;}
+.bento-card:hover::after{left:120%;}
+.bento-card.featured{background:linear-gradient(135deg,#0a1f15,#112a1e);border-color:rgba(0,229,160,.15);}
+.bento-card.featured::before{background:linear-gradient(135deg,var(--emerald),var(--gold));}
+.bento-card.featured:hover{box-shadow:0 20px 50px rgba(0,229,160,.15);}
+.bento-card.wide{grid-column:span 2;}
+.card-icon{font-size:2rem;display:block;margin-bottom:14px;transition:transform .3s var(--spring);}
+.bento-card:hover .card-icon{transform:scale(1.2) rotate(-5deg);}
+.card-badge{display:inline-block;font-size:.63rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:rgba(245,200,66,.1);color:var(--gold);border:1px solid rgba(245,200,66,.2);padding:3px 10px;border-radius:20px;margin-bottom:10px;}
+.bento-card.featured .card-badge{background:rgba(0,229,160,.1);color:var(--emerald);border-color:rgba(0,229,160,.2);}
+.bento-card h3{font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:8px;}
+.bento-card p{font-size:.86rem;line-height:1.7;color:var(--text2);}
+.lang-progress{margin-top:14px;}
+.lang-progress-row{display:flex;justify-content:space-between;font-size:.73rem;color:var(--text3);margin-bottom:5px;}
+.prog-track{height:5px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden;}
+.prog-bar{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--gold),var(--emerald));width:0%;transition:width 1.8s var(--ease);}
+
+/* ═══════════════════════════════════════
+   COURSES SECTION
+═══════════════════════════════════════ */
+.courses-section{
+  background:var(--bg2);
+  padding:100px 5%;
+  position:relative;z-index:1;
+  overflow:hidden;
+}
+.courses-section::after{
+  content:'';position:absolute;top:-300px;right:-300px;
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.04),transparent 70%);
+  pointer-events:none;
+}
+
+/* Tab Filter */
+.course-tabs{
+  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:44px;
+}
+.ctab{
+  font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:8px 20px;border-radius:30px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  color:var(--text3);cursor:pointer;
+  transition:background .2s,border-color .2s,color .2s,transform .2s var(--spring);
+}
+.ctab:hover,.ctab.active{
+  background:rgba(245,200,66,.1);
+  border-color:rgba(245,200,66,.3);
+  color:var(--gold);
+  transform:translateY(-2px);
+}
+
+.courses-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  max-width:1300px;margin:0 auto;
+}
+.course-card{
+  background:var(--surface);
+  border-radius:20px;padding:26px 22px;
+  border:1px solid rgba(255,255,255,.05);
+  position:relative;overflow:hidden;
+  transition:transform .3s var(--spring),box-shadow .3s,border-color .3s;
+  cursor:default;
+}
+.course-card::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  opacity:0;transition:opacity .3s;
+}
+.course-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.4);}
+.course-card:hover::before{opacity:1;}
+
+/* Per-category colors */
+.course-card[data-cat="us"]{border-left:3px solid #60a5fa;}
+.course-card[data-cat="us"]::before{background:linear-gradient(90deg,#60a5fa,var(--cyan));}
+.course-card[data-cat="uk"]{border-left:3px solid var(--rose);}
+.course-card[data-cat="uk"]::before{background:linear-gradient(90deg,var(--rose),var(--violet));}
+.course-card[data-cat="ib"]{border-left:3px solid var(--emerald);}
+.course-card[data-cat="ib"]::before{background:linear-gradient(90deg,var(--emerald),var(--cyan));}
+.course-card[data-cat="india"]{border-left:3px solid var(--gold);}
+.course-card[data-cat="india"]::before{background:linear-gradient(90deg,var(--gold),var(--gold2));}
+.course-card[data-cat="au"]{border-left:3px solid #34d399;}
+.course-card[data-cat="au"]::before{background:linear-gradient(90deg,#34d399,var(--emerald));}
+.course-card[data-cat="finance"]{border-left:3px solid var(--gold);}
+.course-card[data-cat="finance"]::before{background:linear-gradient(90deg,var(--gold),var(--emerald));}
+.course-card[data-cat="science"]{border-left:3px solid var(--violet);}
+.course-card[data-cat="science"]::before{background:linear-gradient(90deg,var(--violet),var(--cyan));}
+.course-card[data-cat="english"]{border-left:3px solid var(--coral);}
+.course-card[data-cat="english"]::before{background:linear-gradient(90deg,var(--coral),var(--rose));}
+.course-card[data-cat="tech"]{border-left:3px solid var(--cyan);}
+.course-card[data-cat="tech"]::before{background:linear-gradient(90deg,var(--cyan),var(--violet));}
+
+.course-emoji{font-size:1.9rem;margin-bottom:12px;display:block;transition:transform .3s var(--spring);}
+.course-card:hover .course-emoji{transform:scale(1.2) rotate(-8deg);}
+
+.course-flag{
+  font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:10px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:var(--text3);
+}
+.course-card h3{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:8px;}
+.course-card p{font-size:.82rem;color:var(--text2);line-height:1.65;}
+
+.course-card.hidden{display:none;}
+
+/* ═══════════════════════════════════════
+   DEMO CTA STRIP
+═══════════════════════════════════════ */
+.demo-strip{
+  position:relative;z-index:1;
+  padding:80px 5%;text-align:center;
+  background:linear-gradient(135deg,#070d14,#0d1a12,#070d14);
+  background-size:300% 300%;
+  animation:gradBG 10s ease-in-out infinite;
+  overflow:hidden;
+}
+@keyframes gradBG{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+.demo-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(245,200,66,.07),transparent);pointer-events:none;}
+.demo-border-t{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.demo-border-b{position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--emerald),transparent);}
+.demo-strip h2{font-size:clamp(2rem,4vw,3rem);color:var(--text);margin-bottom:14px;position:relative;z-index:1;}
+.demo-strip h2 em{color:var(--gold);font-style:normal;}
+.demo-strip p{color:var(--text2);font-size:.95rem;max-width:500px;margin:0 auto 34px;line-height:1.75;position:relative;z-index:1;}
+.demo-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+.btn-emerald{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--emerald2),var(--emerald));color:var(--bg);font-weight:700;font-size:.9rem;padding:15px 34px;border-radius:50px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 0 30px rgba(0,229,160,.25);transition:transform .25s var(--spring),box-shadow .25s;}
+.btn-emerald:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 50px rgba(0,229,160,.45);}
+
+/* ═══════════════════════════════════════
+   LIVE LESSON VIEWER
+═══════════════════════════════════════ */
+.viewer-section{background:var(--bg);padding:100px 5%;position:relative;z-index:1;overflow:hidden;}
+.viewer-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.viewer-section::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--emerald),transparent);}
+.viewer-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:40px;max-width:1200px;margin:0 auto;position:relative;z-index:1;}
+.viewer-tag{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);background:rgba(255,107,107,.1);border:1px solid rgba(255,107,107,.2);padding:5px 14px;border-radius:20px;margin-bottom:16px;}
+.rec-dot{width:7px;height:7px;border-radius:50%;background:var(--coral);box-shadow:0 0 8px var(--coral);animation:blink 1.5s infinite;}
+.viewer-title{font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--text);margin-bottom:24px;letter-spacing:-0.02em;}
+.viewer-title span{color:var(--gold);}
+.video-box{width:100%;aspect-ratio:16/9;background:#040a06;border-radius:18px;border:1px solid rgba(0,229,160,.15);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(0,229,160,.08),inset 0 0 60px rgba(0,0,0,.5);cursor:pointer;}
+.video-box::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,229,160,.015) 2px,rgba(0,229,160,.015) 4px);animation:scanMove 8s linear infinite;}
+@keyframes scanMove{0%{background-position:0 0;}100%{background-position:0 400px;}}
+.video-box::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(0,229,160,.12) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(245,200,66,.06) 0%,transparent 50%);}
+.video-inner{position:relative;z-index:2;text-align:center;}
+.play-ring{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;background:rgba(0,229,160,.15);border:2px solid rgba(0,229,160,.4);animation:ringPulse 2s ease-in-out infinite;transition:transform .2s var(--spring);cursor:pointer;}
+.video-box:hover .play-ring{transform:scale(1.1);}
+@keyframes ringPulse{0%,100%{box-shadow:0 0 0 0 rgba(0,229,160,.3),0 0 20px rgba(0,229,160,.2);}50%{box-shadow:0 0 0 14px rgba(0,229,160,.0),0 0 40px rgba(0,229,160,.3);}}
+.play-ring svg{width:28px;height:28px;fill:var(--emerald);margin-left:4px;}
+.video-meta{font-size:.8rem;color:rgba(255,255,255,.45);line-height:1.6;}
+.viewer-desc{margin-top:20px;color:var(--text2);font-size:.9rem;line-height:1.8;}
+.interact-panel{background:var(--surface);border:1px solid rgba(255,255,255,.07);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:22px;}
+.interact-panel h3{font-size:1.5rem;color:var(--text);}
+.interact-panel>p{font-size:.85rem;color:var(--text2);}
+.math-card{background:var(--bg);border-radius:16px;padding:22px;border:1px solid rgba(255,255,255,.06);}
+.math-card strong{color:var(--gold);font-size:.88rem;display:block;margin-bottom:8px;}
+.math-card p{font-size:.85rem;color:var(--text2);line-height:1.65;margin-bottom:10px;}
+.math-input{width:100%;padding:11px 14px;background:var(--surface2);border:1.5px solid rgba(255,255,255,.08);border-radius:10px;color:var(--text);font-family:'DM Mono',monospace;font-size:.9rem;outline:none;transition:border-color .2s,box-shadow .2s;}
+.math-input:focus{border-color:var(--emerald);box-shadow:0 0 0 3px rgba(0,229,160,.1);}
+.submit-btn{width:100%;padding:12px;margin-top:8px;background:linear-gradient(135deg,var(--emerald2),var(--emerald));color:var(--bg);border:none;border-radius:10px;font-weight:800;font-size:.88rem;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;transition:transform .2s var(--spring),box-shadow .2s;box-shadow:0 0 20px rgba(0,229,160,.2);}
+.submit-btn:hover{transform:scale(1.03);box-shadow:0 0 35px rgba(0,229,160,.35);}
+.hint-btn{width:100%;padding:10px;margin-top:6px;background:rgba(245,200,66,.07);color:var(--gold);border:1px solid rgba(245,200,66,.15);border-radius:10px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;transition:.2s;}
+.hint-btn:hover{background:rgba(245,200,66,.12);}
+.feedback-msg{font-size:.82rem;font-weight:600;padding:9px 13px;border-radius:9px;display:none;margin-top:4px;}
+.feedback-msg.correct{background:rgba(0,229,160,.1);color:var(--emerald);border:1px solid rgba(0,229,160,.2);display:block;}
+.feedback-msg.wrong{background:rgba(255,107,107,.1);color:var(--coral);border:1px solid rgba(255,107,107,.2);display:block;}
+.feedback-msg.hint{background:rgba(245,200,66,.08);color:var(--gold);border:1px solid rgba(245,200,66,.2);display:block;}
+.resource-list{display:flex;flex-direction:column;gap:7px;}
+.resource-link{display:flex;align-items:center;gap:10px;color:var(--text2);text-decoration:none;font-size:.83rem;padding:9px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.05);background:rgba(255,255,255,.02);transition:.2s;}
+.resource-link:hover{color:var(--gold);border-color:rgba(245,200,66,.2);background:rgba(245,200,66,.04);}
+
+/* ═══════════════════════════════════════
+   CALCULATOR
+═══════════════════════════════════════ */
+.calc-section{background:var(--bg2);padding:100px 5%;position:relative;z-index:1;overflow:hidden;}
+.calc-section::before{content:'';position:absolute;top:-300px;right:-300px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(245,200,66,.06),transparent 70%);pointer-events:none;animation:orbDrift 15s ease-in-out infinite;}
+.calc-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:30px;max-width:1100px;margin:0 auto;align-items:start;}
+.calc-panel{background:var(--surface);border-radius:22px;padding:34px;border:1px solid rgba(255,255,255,.06);}
+.calc-field{margin-bottom:22px;}
+.calc-label{display:flex;justify-content:space-between;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:7px;}
+.calc-label span{color:var(--gold);font-family:'DM Mono',monospace;}
+.calc-input{width:100%;padding:12px 15px;background:var(--surface2);border:1.5px solid rgba(255,255,255,.07);border-radius:11px;color:var(--text);font-family:'DM Mono',monospace;font-size:.95rem;outline:none;transition:.2s;}
+.calc-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,200,66,.08);}
+.calc-range{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:var(--surface3);outline:none;cursor:pointer;margin-top:8px;}
+.calc-range::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));cursor:pointer;border:2px solid var(--bg);box-shadow:0 0 10px rgba(245,200,66,.5);}
+select.calc-input{cursor:pointer;}
+select.calc-input option{background:var(--surface2);color:var(--text);}
+.calc-results{background:linear-gradient(160deg,#0d1a14,#0a1520);border-radius:22px;padding:34px;border:1px solid rgba(0,229,160,.12);box-shadow:0 0 40px rgba(0,229,160,.05);position:relative;overflow:hidden;}
+.calc-results::before{content:'';position:absolute;top:-100px;right:-100px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,160,.08),transparent 70%);pointer-events:none;}
+.result-main{text-align:center;padding:28px 0 24px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:24px;}
+.result-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:10px;}
+.result-amount{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,3.8rem);font-weight:700;color:var(--gold);line-height:1;text-shadow:0 0 30px rgba(245,200,66,.3);transition:transform .4s var(--spring);}
+.result-amount.bump{animation:numBump .4s var(--spring);}
+@keyframes numBump{0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
+.breakdown{display:flex;flex-direction:column;gap:14px;margin-bottom:24px;}
+.breakdown-row{display:flex;justify-content:space-between;align-items:center;}
+.b-label{font-size:.83rem;color:rgba(255,255,255,.45);}
+.b-val{font-family:'DM Mono',monospace;font-size:.88rem;color:var(--text);font-weight:500;}
+.b-val.accent{color:var(--emerald);}
+.b-val.gold{color:var(--gold);}
+.bar-chart-wrap{margin-top:20px;}
+.bar-chart-label{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px;}
+.bar-chart{height:10px;border-radius:10px;background:rgba(255,255,255,.06);overflow:hidden;display:flex;}
+.bar-p{height:100%;background:rgba(255,255,255,.35);transition:width 1.2s var(--ease);}
+.bar-i{height:100%;background:linear-gradient(90deg,var(--gold),var(--emerald));transition:width 1.2s var(--ease);}
+.bar-legend{display:flex;gap:18px;margin-top:7px;}
+.bar-legend span{font-size:.7rem;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:5px;}
+.bar-legend span::before{content:'';display:inline-block;width:10px;height:4px;border-radius:2px;}
+.bl-p::before{background:rgba(255,255,255,.35);}
+.bl-i::before{background:linear-gradient(90deg,var(--gold),var(--emerald));}
+.formula-box{margin-top:20px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px;font-family:'DM Mono',monospace;font-size:.78rem;color:var(--emerald);line-height:1.8;text-align:center;}
+
+/* ═══════════════════════════════════════
+   MISSION STRIP
+═══════════════════════════════════════ */
+.mission-strip{position:relative;z-index:1;padding:80px 5%;text-align:center;overflow:hidden;background:linear-gradient(135deg,#0c1a12,#13100a,#0c1a12);background-size:300% 300%;animation:gradBG 8s ease-in-out infinite;}
+.mission-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(245,200,66,.08),transparent);pointer-events:none;}
+.mission-border-top{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.mission-border-bot{position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--emerald),transparent);}
+.mission-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.5vw,2.6rem);font-style:italic;color:var(--text);max-width:800px;margin:0 auto 18px;line-height:1.4;position:relative;z-index:1;}
+.mission-quote em{color:var(--gold);}
+.mission-attr{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);position:relative;z-index:1;}
+
+/* ═══════════════════════════════════════
+   WORKSHEET VAULT
+═══════════════════════════════════════ */
+.vault-section{background:var(--bg);padding:100px 5%;position:relative;z-index:1;}
+.vault-scroll{display:flex;gap:16px;overflow-x:auto;padding:8px 0 24px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;}
+.vault-scroll::-webkit-scrollbar{height:3px;}
+.vault-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px;}
+.ws-card{min-width:270px;flex-shrink:0;background:var(--surface);border-radius:20px;padding:26px;border:1px solid rgba(255,255,255,.05);border-left:3px solid var(--gold);transition:transform .3s var(--spring),box-shadow .3s,border-left-color .3s;position:relative;overflow:hidden;}
+.ws-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,200,66,.04),transparent);opacity:0;transition:opacity .3s;}
+.ws-card:hover{transform:translateY(-6px);box-shadow:0 20px 45px rgba(0,0,0,.35);}
+.ws-card:hover::after{opacity:1;}
+.ws-card:nth-child(even){border-left-color:var(--emerald);}
+.ws-card:nth-child(3n){border-left-color:var(--violet);}
+.ws-icon{font-size:1.8rem;margin-bottom:12px;display:block;transition:transform .3s var(--spring);}
+.ws-card:hover .ws-icon{transform:scale(1.2) rotate(-8deg);}
+.ws-tag{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.15);padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:9px;}
+.ws-card:nth-child(even) .ws-tag{color:var(--emerald);background:rgba(0,229,160,.08);border-color:rgba(0,229,160,.15);}
+.ws-card h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text);margin-bottom:7px;}
+.ws-card p{font-size:.82rem;color:var(--text2);line-height:1.65;margin-bottom:16px;}
+.ws-btn{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;padding:8px 16px;border-radius:20px;cursor:pointer;transition:transform .2s var(--spring),box-shadow .2s;text-decoration:none;box-shadow:0 0 15px rgba(245,200,66,.2);}
+.ws-btn:hover{transform:scale(1.06);box-shadow:0 0 25px rgba(245,200,66,.4);}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer{background:var(--bg2);color:var(--text);padding:70px 5% 40px;border-radius:40px 40px 0 0;position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.05);overflow:hidden;}
+footer::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(245,200,66,.04),transparent 70%);pointer-events:none;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:28px;position:relative;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;text-decoration:none;display:block;margin-bottom:12px;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.footer-brand p{font-size:.84rem;color:var(--text3);line-height:1.75;max-width:280px;}
+.fbadges{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;}
+.fbadge{font-size:.67rem;font-weight:600;letter-spacing:.06em;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:var(--text3);}
+.footer-col h5{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:16px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.footer-col ul li a{color:var(--text3);text-decoration:none;font-size:.84rem;transition:color .2s;}
+.footer-col ul li a:hover{color:var(--gold2);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-bottom p{font-size:.76rem;color:var(--text3);}
+
+/* ═══════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal.up{opacity:0;transform:translateY(28px);}
+.reveal.left{opacity:0;transform:translateX(-28px);}
+.reveal.right{opacity:0;transform:translateX(28px);}
+.reveal.scale{opacity:0;transform:scale(.95);}
+.reveal.visible{opacity:1;transform:translate(0) scale(1);}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:1200px){.courses-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:1024px){
+  .bento-grid{grid-template-columns:repeat(2,1fr);}
+  .bento-card.wide{grid-column:span 2;}
+  .viewer-grid,.calc-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .footer-brand{grid-column:span 2;}
+  .usp-grid{grid-template-columns:repeat(2,1fr);}
+  .courses-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:768px){
+  nav{padding:0 4%;}
+  .nav-links{display:none;position:fixed;top:70px;left:0;right:0;bottom:0;background:rgba(8,12,16,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:flex-start;padding:28px 6%;gap:4px;z-index:999;}
+  .nav-links.open{display:flex;}
+  .nav-links a{width:100%;padding:13px 14px;font-size:1rem;border-radius:12px;}
+  .nav-links a::after{display:none;}
+  .hamburger{display:flex;}
+  .bento-grid{grid-template-columns:1fr;}
+  .bento-card.wide,.bento-card.featured{grid-column:span 1;}
+  .hero{min-height:90vh;}
+  .hero-stats{gap:28px;}
+  .footer-grid{grid-template-columns:1fr;}
+  .footer-brand{grid-column:1;}
+  .section,.usp-section,.courses-section,.viewer-section,.calc-section,.vault-section{padding:70px 5%;}
+  .usp-grid{grid-template-columns:1fr;}
+  .courses-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- Animated background -->
+<div class="bg-aura">
+  <div class="aura-orb"></div>
+  <div class="aura-orb"></div>
+  <div class="aura-orb"></div>
+</div>
+<canvas id="particleCanvas"></canvas>
+
+<!-- ═══════════════════════════════════════
+     NAV
+═══════════════════════════════════════ -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <span class="l-sav">Sav</span><span class="l-ing">oring</span>&nbsp;<span class="l-mon">Mon</span><span class="l-ey">ey</span>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="#why-us">Why Us</a>
+    <a href="#academy">Pillars</a>
+    <a href="#courses">Courses</a>
+    <a href="#viewer">Live Lesson</a>
+    <a href="#calculator">Calculator</a>
+    <a href="#vault">Resources</a>
+    <a href="#" class="nav-cta">Book Free Demo →</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-inner" style="position:relative;z-index:1;">
+    <div class="hero-eyebrow">
+      <div class="live-pill"></div>
+      Global EdTech Excellence · Grade 1–12, Adults &amp; Beyond
+    </div>
+    <h1>
+      <span class="h1-line1">The Polymath's</span>
+      <span class="h1-line2">Kitchen</span>
+    </h1>
+    <p class="hero-sub">
+      Where Mathematics, Finance &amp; Technology are served with real-world flavour.
+      Interactive lessons, live calculators, and worksheets — all under one roof.
+    </p>
+    <div class="hero-btns">
+      <a href="#" class="btn-gold">📅 Book Free Demo</a>
+      <a href="#courses" class="btn-ghost">Explore Courses</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num" data-target="10">0</div><div class="stat-label">Courses Offered</div></div>
+      <div class="stat"><div class="stat-num" data-target="9">0</div><div class="stat-label">Pillars of Mastery</div></div>
+      <div class="stat"><div class="stat-num" data-target="5">0</div><div class="stat-label">Curricula</div></div>
+      <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Curiosity</div></div>
+    </div>
+  </div>
+  <div class="scroll-cue">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker" id="ticker">
+    <span class="ticker-item">Compound Interest</span>
+    <span class="ticker-item">Financial Literacy</span>
+    <span class="ticker-item">Math Mastery</span>
+    <span class="ticker-item">AP Statistics</span>
+    <span class="ticker-item">Stock Markets</span>
+    <span class="ticker-item">CBSE · IGCSE · AP · IB</span>
+    <span class="ticker-item">EdTech Leadership</span>
+    <span class="ticker-item">Teen Budgeting</span>
+    <span class="ticker-item">Spoken English</span>
+    <span class="ticker-item">GenAI & Future Skills</span>
+    <span class="ticker-item">Science Grades 1–12</span>
+    <span class="ticker-item">Australian Curriculum</span>
+    <span class="ticker-item">Compound Interest</span>
+    <span class="ticker-item">Financial Literacy</span>
+    <span class="ticker-item">Math Mastery</span>
+    <span class="ticker-item">AP Statistics</span>
+    <span class="ticker-item">Stock Markets</span>
+    <span class="ticker-item">CBSE · IGCSE · AP · IB</span>
+    <span class="ticker-item">EdTech Leadership</span>
+    <span class="ticker-item">Teen Budgeting</span>
+    <span class="ticker-item">Spoken English</span>
+    <span class="ticker-item">GenAI & Future Skills</span>
+    <span class="ticker-item">Science Grades 1–12</span>
+    <span class="ticker-item">Australian Curriculum</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     WHY CHOOSE US
+═══════════════════════════════════════ -->
+<section class="usp-section" id="why-us">
+  <div class="section-head reveal">
+    <div class="section-tag">Our Edge</div>
+    <h2>Why Choose the Academy?</h2>
+    <p>Six pillars of differentiation that make our students genuinely better prepared for the real world.</p>
+  </div>
+  <div class="usp-grid reveal">
+
+    <div class="usp-card">
+      <span class="usp-number">01</span>
+      <div class="usp-icon-wrap">🎯</div>
+      <h3>Personalised Learning</h3>
+      <p>Custom learning plans built around each student's unique strengths, gaps, and goals. No one-size-fits-all.</p>
+    </div>
+
+    <div class="usp-card">
+      <span class="usp-number">02</span>
+      <div class="usp-icon-wrap">🌐</div>
+      <h3>Global Curriculum Expertise</h3>
+      <p>US, UK, IB, Indian &amp; Australian curriculum specialists — seamlessly bridging education systems worldwide.</p>
+    </div>
+
+    <div class="usp-card">
+      <span class="usp-number">03</span>
+      <div class="usp-icon-wrap">🏗️</div>
+      <h3>Real-Life Application</h3>
+      <p>Maths and finance taught using real-world scenarios, live tools, and scenarios students actually encounter.</p>
+    </div>
+
+    <div class="usp-card">
+      <span class="usp-number">04</span>
+      <div class="usp-icon-wrap">📈</div>
+      <h3>Performance Tracking</h3>
+      <p>Regular assessments, detailed progress reports, and parent dashboards — full transparency at every step.</p>
+    </div>
+
+    <div class="usp-card">
+      <span class="usp-number">05</span>
+      <div class="usp-icon-wrap">💰</div>
+      <h3>Financial Literacy Focus</h3>
+      <p>Students learn the money skills schools never teach — budgeting, investing, credit, and wealth building.</p>
+    </div>
+
+    <div class="usp-card">
+      <span class="usp-number">06</span>
+      <div class="usp-icon-wrap">🕐</div>
+      <h3>Flexible Global Timings</h3>
+      <p>Global-friendly schedules designed for students in the US, UK, Australia, India, and everywhere between.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     ACADEMY PILLARS
+═══════════════════════════════════════ -->
+<section class="section pillars-bg" id="academy">
+  <div class="section-head reveal">
+    <div class="section-tag">The Academy</div>
+    <h2>Nine Pillars of the Polymath</h2>
+    <p>A multidisciplinary framework blending rigorous academics with real-world financial intelligence.</p>
+  </div>
+  <div class="bento-grid reveal">
+
+    <div class="bento-card">
+      <span class="card-icon">📐</span>
+      <div class="card-badge">Academics</div>
+      <h3>Math Mastery</h3>
+      <p>Deep expertise in CBSE, IGCSE, and US Common Core — Algebra, Trigonometry, AP Statistics, and Calculus foundations.</p>
+    </div>
+
+    <div class="bento-card featured">
+      <span class="card-icon">💰</span>
+      <div class="card-badge">Core Mission</div>
+      <h3>Financial Literacy</h3>
+      <p>Structured courses for teens and adults: Banking, Credit, Stocks, and Digital Assets. Making wealth concepts digestible, actionable, and empowering.</p>
+    </div>
+
+    <div class="bento-card">
+      <span class="card-icon">🎓</span>
+      <div class="card-badge">Leadership</div>
+      <h3>EdTech Operations</h3>
+      <p>Senior Teacher Management &amp; Recruitment for global platforms — at scale.</p>
+    </div>
+
+    <div class="bento-card wide">
+      <span class="card-icon">💻</span>
+      <div class="card-badge">Technology</div>
+      <h3>Web Dev &amp; AI Integration</h3>
+      <p>Building educational calculators, Odoo integrations, and AI-powered learning tools using HTML, CSS, JavaScript, and Google Apps Script. The classroom of the future — built today, taught tomorrow.</p>
+    </div>
+
+    <div class="bento-card">
+      <span class="card-icon">🎥</span>
+      <div class="card-badge">Strategy</div>
+      <h3>Digital Content</h3>
+      <p>Research-based video editing (DaVinci Resolve). Dhruv Rathee-style structured storytelling for YouTube impact.</p>
+    </div>
+
+    <div class="bento-card">
+      <span class="card-icon">🚀</span>
+      <div class="card-badge">Business</div>
+      <h3>Entrepreneurship</h3>
+      <p>From growing a private tuition franchise to e-commerce. Sales strategy and Google Ads with measurable ROI.</p>
+    </div>
+
+    <div class="bento-card">
+      <span class="card-icon">🌐</span>
+      <div class="card-badge">Polyglot</div>
+      <h3>Languages</h3>
+      <p>Fluent in English, Hindi, Bengali.</p>
+      <div class="lang-progress">
+        <div class="lang-progress-row"><span>Japanese · N5 Conversational</span><span>35%</span></div>
+        <div class="prog-track"><div class="prog-bar" id="langBar" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="bento-card">
+      <span class="card-icon">🎨</span>
+      <div class="card-badge">Design</div>
+      <h3>Instructional Design</h3>
+      <p>Crafting worksheets with LaTeX and Canva. Story-based frameworks that make students genuinely <em>want</em> to learn.</p>
+    </div>
+
+    <div class="bento-card">
+      <span class="card-icon">🧠</span>
+      <div class="card-badge">Thinking</div>
+      <h3>Analytical Power</h3>
+      <p>Simplifying international standards into digestible, interactive modules. Where complexity meets clarity.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     COURSES
+═══════════════════════════════════════ -->
+<section class="courses-section" id="courses">
+  <div class="section-head reveal">
+    <div class="section-tag">What We Teach</div>
+    <h2>Our Full Course Catalogue</h2>
+    <p>From global curricula to future-ready skills — comprehensive programmes for every learner.</p>
+  </div>
+
+  <div class="course-tabs reveal" id="courseTabs">
+    <button class="ctab active" data-filter="all">All Courses</button>
+    <button class="ctab" data-filter="us">🇺🇸 US</button>
+    <button class="ctab" data-filter="uk">🇬🇧 UK</button>
+    <button class="ctab" data-filter="ib">🌍 IB</button>
+    <button class="ctab" data-filter="india">🇮🇳 India</button>
+    <button class="ctab" data-filter="au">🇦🇺 Australia</button>
+    <button class="ctab" data-filter="finance">💰 Finance</button>
+    <button class="ctab" data-filter="science">🔬 Science</button>
+    <button class="ctab" data-filter="english">🗣️ English</button>
+    <button class="ctab" data-filter="tech">🤖 Tech</button>
+  </div>
+
+  <div class="courses-grid reveal" id="coursesGrid">
+
+    <div class="course-card" data-cat="us">
+      <span class="course-emoji">🇺🇸</span>
+      <div class="course-flag">US Curriculum</div>
+      <h3>SAT / ACT / PSAT</h3>
+      <p>Full exam prep covering both Math and Evidence-Based Reading. Timed practice, strategy sessions, and score improvement plans.</p>
+    </div>
+
+    <div class="course-card" data-cat="us">
+      <span class="course-emoji">📊</span>
+      <div class="course-flag">US · AP</div>
+      <h3>AP Calculus AB/BC &amp; AP Statistics</h3>
+      <p>College-board aligned courses covering limits, derivatives, integrals, and statistical inference with exam strategy.</p>
+    </div>
+
+    <div class="course-card" data-cat="us">
+      <span class="course-emoji">📐</span>
+      <div class="course-flag">US · Core Math</div>
+      <h3>Algebra 1 &amp; 2, Geometry, Precalculus</h3>
+      <p>Strong foundations built with conceptual clarity, real-world examples, and aligned to Common Core standards.</p>
+    </div>
+
+    <div class="course-card" data-cat="uk">
+      <span class="course-emoji">🇬🇧</span>
+      <div class="course-flag">UK Curriculum</div>
+      <h3>GCSE &amp; IGCSE Mathematics</h3>
+      <p>Core and Extended tiers covered with Cambridge-aligned problem sets, past paper walkthroughs, and concept deep-dives.</p>
+    </div>
+
+    <div class="course-card" data-cat="uk">
+      <span class="course-emoji">📈</span>
+      <div class="course-flag">UK · A-Level</div>
+      <h3>A-Level &amp; Further Maths</h3>
+      <p>Pure, Mechanics, and Statistics modules for AQA, OCR, and Edexcel — rigorous preparation for university entry.</p>
+    </div>
+
+    <div class="course-card" data-cat="ib">
+      <span class="course-emoji">🌍</span>
+      <div class="course-flag">IB Curriculum</div>
+      <h3>IB Math AA &amp; AI (SL &amp; HL)</h3>
+      <p>Applications &amp; Interpretation and Analysis &amp; Approaches — both routes covered with Internal Assessment support.</p>
+    </div>
+
+    <div class="course-card" data-cat="india">
+      <span class="course-emoji">🇮🇳</span>
+      <div class="course-flag">Indian Curriculum</div>
+      <h3>CBSE &amp; ICSE Classes 10 &amp; 12</h3>
+      <p>Board exam mastery with chapter-wise notes, NCERT solutions, and previous year question pattern analysis.</p>
+    </div>
+
+    <div class="course-card" data-cat="india">
+      <span class="course-emoji">📝</span>
+      <div class="course-flag">India · State Boards</div>
+      <h3>State Board Mathematics</h3>
+      <p>Customised support for students across Indian state boards with vernacular-friendly explanations where needed.</p>
+    </div>
+
+    <div class="course-card" data-cat="au">
+      <span class="course-emoji">🇦🇺</span>
+      <div class="course-flag">Australian Curriculum</div>
+      <h3>Primary to Senior Secondary Maths</h3>
+      <p>Covering the Australian Curriculum from Years 1–12 — Foundation, Core, and Advanced pathways with NAPLAN readiness.</p>
+    </div>
+
+    <div class="course-card" data-cat="finance">
+      <span class="course-emoji">💹</span>
+      <div class="course-flag">Finance · Students</div>
+      <h3>Financial Literacy for Teens</h3>
+      <p>Saving, budgeting, banking, investing, and credit awareness — the money skills schools never teach. Grades 6–12.</p>
+    </div>
+
+    <div class="course-card" data-cat="finance">
+      <span class="course-emoji">💼</span>
+      <div class="course-flag">Finance · Adults</div>
+      <h3>Adult Financial Planning</h3>
+      <p>Wealth planning, investment fundamentals, tax basics, and the path to financial independence for working adults.</p>
+    </div>
+
+    <div class="course-card" data-cat="science">
+      <span class="course-emoji">🔬</span>
+      <div class="course-flag">Science · Grades 1–12</div>
+      <h3>Physics, Chemistry &amp; Biology</h3>
+      <p>Concept-first science teaching with lab-style demonstrations, diagrams, and curriculum-aligned practice for all boards.</p>
+    </div>
+
+    <div class="course-card" data-cat="english">
+      <span class="course-emoji">🗣️</span>
+      <div class="course-flag">English</div>
+      <h3>Spoken English &amp; Communication</h3>
+      <p>Grammar, pronunciation, public speaking, and interview preparation — designed for both students and working professionals.</p>
+    </div>
+
+    <div class="course-card" data-cat="tech">
+      <span class="course-emoji">🤖</span>
+      <div class="course-flag">Technology</div>
+      <h3>GenAI &amp; Future Skills</h3>
+      <p>AI tools, prompt engineering, and practical real-world AI applications — preparing students for the jobs of tomorrow.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     DEMO CTA STRIP
+═══════════════════════════════════════ -->
+<div class="demo-strip">
+  <div class="demo-border-t"></div>
+  <div class="demo-border-b"></div>
+  <h2>Start Your Learning Journey <em>Today</em></h2>
+  <p>Book a free 30-minute demo class — no commitment, no cost. Just great teaching.</p>
+  <div class="demo-btns">
+    <a href="#" class="btn-emerald">📅 Book Free Demo Class</a>
+    <a href="#courses" class="btn-ghost">Browse All Courses</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     LIVE LESSON VIEWER
+═══════════════════════════════════════ -->
+<section class="viewer-section" id="viewer">
+  <div style="max-width:1200px;margin:0 auto 48px;position:relative;z-index:1;" class="reveal">
+    <div class="section-tag">Live Classroom</div>
+    <h2 style="font-size:clamp(2rem,4vw,3rem);color:var(--text);letter-spacing:-0.02em;">Module 4.2: Compound Interest</h2>
+  </div>
+  <div class="viewer-grid">
+    <div class="reveal left">
+      <div class="viewer-tag">
+        <span class="rec-dot"></span>
+        Recording Available
+      </div>
+      <h2 class="viewer-title">The <span>Power of Exponents</span> in Wealth Building</h2>
+      <div class="video-box">
+        <div class="video-inner">
+          <div class="play-ring">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="video-meta">
+            Dhruv Rathee-Style Research Presentation<br>
+            <span style="opacity:.5;font-size:.72rem;">Module 4.2 · 18 min · HD</span>
+          </div>
+        </div>
+      </div>
+      <p class="viewer-desc">
+        We explore how mathematical exponents quietly govern the growth of wealth. Using real stock market data, we apply the compound interest formula step by step — and discover why starting <em style="color:var(--gold)">early</em> is the single most powerful financial decision a teenager can make.
+      </p>
+    </div>
+    <div class="interact-panel reveal right">
+      <div>
+        <h3>Interactive Taste Test ⭐</h3>
+        <p>Solve the problem below to earn your Michelin Star in Finance</p>
+      </div>
+      <div class="math-card">
+        <strong>Problem: Compound Interest</strong>
+        <p>You invest <strong style="color:var(--gold)">₹10,000</strong> at an annual rate of <strong style="color:var(--emerald)">8%</strong>, compounded <strong style="color:var(--cyan)">12×/year</strong>. Find the value after <strong style="color:var(--violet)">5 years</strong>:</p>
+        <p style="text-align:center;margin:10px 0;font-size:1rem;">$$A = P\!\left(1 + \frac{r}{n}\right)^{nt}$$</p>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
+          <label style="font-size:.73rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);">Your answer (₹) — round to 2 decimals</label>
+          <input type="number" id="mathAns" class="math-input" placeholder="e.g. 14898.46" step="0.01">
+          <button class="submit-btn" onclick="checkAnswer()">Submit Answer</button>
+          <button class="hint-btn" onclick="showHint()">💡 Need a hint?</button>
+        </div>
+        <div id="feedback" class="feedback-msg"></div>
+      </div>
+      <div>
+        <p style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;">Lesson Resources</p>
+        <div class="resource-list">
+          <a href="#" class="resource-link">📂 Download Formula Sheet (PDF)</a>
+          <a href="#calculator" class="resource-link">🔢 Open Live Calculator Below</a>
+          <a href="#vault" class="resource-link">📝 Browse Worksheet Vault</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CALCULATOR
+═══════════════════════════════════════ -->
+<section class="calc-section" id="calculator">
+  <div class="section-head reveal">
+    <div class="section-tag">Live Tool</div>
+    <h2>Compound Interest Calculator</h2>
+    <p>Adjust sliders and watch your wealth compound in real time.</p>
+  </div>
+  <div class="calc-grid reveal">
+    <div class="calc-panel">
+      <div class="calc-field">
+        <div class="calc-label"><span>Principal Amount</span><span id="pLabel">₹10,000</span></div>
+        <input type="number" class="calc-input" id="cP" value="10000" oninput="calcCI();document.getElementById('pLabel').textContent='₹'+Number(this.value).toLocaleString('en-IN')">
+      </div>
+      <div class="calc-field">
+        <div class="calc-label"><span>Annual Interest Rate</span><span id="rLabel">8.0%</span></div>
+        <input type="range" class="calc-range" id="cR" min="1" max="30" value="8" step="0.5" oninput="calcCI();document.getElementById('rLabel').textContent=this.value+'%'">
+      </div>
+      <div class="calc-field">
+        <div class="calc-label"><span>Compounding Frequency</span><span></span></div>
+        <select class="calc-input" id="cN" onchange="calcCI()">
+          <option value="1">Annually (1×/yr)</option>
+          <option value="2">Semi-Annually (2×/yr)</option>
+          <option value="4">Quarterly (4×/yr)</option>
+          <option value="12" selected>Monthly (12×/yr)</option>
+          <option value="365">Daily (365×/yr)</option>
+        </select>
+      </div>
+      <div class="calc-field">
+        <div class="calc-label"><span>Time Period</span><span id="tLabel">5 years</span></div>
+        <input type="range" class="calc-range" id="cT" min="1" max="40" value="5" oninput="calcCI();document.getElementById('tLabel').textContent=this.value+' yr'">
+      </div>
+      <div class="formula-box" id="formulaBox">Calculating…</div>
+    </div>
+    <div class="calc-results">
+      <div class="result-main">
+        <div class="result-label">Final Amount After Interest</div>
+        <div class="result-amount" id="rAmount">₹ —</div>
+      </div>
+      <div class="breakdown">
+        <div class="breakdown-row"><span class="b-label">Principal Invested</span><span class="b-val" id="bP">—</span></div>
+        <div class="breakdown-row"><span class="b-label">Total Interest Earned</span><span class="b-val accent" id="bI">—</span></div>
+        <div class="breakdown-row"><span class="b-label">Interest / Principal</span><span class="b-val gold" id="bRatio">—</span></div>
+        <div class="breakdown-row"><span class="b-label">Effective Annual Rate</span><span class="b-val" id="bEAR">—</span></div>
+      </div>
+      <div class="bar-chart-wrap">
+        <div class="bar-chart-label">Principal vs Interest Split</div>
+        <div class="bar-chart">
+          <div class="bar-p" id="barP" style="width:50%"></div>
+          <div class="bar-i" id="barI" style="width:50%"></div>
+        </div>
+        <div class="bar-legend">
+          <span class="bl-p">Principal</span>
+          <span class="bl-i">Interest</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION STRIP -->
+<div class="mission-strip">
+  <div class="mission-border-top"></div>
+  <div class="mission-border-bot"></div>
+  <p class="mission-quote">"Financial literacy is not the pursuit of <em>wealth</em> — it is the pursuit of <em>freedom</em>."</p>
+  <p class="mission-attr">— The Global Polymath Academy</p>
+</div>
+
+<!-- ═══════════════════════════════════════
+     WORKSHEET VAULT
+═══════════════════════════════════════ -->
+<section class="vault-section" id="vault">
+  <div class="section-head reveal">
+    <div class="section-tag">The Vault</div>
+    <h2>Worksheet &amp; Resource Library</h2>
+    <p>Curated materials for every learner — from teen budgeters to AP Statistics champions.</p>
+  </div>
+  <div class="vault-scroll reveal">
+    <div class="ws-card">
+      <span class="ws-icon">📊</span>
+      <div class="ws-tag">Statistics</div>
+      <h4>AP Statistics MCQ Bank</h4>
+      <p>Advanced diagnostic covering probability distributions, hypothesis testing, and regression analysis.</p>
+      <a href="#" class="ws-btn">↓ Download</a>
+    </div>
+    <div class="ws-card">
+      <span class="ws-icon">💹</span>
+      <div class="ws-tag">Finance</div>
+      <h4>Teen Budget Tracker</h4>
+      <p>The "Anti-Budget" system — simple, flexible, and built for Grades 9–12 financial habits.</p>
+      <a href="#" class="ws-btn">↓ Download</a>
+    </div>
+    <div class="ws-card">
+      <span class="ws-icon">📐</span>
+      <div class="ws-tag">Trigonometry</div>
+      <h4>Trig Visual Guide</h4>
+      <p>Colour-coded unit circles, all identity proofs, and CBSE/IGCSE aligned practice sets.</p>
+      <a href="#" class="ws-btn">↓ Download</a>
+    </div>
+    <div class="ws-card">
+      <span class="ws-icon">💻</span>
+      <div class="ws-tag">Technology</div>
+      <h4>HTML/CSS Cheat Sheet</h4>
+      <p>Compact reference for building your first educational web app — beginner friendly.</p>
+      <a href="#" class="ws-btn">↓ Download</a>
+    </div>
+    <div class="ws-card">
+      <span class="ws-icon">🏦</span>
+      <div class="ws-tag">Finance</div>
+      <h4>Banking Basics Workbook</h4>
+      <p>From savings accounts to credit scores — a complete guided workbook for teens.</p>
+      <a href="#" class="ws-btn">↓ Download</a>
+    </div>
+    <div class="ws-card">
+      <span class="ws-icon">📈</span>
+      <div class="ws-tag">Investing</div>
+      <h4>Intro to Stock Market</h4>
+      <p>NSE/BSE fundamentals, reading candlestick charts, and understanding market indices.</p>
+      <a href="#" class="ws-btn">↓ Download</a>
+    </div>
+    <div class="ws-card">
+      <span class="ws-icon">🔬</span>
+      <div class="ws-tag">Science</div>
+      <h4>Science Concept Cards</h4>
+      <p>Physics, Chemistry &amp; Biology visual summary cards for CBSE/IGCSE exam preparation.</p>
+      <a href="#" class="ws-btn">↓ Download</a>
+    </div>
+    <div class="ws-card">
+      <span class="ws-icon">🗣️</span>
+      <div class="ws-tag">English</div>
+      <h4>Spoken English Drills</h4>
+      <p>Daily speaking exercises and grammar drills for confident communication in professional settings.</p>
+      <a href="#" class="ws-btn">↓ Download</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="footer-logo">Savoring Money</a>
+      <p>Empowering the next generation to earn, spend, and grow with confidence. A multidisciplinary academy where maths meets money meets the real world.</p>
+      <div class="fbadges">
+        <span class="fbadge">English</span>
+        <span class="fbadge">हिन्दी</span>
+        <span class="fbadge">বাংলা</span>
+        <span class="fbadge">日本語 N5</span>
+        <span class="fbadge">CBSE</span>
+        <span class="fbadge">IGCSE</span>
+        <span class="fbadge">AP</span>
+        <span class="fbadge">IB</span>
+        <span class="fbadge">A-Level</span>
+        <span class="fbadge">AUS</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Academy</h5>
+      <ul>
+        <li><a href="#why-us">Why Choose Us</a></li>
+        <li><a href="#academy">Nine Pillars</a></li>
+        <li><a href="#courses">All Courses</a></li>
+        <li><a href="#viewer">Live Lessons</a></li>
+        <li><a href="#calculator">Calculator</a></li>
+        <li><a href="#vault">Resource Vault</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Courses</h5>
+      <ul>
+        <li><a href="#courses">US Curriculum</a></li>
+        <li><a href="#courses">UK / IGCSE</a></li>
+        <li><a href="#courses">IB Programme</a></li>
+        <li><a href="#courses">CBSE / ICSE</a></li>
+        <li><a href="#courses">Financial Literacy</a></li>
+        <li><a href="#courses">GenAI &amp; Tech</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Connect</h5>
+      <ul>
+        <li><a href="#">YouTube Channel</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">LinkedIN</a></li>
+        <li><a href="#">Book Free Demo</a></li>
+        <li><a href="#">Enroll Now</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Savoring Money · The Global Polymath Academy</p>
+    <p>Founded by a Senior Teacher Manager &amp; Content Strategist</p>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════ -->
+<script>
+/* ─── PARTICLE CANVAS ─── */
+(function(){
+  const canvas = document.getElementById('particleCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resize);
+  resize();
+  class Particle {
+    constructor(){
+      this.x  = Math.random()*W; this.y = Math.random()*H;
+      this.vx = (Math.random()-.5)*.35; this.vy = (Math.random()-.5)*.35;
+      this.r  = Math.random()*1.5+.5;
+      this.col = Math.random()>.5
+        ? `rgba(245,200,66,${(Math.random()*.4+.1).toFixed(2)})`
+        : `rgba(0,229,160,${(Math.random()*.3+.08).toFixed(2)})`;
+    }
+    update(){ this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>W)this.vx*=-1; if(this.y<0||this.y>H)this.vy*=-1; }
+    draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.fillStyle=this.col; ctx.fill(); }
+  }
+  for(let i=0;i<90;i++) particles.push(new Particle());
+  function animate(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p=>{ p.update(); p.draw(); });
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<130){
+          const alpha=(1-d/130)*.12;
+          ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(245,200,66,${alpha})`; ctx.lineWidth=1; ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+/* ─── NAV ─── */
+window.addEventListener('scroll',()=>{ document.getElementById('nav').classList.toggle('solid', window.scrollY>40); });
+document.getElementById('hamburger').addEventListener('click',()=>{ document.getElementById('navLinks').classList.toggle('open'); });
+document.querySelectorAll('.nav-links a').forEach(a=>{ a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open')); });
+
+/* ─── SCROLL REVEAL ─── */
+const revealEls = document.querySelectorAll('.reveal');
+const ro = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); ro.unobserve(e.target); }});
+},{threshold:0.1});
+revealEls.forEach(el=>ro.observe(el));
+
+/* ─── LANG BAR ─── */
+const langRO = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ document.getElementById('langBar').style.width='35%'; langRO.unobserve(e.target); }});
+},{threshold:0.5});
+langRO.observe(document.getElementById('langBar'));
+
+/* ─── COUNTER ANIMATION ─── */
+document.querySelectorAll('.stat-num[data-target]').forEach(el=>{
+  const target = parseInt(el.dataset.target);
+  const start = () => {
+    let count = 0;
+    const step = Math.ceil(target/30);
+    const id = setInterval(()=>{
+      count = Math.min(count+step, target);
+      el.textContent = count+'+';
+      if(count>=target) clearInterval(id);
+    },50);
+  };
+  const cRO = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ start(); cRO.unobserve(el); }});
+  },{threshold:0.5});
+  cRO.observe(el);
+});
+
+/* ─── COURSE FILTER TABS ─── */
+document.getElementById('courseTabs').addEventListener('click', function(e){
+  const tab = e.target.closest('.ctab');
+  if(!tab) return;
+  document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active');
+  const filter = tab.dataset.filter;
+  document.querySelectorAll('.course-card').forEach(card=>{
+    if(filter === 'all' || card.dataset.cat === filter){
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+});
+
+/* ─── MATH PROBLEM ─── */
+const CORRECT = 10000 * Math.pow(1 + 0.08/12, 12*5);
+function checkAnswer(){
+  const raw = parseFloat(document.getElementById('mathAns').value);
+  const fb  = document.getElementById('feedback');
+  if(isNaN(raw)){ fb.className='feedback-msg hint'; fb.textContent='Please enter a number first!'; return; }
+  const diff = Math.abs(raw - CORRECT);
+  if(diff<=1){
+    fb.className='feedback-msg correct';
+    fb.innerHTML=`⭐ Correct! A ≈ ₹${CORRECT.toFixed(2)} — Michelin Star unlocked!`;
+  } else if(diff<=600){
+    fb.className='feedback-msg hint';
+    fb.innerHTML=`Almost! You got ₹${raw.toFixed(2)}. The answer is near ₹14,898. Check your exponent!`;
+  } else {
+    fb.className='feedback-msg wrong';
+    fb.innerHTML=`Not quite (₹${raw.toFixed(2)}). Try: P=10000, r=0.08, n=12, t=5. Step: 1+r/n = 1.00667`;
+  }
+}
+function showHint(){
+  const fb=document.getElementById('feedback');
+  fb.className='feedback-msg hint';
+  fb.innerHTML=`💡 Step 1: r÷n = 0.08÷12 = 0.006667<br>Step 2: (1.006667)^60 ≈ 1.489846<br>Step 3: 10,000 × 1.489846 = ?`;
+}
+
+/* ─── CALCULATOR ─── */
+function fmt(n){ return n.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function calcCI(){
+  const P = parseFloat(document.getElementById('cP').value)||0;
+  const r = parseFloat(document.getElementById('cR').value)/100||0;
+  const n = parseInt(document.getElementById('cN').value);
+  const t = parseInt(document.getElementById('cT').value);
+  if(P<=0) return;
+  const A = P * Math.pow(1+r/n, n*t);
+  const interest = A - P;
+  const EAR = (Math.pow(1+r/n,n)-1)*100;
+  const amtEl = document.getElementById('rAmount');
+  amtEl.textContent = '₹ '+fmt(A);
+  amtEl.classList.remove('bump'); void amtEl.offsetWidth; amtEl.classList.add('bump');
+  document.getElementById('bP').textContent     = '₹ '+fmt(P);
+  document.getElementById('bI').textContent     = '₹ '+fmt(interest);
+  document.getElementById('bRatio').textContent = (interest/P*100).toFixed(1)+'%';
+  document.getElementById('bEAR').textContent   = EAR.toFixed(4)+'%';
+  document.getElementById('barP').style.width   = (P/A*100)+'%';
+  document.getElementById('barI').style.width   = (interest/A*100)+'%';
+  document.getElementById('formulaBox').innerHTML =
+    `A = ${fmt(P)} × (1 + ${(r/n).toFixed(6)})^${n*t}<br>`+
+    `A = ${fmt(P)} × ${Math.pow(1+r/n,n*t).toFixed(6)}<br>`+
+    `<strong style="color:var(--gold)">A = ₹ ${fmt(A)}</strong>`;
+}
+calcCI();
+</script>
+</body>
+</html>
