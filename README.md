@@ -13,8 +13,9 @@ A complete financial education platform and resource hub hosted on GitHub Pages.
 ├── Savoring_Money_Website.htm        ← Main website
 ├── Savoring_Money_Careers.htm        ← Careers portal
 ├── SavoringMoney_ATS.html            ← ATS / People Ops (internal)
-├── __SAT_Math_Mastery_Tracker.html   ← SAT Math Tracker
 ├── Invest_Universe.html              ← Investment Universe
+├── style.css                         ← Shared stylesheet (nav, footer, cards, buttons, tokens)
+├── favicon.svg                       ← Site icon (also used as the nav/footer logo mark)
 ├── README.md                         ← This file
 └── worksheets/
     ├── index.html                    ← Worksheets Hub (EDITABLE)

@@ -3,533 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Savoring Money | The Global Polymath Academy</title>
+<title>Savoring Money | Personal Finance &amp; Tech Education</title>
+<meta name="description" content="Savoring Money teaches budgeting, investing, credit, crypto, and AI-powered money skills for teens and adults — with a live compound-interest calculator, free resources, and math tutoring demos through our partner, We The Mind.">
+<meta property="og:title" content="Savoring Money | Personal Finance &amp; Tech Education">
+<meta property="og:description" content="Budgeting, investing, credit, crypto, and AI money skills for the next generation — plus live math tutoring demos through our partner, We The Mind.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="favicon.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Savoring Money | Personal Finance &amp; Tech Education">
+<meta name="twitter:description" content="Budgeting, investing, credit, crypto, and AI money skills for the next generation — plus live math tutoring demos through our partner, We The Mind.">
+<meta name="twitter:image" content="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Cabinet+Grotesk:wght@300;400;500;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]},options:{skipHtmlTags:['script','noscript','style','textarea']}};</script>
-<style>
-/* ═══════════════════════════════════════
-   DESIGN TOKENS
-═══════════════════════════════════════ */
-:root {
-  --bg:        #080c10;
-  --bg2:       #0d1117;
-  --surface:   #111820;
-  --surface2:  #161f2b;
-  --surface3:  #1d2838;
-  --gold:      #f5c842;
-  --gold2:     #ffdd70;
-  --gold-dim:  #a8892d;
-  --emerald:   #00e5a0;
-  --emerald2:  #00c87d;
-  --emerald-dim:#005f3d;
-  --coral:     #ff6b6b;
-  --violet:    #a78bfa;
-  --cyan:      #38bdf8;
-  --sky:       #0ea5e9;
-  --rose:      #fb7185;
-  --text:      #e8edf5;
-  --text2:     #96a3b4;
-  --text3:     #5a6a7e;
-  --ease:      cubic-bezier(.4,0,.2,1);
-  --spring:    cubic-bezier(.34,1.56,.64,1);
-  --bounce:    cubic-bezier(.68,-0.55,.27,1.55);
-}
-
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{
-  font-family:'Cabinet Grotesk',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
-  min-height:100vh;
-}
-h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;line-height:1.1;}
-::-webkit-scrollbar{width:5px;}
-::-webkit-scrollbar-track{background:var(--bg2);}
-::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold),var(--emerald));border-radius:5px;}
-
-/* ═══════════════════════════════════════
-   ANIMATED GRADIENT BACKGROUND
-═══════════════════════════════════════ */
-.bg-aura{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
-.aura-orb{position:absolute;border-radius:50%;filter:blur(120px);animation:orbDrift 20s ease-in-out infinite;}
-.aura-orb:nth-child(1){width:600px;height:600px;background:radial-gradient(circle,rgba(245,200,66,.07),transparent 70%);top:-200px;right:-100px;animation-delay:0s;animation-duration:22s;}
-.aura-orb:nth-child(2){width:500px;height:500px;background:radial-gradient(circle,rgba(0,229,160,.06),transparent 70%);bottom:-150px;left:-100px;animation-delay:-8s;animation-duration:18s;}
-.aura-orb:nth-child(3){width:400px;height:400px;background:radial-gradient(circle,rgba(167,139,250,.05),transparent 70%);top:40%;left:40%;animation-delay:-4s;animation-duration:25s;}
-@keyframes orbDrift{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(60px,-40px) scale(1.1);}66%{transform:translate(-40px,60px) scale(0.95);}}
-
-#particleCanvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;}
-
-body::after{
-  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity:.35;
-}
-
-/* ═══════════════════════════════════════
-   NAVIGATION
-═══════════════════════════════════════ */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 5%;height:70px;
-  background:rgba(8,12,16,.7);
-  backdrop-filter:blur(24px);
-  border-bottom:1px solid rgba(245,200,66,.08);
-  transition:background .4s,border-color .4s;
-}
-nav.solid{background:rgba(8,12,16,.95);border-color:rgba(245,200,66,.15);}
-.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:3px;}
-.nav-logo .l-sav{color:var(--text);}
-.nav-logo .l-ing{color:var(--text2);}
-.nav-logo .l-mon{color:var(--gold);}
-.nav-logo .l-ey{color:var(--gold2);}
-.nav-links{display:flex;align-items:center;gap:4px;}
-.nav-links a{color:var(--text2);text-decoration:none;font-size:.85rem;font-weight:500;padding:7px 15px;border-radius:30px;transition:color .2s,background .2s;position:relative;}
-.nav-links a::after{content:'';position:absolute;bottom:5px;left:50%;right:50%;height:1.5px;background:var(--gold);transition:left .3s var(--ease),right .3s var(--ease);border-radius:2px;}
-.nav-links a:hover{color:var(--text);}
-.nav-links a:hover::after{left:15px;right:15px;}
-.nav-cta{background:linear-gradient(135deg,var(--gold),var(--gold2)) !important;color:var(--bg) !important;font-weight:700 !important;border-radius:30px;padding:9px 22px !important;box-shadow:0 0 20px rgba(245,200,66,.25);transition:transform .2s,box-shadow .2s !important;}
-.nav-cta::after{display:none !important;}
-.nav-cta:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(245,200,66,.4) !important;}
-.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:5px;}
-.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:.3s;}
-
-/* ═══════════════════════════════════════
-   HERO
-═══════════════════════════════════════ */
-.hero{
-  position:relative;z-index:1;min-height:100vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:100px 5% 80px;overflow:hidden;
-}
-.hero-grid{
-  position:absolute;inset:0;pointer-events:none;
-  background-image:linear-gradient(rgba(245,200,66,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(245,200,66,.04) 1px,transparent 1px);
-  background-size:60px 60px;
-  mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,black 40%,transparent 100%);
-  animation:gridShift 8s linear infinite;
-}
-@keyframes gridShift{0%{background-position:0 0;}100%{background-position:60px 60px;}}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.2);padding:6px 18px;border-radius:30px;margin-bottom:32px;animation:popIn .6s var(--spring) both;}
-.live-pill{width:7px;height:7px;border-radius:50%;background:var(--emerald);box-shadow:0 0 8px var(--emerald);animation:blink 1.5s infinite;}
-@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 8px var(--emerald);}50%{opacity:.3;box-shadow:none;}}
-.hero h1{font-size:clamp(3rem,8vw,6.5rem);font-weight:700;line-height:1.0;letter-spacing:-0.03em;margin-bottom:24px;animation:fadeUp .8s .1s var(--ease) both;}
-.h1-line1{display:block;color:var(--text);}
-.h1-line2{display:block;background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 30%,var(--emerald) 70%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% auto;animation:gradShift 4s linear infinite;}
-@keyframes gradShift{0%{background-position:0% 50%;}100%{background-position:200% 50%;}}
-.hero-sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--text2);max-width:580px;margin:0 auto 44px;line-height:1.75;font-weight:400;animation:fadeUp .8s .2s var(--ease) both;}
-.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .3s var(--ease) both;}
-.btn-gold{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg);font-weight:700;font-size:.9rem;padding:15px 34px;border-radius:50px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 0 30px rgba(245,200,66,.3);transition:transform .25s var(--spring),box-shadow .25s;position:relative;overflow:hidden;}
-.btn-gold::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);opacity:0;transition:opacity .3s;}
-.btn-gold:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 50px rgba(245,200,66,.5);}
-.btn-gold:hover::before{opacity:1;}
-.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--text);font-weight:500;font-size:.9rem;padding:15px 34px;border-radius:50px;text-decoration:none;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:border-color .25s,background .25s,transform .25s var(--spring);}
-.btn-ghost:hover{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.05);transform:translateY(-2px);}
-.hero-stats{display:flex;gap:50px;justify-content:center;flex-wrap:wrap;margin-top:72px;padding-top:48px;border-top:1px solid rgba(255,255,255,.07);animation:fadeUp .8s .45s var(--ease) both;}
-.stat{text-align:center;}
-.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;line-height:1;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.stat-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-top:5px;}
-.scroll-cue{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text3);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;animation:fadeIn 1.5s 1.5s both;}
-.scroll-line{width:1px;height:44px;background:linear-gradient(var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite;}
-@keyframes scrollPulse{0%,100%{opacity:.3;height:44px;}50%{opacity:1;height:60px;}}
-@keyframes popIn{from{opacity:0;transform:scale(.8);}to{opacity:1;transform:scale(1);}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-
-/* ═══════════════════════════════════════
-   TICKER
-═══════════════════════════════════════ */
-.ticker-wrap{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);background:rgba(245,200,66,.04);padding:14px 0;overflow:hidden;}
-.ticker{display:flex;width:max-content;animation:tickerRoll 30s linear infinite;}
-.ticker-item{white-space:nowrap;padding:0 40px;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);opacity:.65;display:flex;align-items:center;gap:16px;}
-.ticker-item::after{content:'◆';font-size:.5rem;}
-@keyframes tickerRoll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-
-/* ═══════════════════════════════════════
-   SECTION SHARED
-═══════════════════════════════════════ */
-.section{padding:100px 5%;position:relative;z-index:1;}
-.section-tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--emerald);margin-bottom:12px;}
-.section-head{text-align:center;margin-bottom:60px;}
-.section-head h2{font-size:clamp(2.2rem,4.5vw,3.4rem);color:var(--text);letter-spacing:-0.02em;}
-.section-head p{margin-top:14px;color:var(--text2);font-size:.95rem;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.75;}
-
-/* ═══════════════════════════════════════
-   WHY CHOOSE US (USP SECTION)
-═══════════════════════════════════════ */
-.usp-section{
-  background:var(--bg2);
-  padding:100px 5%;
-  position:relative;z-index:1;
-  overflow:hidden;
-}
-.usp-section::before{
-  content:'';position:absolute;bottom:-200px;left:-200px;
-  width:600px;height:600px;border-radius:50%;
-  background:radial-gradient(circle,rgba(0,229,160,.05),transparent 70%);
-  pointer-events:none;
-}
-.usp-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-  max-width:1200px;margin:0 auto;
-}
-.usp-card{
-  background:var(--surface);
-  border-radius:20px;
-  padding:30px 26px;
-  border:1px solid rgba(255,255,255,.05);
-  position:relative;overflow:hidden;
-  transition:transform .3s var(--spring),box-shadow .3s,border-color .3s;
-}
-.usp-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--gold),var(--emerald));
-  transform:scaleX(0);transform-origin:left;
-  transition:transform .4s var(--ease);
-}
-.usp-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.4);border-color:rgba(245,200,66,.1);}
-.usp-card:hover::before{transform:scaleX(1);}
-.usp-icon-wrap{
-  width:54px;height:54px;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.5rem;
-  background:rgba(245,200,66,.07);
-  border:1px solid rgba(245,200,66,.12);
-  margin-bottom:18px;
-  transition:transform .3s var(--spring),background .3s;
-}
-.usp-card:hover .usp-icon-wrap{transform:scale(1.12) rotate(-5deg);background:rgba(245,200,66,.14);}
-.usp-card:nth-child(2) .usp-icon-wrap,.usp-card:nth-child(5) .usp-icon-wrap{background:rgba(0,229,160,.07);border-color:rgba(0,229,160,.12);}
-.usp-card:nth-child(2):hover .usp-icon-wrap,.usp-card:nth-child(5):hover .usp-icon-wrap{background:rgba(0,229,160,.14);}
-.usp-card:nth-child(3) .usp-icon-wrap,.usp-card:nth-child(6) .usp-icon-wrap{background:rgba(167,139,250,.07);border-color:rgba(167,139,250,.12);}
-.usp-card:nth-child(3):hover .usp-icon-wrap,.usp-card:nth-child(6):hover .usp-icon-wrap{background:rgba(167,139,250,.14);}
-.usp-card h3{font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:9px;}
-.usp-card p{font-size:.85rem;color:var(--text2);line-height:1.72;}
-.usp-number{
-  position:absolute;top:22px;right:22px;
-  font-family:'DM Mono',monospace;
-  font-size:.7rem;color:var(--text3);opacity:.4;
-  font-weight:500;
-}
-
-/* ═══════════════════════════════════════
-   ACADEMY PILLARS (BENTO)
-═══════════════════════════════════════ */
-.pillars-bg{background:var(--bg);}
-.bento-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.bento-card{background:var(--surface);border-radius:22px;padding:28px;border:1px solid rgba(255,255,255,.05);position:relative;overflow:hidden;cursor:default;transition:transform .3s var(--spring),box-shadow .3s,border-color .3s;}
-.bento-card::before{content:'';position:absolute;inset:0;border-radius:22px;background:linear-gradient(135deg,var(--gold),var(--emerald),var(--violet));opacity:0;transition:opacity .4s;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;padding:1px;}
-.bento-card::after{content:'';position:absolute;top:-50%;left:-60%;width:40%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);transform:skewX(-20deg);transition:left .6s var(--ease);}
-.bento-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.4);}
-.bento-card:hover::before{opacity:1;}
-.bento-card:hover::after{left:120%;}
-.bento-card.featured{background:linear-gradient(135deg,#0a1f15,#112a1e);border-color:rgba(0,229,160,.15);}
-.bento-card.featured::before{background:linear-gradient(135deg,var(--emerald),var(--gold));}
-.bento-card.featured:hover{box-shadow:0 20px 50px rgba(0,229,160,.15);}
-.bento-card.wide{grid-column:span 2;}
-.card-icon{font-size:2rem;display:block;margin-bottom:14px;transition:transform .3s var(--spring);}
-.bento-card:hover .card-icon{transform:scale(1.2) rotate(-5deg);}
-.card-badge{display:inline-block;font-size:.63rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:rgba(245,200,66,.1);color:var(--gold);border:1px solid rgba(245,200,66,.2);padding:3px 10px;border-radius:20px;margin-bottom:10px;}
-.bento-card.featured .card-badge{background:rgba(0,229,160,.1);color:var(--emerald);border-color:rgba(0,229,160,.2);}
-.bento-card h3{font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:8px;}
-.bento-card p{font-size:.86rem;line-height:1.7;color:var(--text2);}
-.lang-progress{margin-top:14px;}
-.lang-progress-row{display:flex;justify-content:space-between;font-size:.73rem;color:var(--text3);margin-bottom:5px;}
-.prog-track{height:5px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden;}
-.prog-bar{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--gold),var(--emerald));width:0%;transition:width 1.8s var(--ease);}
-
-/* ═══════════════════════════════════════
-   COURSES SECTION
-═══════════════════════════════════════ */
-.courses-section{
-  background:var(--bg2);
-  padding:100px 5%;
-  position:relative;z-index:1;
-  overflow:hidden;
-}
-.courses-section::after{
-  content:'';position:absolute;top:-300px;right:-300px;
-  width:700px;height:700px;border-radius:50%;
-  background:radial-gradient(circle,rgba(56,189,248,.04),transparent 70%);
-  pointer-events:none;
-}
-
-/* Tab Filter */
-.course-tabs{
-  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:44px;
-}
-.ctab{
-  font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  padding:8px 20px;border-radius:30px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
-  color:var(--text3);cursor:pointer;
-  transition:background .2s,border-color .2s,color .2s,transform .2s var(--spring);
-}
-.ctab:hover,.ctab.active{
-  background:rgba(245,200,66,.1);
-  border-color:rgba(245,200,66,.3);
-  color:var(--gold);
-  transform:translateY(-2px);
-}
-
-.courses-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  max-width:1300px;margin:0 auto;
-}
-.course-card{
-  background:var(--surface);
-  border-radius:20px;padding:26px 22px;
-  border:1px solid rgba(255,255,255,.05);
-  position:relative;overflow:hidden;
-  transition:transform .3s var(--spring),box-shadow .3s,border-color .3s;
-  cursor:default;
-}
-.course-card::before{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
-  opacity:0;transition:opacity .3s;
-}
-.course-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.4);}
-.course-card:hover::before{opacity:1;}
-
-/* Per-category colors */
-.course-card[data-cat="us"]{border-left:3px solid #60a5fa;}
-.course-card[data-cat="us"]::before{background:linear-gradient(90deg,#60a5fa,var(--cyan));}
-.course-card[data-cat="uk"]{border-left:3px solid var(--rose);}
-.course-card[data-cat="uk"]::before{background:linear-gradient(90deg,var(--rose),var(--violet));}
-.course-card[data-cat="ib"]{border-left:3px solid var(--emerald);}
-.course-card[data-cat="ib"]::before{background:linear-gradient(90deg,var(--emerald),var(--cyan));}
-.course-card[data-cat="india"]{border-left:3px solid var(--gold);}
-.course-card[data-cat="india"]::before{background:linear-gradient(90deg,var(--gold),var(--gold2));}
-.course-card[data-cat="au"]{border-left:3px solid #34d399;}
-.course-card[data-cat="au"]::before{background:linear-gradient(90deg,#34d399,var(--emerald));}
-.course-card[data-cat="finance"]{border-left:3px solid var(--gold);}
-.course-card[data-cat="finance"]::before{background:linear-gradient(90deg,var(--gold),var(--emerald));}
-.course-card[data-cat="science"]{border-left:3px solid var(--violet);}
-.course-card[data-cat="science"]::before{background:linear-gradient(90deg,var(--violet),var(--cyan));}
-.course-card[data-cat="english"]{border-left:3px solid var(--coral);}
-.course-card[data-cat="english"]::before{background:linear-gradient(90deg,var(--coral),var(--rose));}
-.course-card[data-cat="tech"]{border-left:3px solid var(--cyan);}
-.course-card[data-cat="tech"]::before{background:linear-gradient(90deg,var(--cyan),var(--violet));}
-
-.course-emoji{font-size:1.9rem;margin-bottom:12px;display:block;transition:transform .3s var(--spring);}
-.course-card:hover .course-emoji{transform:scale(1.2) rotate(-8deg);}
-
-.course-flag{
-  font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:10px;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:var(--text3);
-}
-.course-card h3{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:8px;}
-.course-card p{font-size:.82rem;color:var(--text2);line-height:1.65;}
-
-.course-card.hidden{display:none;}
-
-/* ═══════════════════════════════════════
-   DEMO CTA STRIP
-═══════════════════════════════════════ */
-.demo-strip{
-  position:relative;z-index:1;
-  padding:80px 5%;text-align:center;
-  background:linear-gradient(135deg,#070d14,#0d1a12,#070d14);
-  background-size:300% 300%;
-  animation:gradBG 10s ease-in-out infinite;
-  overflow:hidden;
-}
-@keyframes gradBG{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
-.demo-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(245,200,66,.07),transparent);pointer-events:none;}
-.demo-border-t{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.demo-border-b{position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--emerald),transparent);}
-.demo-strip h2{font-size:clamp(2rem,4vw,3rem);color:var(--text);margin-bottom:14px;position:relative;z-index:1;}
-.demo-strip h2 em{color:var(--gold);font-style:normal;}
-.demo-strip p{color:var(--text2);font-size:.95rem;max-width:500px;margin:0 auto 34px;line-height:1.75;position:relative;z-index:1;}
-.demo-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
-.btn-emerald{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--emerald2),var(--emerald));color:var(--bg);font-weight:700;font-size:.9rem;padding:15px 34px;border-radius:50px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 0 30px rgba(0,229,160,.25);transition:transform .25s var(--spring),box-shadow .25s;}
-.btn-emerald:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 50px rgba(0,229,160,.45);}
-
-/* ═══════════════════════════════════════
-   LIVE LESSON VIEWER
-═══════════════════════════════════════ */
-.viewer-section{background:var(--bg);padding:100px 5%;position:relative;z-index:1;overflow:hidden;}
-.viewer-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.viewer-section::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--emerald),transparent);}
-.viewer-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:40px;max-width:1200px;margin:0 auto;position:relative;z-index:1;}
-.viewer-tag{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--coral);background:rgba(255,107,107,.1);border:1px solid rgba(255,107,107,.2);padding:5px 14px;border-radius:20px;margin-bottom:16px;}
-.rec-dot{width:7px;height:7px;border-radius:50%;background:var(--coral);box-shadow:0 0 8px var(--coral);animation:blink 1.5s infinite;}
-.viewer-title{font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--text);margin-bottom:24px;letter-spacing:-0.02em;}
-.viewer-title span{color:var(--gold);}
-.video-box{width:100%;aspect-ratio:16/9;background:#040a06;border-radius:18px;border:1px solid rgba(0,229,160,.15);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(0,229,160,.08),inset 0 0 60px rgba(0,0,0,.5);cursor:pointer;}
-.video-box::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,229,160,.015) 2px,rgba(0,229,160,.015) 4px);animation:scanMove 8s linear infinite;}
-@keyframes scanMove{0%{background-position:0 0;}100%{background-position:0 400px;}}
-.video-box::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(0,229,160,.12) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(245,200,66,.06) 0%,transparent 50%);}
-.video-inner{position:relative;z-index:2;text-align:center;}
-.play-ring{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;background:rgba(0,229,160,.15);border:2px solid rgba(0,229,160,.4);animation:ringPulse 2s ease-in-out infinite;transition:transform .2s var(--spring);cursor:pointer;}
-.video-box:hover .play-ring{transform:scale(1.1);}
-@keyframes ringPulse{0%,100%{box-shadow:0 0 0 0 rgba(0,229,160,.3),0 0 20px rgba(0,229,160,.2);}50%{box-shadow:0 0 0 14px rgba(0,229,160,.0),0 0 40px rgba(0,229,160,.3);}}
-.play-ring svg{width:28px;height:28px;fill:var(--emerald);margin-left:4px;}
-.video-meta{font-size:.8rem;color:rgba(255,255,255,.45);line-height:1.6;}
-.viewer-desc{margin-top:20px;color:var(--text2);font-size:.9rem;line-height:1.8;}
-.interact-panel{background:var(--surface);border:1px solid rgba(255,255,255,.07);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:22px;}
-.interact-panel h3{font-size:1.5rem;color:var(--text);}
-.interact-panel>p{font-size:.85rem;color:var(--text2);}
-.math-card{background:var(--bg);border-radius:16px;padding:22px;border:1px solid rgba(255,255,255,.06);}
-.math-card strong{color:var(--gold);font-size:.88rem;display:block;margin-bottom:8px;}
-.math-card p{font-size:.85rem;color:var(--text2);line-height:1.65;margin-bottom:10px;}
-.math-input{width:100%;padding:11px 14px;background:var(--surface2);border:1.5px solid rgba(255,255,255,.08);border-radius:10px;color:var(--text);font-family:'DM Mono',monospace;font-size:.9rem;outline:none;transition:border-color .2s,box-shadow .2s;}
-.math-input:focus{border-color:var(--emerald);box-shadow:0 0 0 3px rgba(0,229,160,.1);}
-.submit-btn{width:100%;padding:12px;margin-top:8px;background:linear-gradient(135deg,var(--emerald2),var(--emerald));color:var(--bg);border:none;border-radius:10px;font-weight:800;font-size:.88rem;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;transition:transform .2s var(--spring),box-shadow .2s;box-shadow:0 0 20px rgba(0,229,160,.2);}
-.submit-btn:hover{transform:scale(1.03);box-shadow:0 0 35px rgba(0,229,160,.35);}
-.hint-btn{width:100%;padding:10px;margin-top:6px;background:rgba(245,200,66,.07);color:var(--gold);border:1px solid rgba(245,200,66,.15);border-radius:10px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:'Cabinet Grotesk',sans-serif;transition:.2s;}
-.hint-btn:hover{background:rgba(245,200,66,.12);}
-.feedback-msg{font-size:.82rem;font-weight:600;padding:9px 13px;border-radius:9px;display:none;margin-top:4px;}
-.feedback-msg.correct{background:rgba(0,229,160,.1);color:var(--emerald);border:1px solid rgba(0,229,160,.2);display:block;}
-.feedback-msg.wrong{background:rgba(255,107,107,.1);color:var(--coral);border:1px solid rgba(255,107,107,.2);display:block;}
-.feedback-msg.hint{background:rgba(245,200,66,.08);color:var(--gold);border:1px solid rgba(245,200,66,.2);display:block;}
-.resource-list{display:flex;flex-direction:column;gap:7px;}
-.resource-link{display:flex;align-items:center;gap:10px;color:var(--text2);text-decoration:none;font-size:.83rem;padding:9px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.05);background:rgba(255,255,255,.02);transition:.2s;}
-.resource-link:hover{color:var(--gold);border-color:rgba(245,200,66,.2);background:rgba(245,200,66,.04);}
-
-/* ═══════════════════════════════════════
-   CALCULATOR
-═══════════════════════════════════════ */
-.calc-section{background:var(--bg2);padding:100px 5%;position:relative;z-index:1;overflow:hidden;}
-.calc-section::before{content:'';position:absolute;top:-300px;right:-300px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(245,200,66,.06),transparent 70%);pointer-events:none;animation:orbDrift 15s ease-in-out infinite;}
-.calc-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:30px;max-width:1100px;margin:0 auto;align-items:start;}
-.calc-panel{background:var(--surface);border-radius:22px;padding:34px;border:1px solid rgba(255,255,255,.06);}
-.calc-field{margin-bottom:22px;}
-.calc-label{display:flex;justify-content:space-between;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:7px;}
-.calc-label span{color:var(--gold);font-family:'DM Mono',monospace;}
-.calc-input{width:100%;padding:12px 15px;background:var(--surface2);border:1.5px solid rgba(255,255,255,.07);border-radius:11px;color:var(--text);font-family:'DM Mono',monospace;font-size:.95rem;outline:none;transition:.2s;}
-.calc-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,200,66,.08);}
-.calc-range{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;background:var(--surface3);outline:none;cursor:pointer;margin-top:8px;}
-.calc-range::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));cursor:pointer;border:2px solid var(--bg);box-shadow:0 0 10px rgba(245,200,66,.5);}
-select.calc-input{cursor:pointer;}
-select.calc-input option{background:var(--surface2);color:var(--text);}
-.calc-results{background:linear-gradient(160deg,#0d1a14,#0a1520);border-radius:22px;padding:34px;border:1px solid rgba(0,229,160,.12);box-shadow:0 0 40px rgba(0,229,160,.05);position:relative;overflow:hidden;}
-.calc-results::before{content:'';position:absolute;top:-100px;right:-100px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,160,.08),transparent 70%);pointer-events:none;}
-.result-main{text-align:center;padding:28px 0 24px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:24px;}
-.result-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:10px;}
-.result-amount{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,3.8rem);font-weight:700;color:var(--gold);line-height:1;text-shadow:0 0 30px rgba(245,200,66,.3);transition:transform .4s var(--spring);}
-.result-amount.bump{animation:numBump .4s var(--spring);}
-@keyframes numBump{0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
-.breakdown{display:flex;flex-direction:column;gap:14px;margin-bottom:24px;}
-.breakdown-row{display:flex;justify-content:space-between;align-items:center;}
-.b-label{font-size:.83rem;color:rgba(255,255,255,.45);}
-.b-val{font-family:'DM Mono',monospace;font-size:.88rem;color:var(--text);font-weight:500;}
-.b-val.accent{color:var(--emerald);}
-.b-val.gold{color:var(--gold);}
-.bar-chart-wrap{margin-top:20px;}
-.bar-chart-label{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px;}
-.bar-chart{height:10px;border-radius:10px;background:rgba(255,255,255,.06);overflow:hidden;display:flex;}
-.bar-p{height:100%;background:rgba(255,255,255,.35);transition:width 1.2s var(--ease);}
-.bar-i{height:100%;background:linear-gradient(90deg,var(--gold),var(--emerald));transition:width 1.2s var(--ease);}
-.bar-legend{display:flex;gap:18px;margin-top:7px;}
-.bar-legend span{font-size:.7rem;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:5px;}
-.bar-legend span::before{content:'';display:inline-block;width:10px;height:4px;border-radius:2px;}
-.bl-p::before{background:rgba(255,255,255,.35);}
-.bl-i::before{background:linear-gradient(90deg,var(--gold),var(--emerald));}
-.formula-box{margin-top:20px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:14px;font-family:'DM Mono',monospace;font-size:.78rem;color:var(--emerald);line-height:1.8;text-align:center;}
-
-/* ═══════════════════════════════════════
-   MISSION STRIP
-═══════════════════════════════════════ */
-.mission-strip{position:relative;z-index:1;padding:80px 5%;text-align:center;overflow:hidden;background:linear-gradient(135deg,#0c1a12,#13100a,#0c1a12);background-size:300% 300%;animation:gradBG 8s ease-in-out infinite;}
-.mission-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(245,200,66,.08),transparent);pointer-events:none;}
-.mission-border-top{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.mission-border-bot{position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--emerald),transparent);}
-.mission-quote{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.5vw,2.6rem);font-style:italic;color:var(--text);max-width:800px;margin:0 auto 18px;line-height:1.4;position:relative;z-index:1;}
-.mission-quote em{color:var(--gold);}
-.mission-attr{font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);position:relative;z-index:1;}
-
-/* ═══════════════════════════════════════
-   WORKSHEET VAULT
-═══════════════════════════════════════ */
-.vault-section{background:var(--bg);padding:100px 5%;position:relative;z-index:1;}
-.vault-scroll{display:flex;gap:16px;overflow-x:auto;padding:8px 0 24px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent;}
-.vault-scroll::-webkit-scrollbar{height:3px;}
-.vault-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px;}
-.ws-card{min-width:270px;flex-shrink:0;background:var(--surface);border-radius:20px;padding:26px;border:1px solid rgba(255,255,255,.05);border-left:3px solid var(--gold);transition:transform .3s var(--spring),box-shadow .3s,border-left-color .3s;position:relative;overflow:hidden;}
-.ws-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,200,66,.04),transparent);opacity:0;transition:opacity .3s;}
-.ws-card:hover{transform:translateY(-6px);box-shadow:0 20px 45px rgba(0,0,0,.35);}
-.ws-card:hover::after{opacity:1;}
-.ws-card:nth-child(even){border-left-color:var(--emerald);}
-.ws-card:nth-child(3n){border-left-color:var(--violet);}
-.ws-icon{font-size:1.8rem;margin-bottom:12px;display:block;transition:transform .3s var(--spring);}
-.ws-card:hover .ws-icon{transform:scale(1.2) rotate(-8deg);}
-.ws-tag{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.15);padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:9px;}
-.ws-card:nth-child(even) .ws-tag{color:var(--emerald);background:rgba(0,229,160,.08);border-color:rgba(0,229,160,.15);}
-.ws-card h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text);margin-bottom:7px;}
-.ws-card p{font-size:.82rem;color:var(--text2);line-height:1.65;margin-bottom:16px;}
-.ws-btn{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;padding:8px 16px;border-radius:20px;cursor:pointer;transition:transform .2s var(--spring),box-shadow .2s;text-decoration:none;box-shadow:0 0 15px rgba(245,200,66,.2);}
-.ws-btn:hover{transform:scale(1.06);box-shadow:0 0 25px rgba(245,200,66,.4);}
-
-/* ═══════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════ */
-footer{background:var(--bg2);color:var(--text);padding:70px 5% 40px;border-radius:40px 40px 0 0;position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.05);overflow:hidden;}
-footer::before{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(245,200,66,.04),transparent 70%);pointer-events:none;}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:28px;position:relative;}
-.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;text-decoration:none;display:block;margin-bottom:12px;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.footer-brand p{font-size:.84rem;color:var(--text3);line-height:1.75;max-width:280px;}
-.fbadges{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;}
-.fbadge{font-size:.67rem;font-weight:600;letter-spacing:.06em;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:var(--text3);}
-.footer-col h5{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold);margin-bottom:16px;}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
-.footer-col ul li a{color:var(--text3);text-decoration:none;font-size:.84rem;transition:color .2s;}
-.footer-col ul li a:hover{color:var(--gold2);}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.footer-bottom p{font-size:.76rem;color:var(--text3);}
-
-/* ═══════════════════════════════════════
-   SCROLL REVEAL
-═══════════════════════════════════════ */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
-.reveal.up{opacity:0;transform:translateY(28px);}
-.reveal.left{opacity:0;transform:translateX(-28px);}
-.reveal.right{opacity:0;transform:translateX(28px);}
-.reveal.scale{opacity:0;transform:scale(.95);}
-.reveal.visible{opacity:1;transform:translate(0) scale(1);}
-
-/* ═══════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════ */
-@media(max-width:1200px){.courses-grid{grid-template-columns:repeat(3,1fr);}}
-@media(max-width:1024px){
-  .bento-grid{grid-template-columns:repeat(2,1fr);}
-  .bento-card.wide{grid-column:span 2;}
-  .viewer-grid,.calc-grid{grid-template-columns:1fr;}
-  .footer-grid{grid-template-columns:1fr 1fr;}
-  .footer-brand{grid-column:span 2;}
-  .usp-grid{grid-template-columns:repeat(2,1fr);}
-  .courses-grid{grid-template-columns:repeat(2,1fr);}
-}
-@media(max-width:768px){
-  nav{padding:0 4%;}
-  .nav-links{display:none;position:fixed;top:70px;left:0;right:0;bottom:0;background:rgba(8,12,16,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:flex-start;padding:28px 6%;gap:4px;z-index:999;}
-  .nav-links.open{display:flex;}
-  .nav-links a{width:100%;padding:13px 14px;font-size:1rem;border-radius:12px;}
-  .nav-links a::after{display:none;}
-  .hamburger{display:flex;}
-  .bento-grid{grid-template-columns:1fr;}
-  .bento-card.wide,.bento-card.featured{grid-column:span 1;}
-  .hero{min-height:90vh;}
-  .hero-stats{gap:28px;}
-  .footer-grid{grid-template-columns:1fr;}
-  .footer-brand{grid-column:1;}
-  .section,.usp-section,.courses-section,.viewer-section,.calc-section,.vault-section{padding:70px 5%;}
-  .usp-grid{grid-template-columns:1fr;}
-  .courses-grid{grid-template-columns:1fr;}
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+<!-- Shared brand logo icon (circuit-board brain + pi + coin + rising chart) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="sm-logo-icon" viewBox="0 0 64 64">
+    <circle cx="32" cy="32" r="30" fill="#142238"/>
+    <path d="M20 20c-4 0-7 3-7 7 0 3 2 5 2 5-3 1-5 4-5 7 0 4 3 7 7 7h2c1 3 4 5 7 5h14c3 0 6-2 7-5h2c4 0 7-3 7-7 0-3-2-6-5-7 0 0 2-2 2-5 0-4-3-7-7-7-1-3-4-5-7-5H27c-3 0-6 2-7 5z" fill="none" stroke="#f5c842" stroke-width="1.6" stroke-linejoin="round"/>
+    <g stroke="#f5c842" stroke-width="1.2" stroke-linecap="round" opacity="0.85">
+      <line x1="17" y1="27" x2="12" y2="27"/>
+      <line x1="17" y1="37" x2="12" y2="39"/>
+      <line x1="47" y1="27" x2="52" y2="25"/>
+      <line x1="47" y1="37" x2="52" y2="39"/>
+      <line x1="32" y1="16" x2="32" y2="11"/>
+    </g>
+    <g fill="#f5c842">
+      <circle cx="12" cy="27" r="1.6"/>
+      <circle cx="12" cy="39" r="1.6"/>
+      <circle cx="52" cy="25" r="1.6"/>
+      <circle cx="52" cy="39" r="1.6"/>
+      <circle cx="32" cy="11" r="1.6"/>
+    </g>
+    <text x="32" y="42" font-family="Georgia, 'Times New Roman', serif" font-size="25" font-weight="700" fill="#f5c842" text-anchor="middle">&#960;</text>
+    <circle cx="46" cy="18" r="7" fill="#f5c842" stroke="#142238" stroke-width="1"/>
+    <text x="46" y="21.5" font-family="Arial, sans-serif" font-size="9" font-weight="700" fill="#142238" text-anchor="middle">$</text>
+    <polyline points="14,46 22,40 28,44 40,32" fill="none" stroke="#00e5a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <polygon points="40,32 33.5,33.5 38.5,38" fill="#00e5a0"/>
+  </symbol>
+</svg>
 
 <!-- Animated background -->
 <div class="bg-aura">
@@ -543,8 +60,9 @@ footer::before{content:'';position:absolute;top:-200px;left:50%;transform:transl
      NAV
 ═══════════════════════════════════════ -->
 <nav id="nav">
-  <a href="#" class="nav-logo">
-    <span class="l-sav">Sav</span><span class="l-ing">oring</span>&nbsp;<span class="l-mon">Mon</span><span class="l-ey">ey</span>
+  <a href="Savoring_Money_Website.htm" class="nav-logo brand-logo">
+    <svg class="brand-icon" width="32" height="32" aria-hidden="true"><use href="#sm-logo-icon"></use></svg>
+    <span class="brand-word">SAVORING <em>MONEY</em></span>
   </a>
   <div class="nav-links" id="navLinks">
     <a href="#why-us">Why Us</a>
@@ -553,7 +71,7 @@ footer::before{content:'';position:absolute;top:-200px;left:50%;transform:transl
     <a href="#viewer">Live Lesson</a>
     <a href="#calculator">Calculator</a>
     <a href="#vault">Resources</a>
-    <a href="#" class="nav-cta">Book Free Demo →</a>
+    <a href="#book-demo" class="nav-cta">Book Free Demo →</a>
   </div>
   <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -575,17 +93,18 @@ footer::before{content:'';position:absolute;top:-200px;left:50%;transform:transl
       <span class="h1-line2">Kitchen</span>
     </h1>
     <p class="hero-sub">
-      Where Mathematics, Finance &amp; Technology are served with real-world flavour.
+      Where Personal Finance &amp; Technology are served with real-world flavour.
       Interactive lessons, live calculators, and worksheets — all under one roof.
+      (Want live math tutoring too? We partner with <strong style="color:var(--gold)">We The Mind</strong> for that.)
     </p>
     <div class="hero-btns">
-      <a href="#" class="btn-gold">📅 Book Free Demo</a>
+      <a href="#book-demo" class="btn-gold">📅 Book Free Demo</a>
       <a href="#courses" class="btn-ghost">Explore Courses</a>
     </div>
     <div class="hero-stats">
-      <div class="stat"><div class="stat-num" data-target="10">0</div><div class="stat-label">Courses Offered</div></div>
-      <div class="stat"><div class="stat-num" data-target="9">0</div><div class="stat-label">Pillars of Mastery</div></div>
-      <div class="stat"><div class="stat-num" data-target="5">0</div><div class="stat-label">Curricula</div></div>
+      <div class="stat"><div class="stat-num" data-target="12">0</div><div class="stat-label">Courses Offered</div></div>
+      <div class="stat"><div class="stat-num" data-target="8">0</div><div class="stat-label">Pillars of Mastery</div></div>
+      <div class="stat"><div class="stat-num" data-target="4">0</div><div class="stat-label">Skill Areas</div></div>
       <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Curiosity</div></div>
     </div>
   </div>
@@ -600,28 +119,28 @@ footer::before{content:'';position:absolute;top:-200px;left:50%;transform:transl
   <div class="ticker" id="ticker">
     <span class="ticker-item">Compound Interest</span>
     <span class="ticker-item">Financial Literacy</span>
-    <span class="ticker-item">Math Mastery</span>
-    <span class="ticker-item">AP Statistics</span>
+    <span class="ticker-item">Investing Basics</span>
+    <span class="ticker-item">Crypto & Blockchain</span>
     <span class="ticker-item">Stock Markets</span>
-    <span class="ticker-item">CBSE · IGCSE · AP · IB</span>
+    <span class="ticker-item">Excel & Python</span>
     <span class="ticker-item">EdTech Leadership</span>
     <span class="ticker-item">Teen Budgeting</span>
     <span class="ticker-item">Spoken English</span>
     <span class="ticker-item">GenAI & Future Skills</span>
     <span class="ticker-item">Science Grades 1–12</span>
-    <span class="ticker-item">Australian Curriculum</span>
+    <span class="ticker-item">Credit & Debt Management</span>
     <span class="ticker-item">Compound Interest</span>
     <span class="ticker-item">Financial Literacy</span>
-    <span class="ticker-item">Math Mastery</span>
-    <span class="ticker-item">AP Statistics</span>
+    <span class="ticker-item">Investing Basics</span>
+    <span class="ticker-item">Crypto & Blockchain</span>
     <span class="ticker-item">Stock Markets</span>
-    <span class="ticker-item">CBSE · IGCSE · AP · IB</span>
+    <span class="ticker-item">Excel & Python</span>
     <span class="ticker-item">EdTech Leadership</span>
     <span class="ticker-item">Teen Budgeting</span>
     <span class="ticker-item">Spoken English</span>
     <span class="ticker-item">GenAI & Future Skills</span>
     <span class="ticker-item">Science Grades 1–12</span>
-    <span class="ticker-item">Australian Curriculum</span>
+    <span class="ticker-item">Credit & Debt Management</span>
   </div>
 </div>
 
@@ -646,15 +165,15 @@ footer::before{content:'';position:absolute;top:-200px;left:50%;transform:transl
     <div class="usp-card">
       <span class="usp-number">02</span>
       <div class="usp-icon-wrap">🌐</div>
-      <h3>Global Curriculum Expertise</h3>
-      <p>US, UK, IB, Indian &amp; Australian curriculum specialists — seamlessly bridging education systems worldwide.</p>
+      <h3>Global Money Fluency</h3>
+      <p>Financial concepts adapted for learners in the US, UK, India, Australia &amp; beyond — one money vocabulary, everywhere.</p>
     </div>
 
     <div class="usp-card">
       <span class="usp-number">03</span>
       <div class="usp-icon-wrap">🏗️</div>
       <h3>Real-Life Application</h3>
-      <p>Maths and finance taught using real-world scenarios, live tools, and scenarios students actually encounter.</p>
+      <p>Finance and technology taught using real-world scenarios, live calculators, and situations students actually encounter.</p>
     </div>
 
     <div class="usp-card">
@@ -687,17 +206,10 @@ footer::before{content:'';position:absolute;top:-200px;left:50%;transform:transl
 <section class="section pillars-bg" id="academy">
   <div class="section-head reveal">
     <div class="section-tag">The Academy</div>
-    <h2>Nine Pillars of the Polymath</h2>
-    <p>A multidisciplinary framework blending rigorous academics with real-world financial intelligence.</p>
+    <h2>Eight Pillars of the Polymath</h2>
+    <p>A multidisciplinary framework blending real-world financial intelligence with future-ready technology.</p>
   </div>
   <div class="bento-grid reveal">
-
-    <div class="bento-card">
-      <span class="card-icon">📐</span>
-      <div class="card-badge">Academics</div>
-      <h3>Math Mastery</h3>
-      <p>Deep expertise in CBSE, IGCSE, and US Common Core — Algebra, Trigonometry, AP Statistics, and Calculus foundations.</p>
-    </div>
 
     <div class="bento-card featured">
       <span class="card-icon">💰</span>
@@ -769,16 +281,11 @@ footer::before{content:'';position:absolute;top:-200px;left:50%;transform:transl
   <div class="section-head reveal">
     <div class="section-tag">What We Teach</div>
     <h2>Our Full Course Catalogue</h2>
-    <p>From global curricula to future-ready skills — comprehensive programmes for every learner.</p>
+    <p>Personal finance and future-ready tech skills — comprehensive programmes for every learner.</p>
   </div>
 
   <div class="course-tabs reveal" id="courseTabs">
     <button class="ctab active" data-filter="all">All Courses</button>
-    <button class="ctab" data-filter="us">🇺🇸 US</button>
-    <button class="ctab" data-filter="uk">🇬🇧 UK</button>
-    <button class="ctab" data-filter="ib">🌍 IB</button>
-    <button class="ctab" data-filter="india">🇮🇳 India</button>
-    <button class="ctab" data-filter="au">🇦🇺 Australia</button>
     <button class="ctab" data-filter="finance">💰 Finance</button>
     <button class="ctab" data-filter="science">🔬 Science</button>
     <button class="ctab" data-filter="english">🗣️ English</button>
@@ -787,67 +294,53 @@ footer::before{content:'';position:absolute;top:-200px;left:50%;transform:transl
 
   <div class="courses-grid reveal" id="coursesGrid">
 
-    <div class="course-card" data-cat="us">
-      <span class="course-emoji">🇺🇸</span>
-      <div class="course-flag">US Curriculum</div>
-      <h3>SAT / ACT / PSAT</h3>
-      <p>Full exam prep covering both Math and Evidence-Based Reading. Timed practice, strategy sessions, and score improvement plans.</p>
+    <div class="course-card" data-cat="finance">
+      <span class="course-emoji">📒</span>
+      <div class="course-flag">Finance · Foundations</div>
+      <h3>Budgeting &amp; Cash Flow Mastery</h3>
+      <p>Build a budget that survives real life — income tracking, the anti-budget method, and habits that stick past month one.</p>
     </div>
 
-    <div class="course-card" data-cat="us">
-      <span class="course-emoji">📊</span>
-      <div class="course-flag">US · AP</div>
-      <h3>AP Calculus AB/BC &amp; AP Statistics</h3>
-      <p>College-board aligned courses covering limits, derivatives, integrals, and statistical inference with exam strategy.</p>
-    </div>
-
-    <div class="course-card" data-cat="us">
-      <span class="course-emoji">📐</span>
-      <div class="course-flag">US · Core Math</div>
-      <h3>Algebra 1 &amp; 2, Geometry, Precalculus</h3>
-      <p>Strong foundations built with conceptual clarity, real-world examples, and aligned to Common Core standards.</p>
-    </div>
-
-    <div class="course-card" data-cat="uk">
-      <span class="course-emoji">🇬🇧</span>
-      <div class="course-flag">UK Curriculum</div>
-      <h3>GCSE &amp; IGCSE Mathematics</h3>
-      <p>Core and Extended tiers covered with Cambridge-aligned problem sets, past paper walkthroughs, and concept deep-dives.</p>
-    </div>
-
-    <div class="course-card" data-cat="uk">
+    <div class="course-card" data-cat="finance">
       <span class="course-emoji">📈</span>
-      <div class="course-flag">UK · A-Level</div>
-      <h3>A-Level &amp; Further Maths</h3>
-      <p>Pure, Mechanics, and Statistics modules for AQA, OCR, and Edexcel — rigorous preparation for university entry.</p>
+      <div class="course-flag">Finance · Investing</div>
+      <h3>Investing &amp; Stock Market Basics</h3>
+      <p>From opening your first brokerage account to reading an index fund fact sheet — investing fundamentals without the jargon.</p>
     </div>
 
-    <div class="course-card" data-cat="ib">
-      <span class="course-emoji">🌍</span>
-      <div class="course-flag">IB Curriculum</div>
-      <h3>IB Math AA &amp; AI (SL &amp; HL)</h3>
-      <p>Applications &amp; Interpretation and Analysis &amp; Approaches — both routes covered with Internal Assessment support.</p>
+    <div class="course-card" data-cat="finance">
+      <span class="course-emoji">💳</span>
+      <div class="course-flag">Finance · Credit</div>
+      <h3>Credit &amp; Debt Management</h3>
+      <p>How credit scores actually work, avoiding high-interest debt traps, and paying down what you owe with a real plan.</p>
     </div>
 
-    <div class="course-card" data-cat="india">
-      <span class="course-emoji">🇮🇳</span>
-      <div class="course-flag">Indian Curriculum</div>
-      <h3>CBSE &amp; ICSE Classes 10 &amp; 12</h3>
-      <p>Board exam mastery with chapter-wise notes, NCERT solutions, and previous year question pattern analysis.</p>
+    <div class="course-card" data-cat="finance">
+      <span class="course-emoji">🧾</span>
+      <div class="course-flag">Finance · Planning</div>
+      <h3>Taxes &amp; Retirement Planning</h3>
+      <p>Demystifying tax basics and long-term retirement vehicles so compounding has decades to work in your favour.</p>
     </div>
 
-    <div class="course-card" data-cat="india">
-      <span class="course-emoji">📝</span>
-      <div class="course-flag">India · State Boards</div>
-      <h3>State Board Mathematics</h3>
-      <p>Customised support for students across Indian state boards with vernacular-friendly explanations where needed.</p>
+    <div class="course-card" data-cat="finance">
+      <span class="course-emoji">🪙</span>
+      <div class="course-flag">Finance · Digital Assets</div>
+      <h3>Crypto &amp; Blockchain Basics</h3>
+      <p>What blockchain actually solves, how to evaluate digital assets critically, and how to avoid the most common scams.</p>
     </div>
 
-    <div class="course-card" data-cat="au">
-      <span class="course-emoji">🇦🇺</span>
-      <div class="course-flag">Australian Curriculum</div>
-      <h3>Primary to Senior Secondary Maths</h3>
-      <p>Covering the Australian Curriculum from Years 1–12 — Foundation, Core, and Advanced pathways with NAPLAN readiness.</p>
+    <div class="course-card" data-cat="tech">
+      <span class="course-emoji">📊</span>
+      <div class="course-flag">Tech · Analysis</div>
+      <h3>Excel &amp; Python for Finance</h3>
+      <p>Model budgets and portfolios in Excel, then automate the boring parts with beginner-friendly Python scripts.</p>
+    </div>
+
+    <div class="course-card" data-cat="tech">
+      <span class="course-emoji">🤖</span>
+      <div class="course-flag">Tech · AI</div>
+      <h3>AI Tools for Money Management</h3>
+      <p>Using AI assistants responsibly for budgeting, expense tracking, and financial research — without the hallucinated advice.</p>
     </div>
 
     <div class="course-card" data-cat="finance">
@@ -897,7 +390,7 @@ footer::before{content:'';position:absolute;top:-200px;left:50%;transform:transl
   <h2>Start Your Learning Journey <em>Today</em></h2>
   <p>Book a free 30-minute demo class — no commitment, no cost. Just great teaching.</p>
   <div class="demo-btns">
-    <a href="#" class="btn-emerald">📅 Book Free Demo Class</a>
+    <a href="#book-demo" class="btn-emerald">📅 Book Free Demo Class</a>
     <a href="#courses" class="btn-ghost">Browse All Courses</a>
   </div>
 </div>
@@ -952,7 +445,7 @@ footer::before{content:'';position:absolute;top:-200px;left:50%;transform:transl
       <div>
         <p style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;">Lesson Resources</p>
         <div class="resource-list">
-          <a href="#" class="resource-link">📂 Download Formula Sheet (PDF)</a>
+          <a href="https://whatsapp.com/channel/0029VbCPOKT7YSd4kdergp0B" target="_blank" rel="noopener" class="resource-link">📂 Request Formula Sheet via WhatsApp</a>
           <a href="#calculator" class="resource-link">🔢 Open Live Calculator Below</a>
           <a href="#vault" class="resource-link">📝 Browse Worksheet Vault</a>
         </div>
@@ -1037,64 +530,136 @@ footer::before{content:'';position:absolute;top:-200px;left:50%;transform:transl
   <div class="section-head reveal">
     <div class="section-tag">The Vault</div>
     <h2>Worksheet &amp; Resource Library</h2>
-    <p>Curated materials for every learner — from teen budgeters to AP Statistics champions.</p>
+    <p>Curated materials for every learner — from teen budgeters to future investors. No files hosted here — request any item and we'll send it over WhatsApp.</p>
   </div>
   <div class="vault-scroll reveal">
     <div class="ws-card">
-      <span class="ws-icon">📊</span>
-      <div class="ws-tag">Statistics</div>
-      <h4>AP Statistics MCQ Bank</h4>
-      <p>Advanced diagnostic covering probability distributions, hypothesis testing, and regression analysis.</p>
-      <a href="#" class="ws-btn">↓ Download</a>
+      <span class="ws-icon">📈</span>
+      <div class="ws-tag">Investing</div>
+      <h4>Investing Fundamentals Q&amp;A Bank</h4>
+      <p>Diagnostic questions covering index funds, diversification, risk tolerance, and reading a brokerage statement.</p>
+      <a href="https://whatsapp.com/channel/0029VbCPOKT7YSd4kdergp0B" target="_blank" rel="noopener" class="ws-btn">💬 Request via WhatsApp</a>
     </div>
     <div class="ws-card">
       <span class="ws-icon">💹</span>
       <div class="ws-tag">Finance</div>
       <h4>Teen Budget Tracker</h4>
       <p>The "Anti-Budget" system — simple, flexible, and built for Grades 9–12 financial habits.</p>
-      <a href="#" class="ws-btn">↓ Download</a>
+      <a href="https://whatsapp.com/channel/0029VbCPOKT7YSd4kdergp0B" target="_blank" rel="noopener" class="ws-btn">💬 Request via WhatsApp</a>
     </div>
     <div class="ws-card">
-      <span class="ws-icon">📐</span>
-      <div class="ws-tag">Trigonometry</div>
-      <h4>Trig Visual Guide</h4>
-      <p>Colour-coded unit circles, all identity proofs, and CBSE/IGCSE aligned practice sets.</p>
-      <a href="#" class="ws-btn">↓ Download</a>
+      <span class="ws-icon">📊</span>
+      <div class="ws-tag">Technology</div>
+      <h4>Excel Formulas Cheat Sheet</h4>
+      <p>The Excel functions every budget or portfolio tracker actually needs — no fluff, just the ones you'll reuse.</p>
+      <a href="https://whatsapp.com/channel/0029VbCPOKT7YSd4kdergp0B" target="_blank" rel="noopener" class="ws-btn">💬 Request via WhatsApp</a>
     </div>
     <div class="ws-card">
       <span class="ws-icon">💻</span>
       <div class="ws-tag">Technology</div>
       <h4>HTML/CSS Cheat Sheet</h4>
       <p>Compact reference for building your first educational web app — beginner friendly.</p>
-      <a href="#" class="ws-btn">↓ Download</a>
+      <a href="https://whatsapp.com/channel/0029VbCPOKT7YSd4kdergp0B" target="_blank" rel="noopener" class="ws-btn">💬 Request via WhatsApp</a>
     </div>
     <div class="ws-card">
       <span class="ws-icon">🏦</span>
       <div class="ws-tag">Finance</div>
       <h4>Banking Basics Workbook</h4>
       <p>From savings accounts to credit scores — a complete guided workbook for teens.</p>
-      <a href="#" class="ws-btn">↓ Download</a>
+      <a href="https://whatsapp.com/channel/0029VbCPOKT7YSd4kdergp0B" target="_blank" rel="noopener" class="ws-btn">💬 Request via WhatsApp</a>
     </div>
     <div class="ws-card">
       <span class="ws-icon">📈</span>
       <div class="ws-tag">Investing</div>
       <h4>Intro to Stock Market</h4>
       <p>NSE/BSE fundamentals, reading candlestick charts, and understanding market indices.</p>
-      <a href="#" class="ws-btn">↓ Download</a>
+      <a href="https://whatsapp.com/channel/0029VbCPOKT7YSd4kdergp0B" target="_blank" rel="noopener" class="ws-btn">💬 Request via WhatsApp</a>
     </div>
     <div class="ws-card">
       <span class="ws-icon">🔬</span>
       <div class="ws-tag">Science</div>
       <h4>Science Concept Cards</h4>
-      <p>Physics, Chemistry &amp; Biology visual summary cards for CBSE/IGCSE exam preparation.</p>
-      <a href="#" class="ws-btn">↓ Download</a>
+      <p>Physics, Chemistry &amp; Biology visual summary cards for exam preparation.</p>
+      <a href="https://whatsapp.com/channel/0029VbCPOKT7YSd4kdergp0B" target="_blank" rel="noopener" class="ws-btn">💬 Request via WhatsApp</a>
     </div>
     <div class="ws-card">
       <span class="ws-icon">🗣️</span>
       <div class="ws-tag">English</div>
       <h4>Spoken English Drills</h4>
       <p>Daily speaking exercises and grammar drills for confident communication in professional settings.</p>
-      <a href="#" class="ws-btn">↓ Download</a>
+      <a href="https://whatsapp.com/channel/0029VbCPOKT7YSd4kdergp0B" target="_blank" rel="noopener" class="ws-btn">💬 Request via WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     LEARN ON YOUTUBE
+═══════════════════════════════════════ -->
+<section class="yt-strip">
+  <div class="yt-card reveal">
+    <div class="yt-icon">▶️</div>
+    <h2>All Our Personal Finance Lessons Live <span>on YouTube</span></h2>
+    <p>Budgeting, investing, credit, crypto — every personal-finance topic we teach is broken down in free video lessons. New uploads regularly, no signup required.</p>
+    <a href="https://www.youtube.com/@savoringmoney" target="_blank" rel="noopener" class="btn-youtube">▶ Watch on YouTube</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     BOOK A DEMO (We The Mind partnership)
+═══════════════════════════════════════ -->
+<section class="demo-form-section" id="book-demo">
+  <div class="section-head reveal">
+    <div class="section-tag">Live Tutoring</div>
+    <h2>Book a Free Math Tutoring Demo <span style="color:var(--gold);">— powered by We The Mind</span></h2>
+    <p>Our personal-finance curriculum lives on YouTube and right here on this site. For live 1:1 or group <strong style="color:var(--emerald);">math tutoring</strong>, we partner with We The Mind — book your free demo below and their team will confirm your session.</p>
+  </div>
+  <div class="demo-form-wrap reveal">
+    <div class="demo-form-card">
+      <p class="demo-partner-note">Personal finance learning at Savoring Money is <strong>YouTube-first</strong> and always free. Live <strong>math tutoring demos</strong> are booked through our partner, <strong>We The Mind</strong>, using the form below.</p>
+      <form id="demo-form" data-endpoint="https://script.google.com/macros/s/AKfycbw4v7C_-phYjQUH38Gi4fWWzhpYgKZPggMOp4xah5FNHU3OL0Ifv0qni07jaNZh8zqW/exec">
+        <input type="hidden" name="utm_source" id="utm_source">
+        <input type="hidden" name="utm_medium" id="utm_medium">
+        <input type="hidden" name="utm_campaign" id="utm_campaign">
+        <div class="field">
+          <label for="session_type">What are you booking?</label>
+          <select id="session_type" name="session_type" required>
+            <option value="Free 30-Minute Demo">Free 30-Minute Demo</option>
+            <option value="Group Session Trial">Group Session Trial</option>
+            <option value="Single Problem-Solving Session">Single Problem-Solving Session ($20)</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="field"><label for="parent_name">Parent name</label><input type="text" id="parent_name" name="parent_name" required></div>
+          <div class="field"><label for="student_name">Student name</label><input type="text" id="student_name" name="student_name" required></div>
+        </div>
+        <div class="form-row">
+          <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+          <div class="field"><label for="phone">Phone (with country code)</label><input type="tel" id="phone" name="phone" required></div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="curriculum">Curriculum / board</label>
+            <select id="curriculum" name="curriculum" required>
+              <option value="">Select one</option>
+              <optgroup label="School Boards"><option>CBSE</option><option>ICSE / ISC</option><option>IB Diploma</option><option>IGCSE (Cambridge)</option><option>A-Levels</option><option>US Common Core</option><option>Australian ACARA</option><option>Singapore O/A-Level</option><option>Canadian Provincial</option><option>UAE MOE / KHDA</option></optgroup>
+              <optgroup label="US Tests & AP"><option>SAT</option><option>ACT</option><option>AP Courses</option></optgroup>
+              <optgroup label="Competitive / Grad-Entrance"><option>GATE</option><option>CSIR NET</option></optgroup>
+              <optgroup label="University Level"><option>University Math</option><option>University Physics/Chemistry</option><option>University Computer Science</option></optgroup>
+              <option>Other — I'll specify below</option>
+            </select>
+          </div>
+          <div class="field"><label for="grade">Grade / year</label><input type="text" id="grade" name="grade" placeholder="e.g. Grade 10" required></div>
+        </div>
+        <div class="field"><label for="notes">Subject, problems to solve, or group size</label><input type="text" id="notes" name="notes" placeholder="e.g. IB DP Maths AA HL — functions, or 'group of 5'" required></div>
+        <div class="field" id="problem_file_field" style="display:none;">
+          <label for="problem_file">Upload your problem(s) — photo, PDF, or document <span style="font-weight:400;">(max 10 MB)</span></label>
+          <input type="file" id="problem_file" name="problem_file" accept=".png,.jpg,.jpeg,.pdf,.doc,.docx">
+          <p class="form-footnote" id="problem_file_error" style="display:none; color:var(--rose);">That file is over 10 MB — please upload something smaller.</p>
+        </div>
+        <button type="submit" class="btn btn-primary form-submit">Book My Free Session</button>
+        <p class="form-footnote">By submitting, you agree to be contacted about scheduling your free session. We don't share your details with advertisers.</p>
+      </form>
+      <div id="form-success" style="display:none;">Thanks — we've got your request, noted and ready to grow. Look out for a confirmation email with your session time shortly.</div>
     </div>
   </div>
 </section>
@@ -1105,26 +670,29 @@ footer::before{content:'';position:absolute;top:-200px;left:50%;transform:transl
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <a href="#" class="footer-logo">Savoring Money</a>
-      <p>Empowering the next generation to earn, spend, and grow with confidence. A multidisciplinary academy where maths meets money meets the real world.</p>
+      <div class="brand-logo">
+        <svg class="brand-icon" width="30" height="30" aria-hidden="true"><use href="#sm-logo-icon"></use></svg>
+        <span class="brand-word">Savoring <em>Money</em></span>
+      </div>
+      <p>Empowering the next generation to earn, spend, and grow with confidence. A multidisciplinary academy where money meets technology meets the real world.</p>
       <div class="fbadges">
         <span class="fbadge">English</span>
         <span class="fbadge">हिन्दी</span>
         <span class="fbadge">বাংলা</span>
         <span class="fbadge">日本語 N5</span>
-        <span class="fbadge">CBSE</span>
-        <span class="fbadge">IGCSE</span>
-        <span class="fbadge">AP</span>
-        <span class="fbadge">IB</span>
-        <span class="fbadge">A-Level</span>
-        <span class="fbadge">AUS</span>
+        <span class="fbadge">Budgeting</span>
+        <span class="fbadge">Investing</span>
+        <span class="fbadge">Crypto</span>
+        <span class="fbadge">Excel</span>
+        <span class="fbadge">Python</span>
+        <span class="fbadge">AI Tools</span>
       </div>
     </div>
     <div class="footer-col">
       <h5>Academy</h5>
       <ul>
         <li><a href="#why-us">Why Choose Us</a></li>
-        <li><a href="#academy">Nine Pillars</a></li>
+        <li><a href="#academy">Eight Pillars</a></li>
         <li><a href="#courses">All Courses</a></li>
         <li><a href="#viewer">Live Lessons</a></li>
         <li><a href="#calculator">Calculator</a></li>
@@ -1134,22 +702,23 @@ footer::before{content:'';position:absolute;top:-200px;left:50%;transform:transl
     <div class="footer-col">
       <h5>Courses</h5>
       <ul>
-        <li><a href="#courses">US Curriculum</a></li>
-        <li><a href="#courses">UK / IGCSE</a></li>
-        <li><a href="#courses">IB Programme</a></li>
-        <li><a href="#courses">CBSE / ICSE</a></li>
+        <li><a href="#courses">Budgeting &amp; Cash Flow</a></li>
+        <li><a href="#courses">Investing Basics</a></li>
+        <li><a href="#courses">Credit &amp; Debt</a></li>
+        <li><a href="#courses">Crypto &amp; Blockchain</a></li>
         <li><a href="#courses">Financial Literacy</a></li>
-        <li><a href="#courses">GenAI &amp; Tech</a></li>
+        <li><a href="#courses">AI &amp; Tech Tools</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Connect</h5>
       <ul>
-        <li><a href="#">YouTube Channel</a></li>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">LinkedIN</a></li>
-        <li><a href="#">Book Free Demo</a></li>
-        <li><a href="#">Enroll Now</a></li>
+        <li><a href="https://www.youtube.com/@savoringmoney" target="_blank" rel="noopener">YouTube Channel</a></li>
+        <li><a href="https://instagram.com/savoringmoney" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://www.linkedin.com/company/savoring-money/" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://whatsapp.com/channel/0029VbCPOKT7YSd4kdergp0B" target="_blank" rel="noopener">WhatsApp Channel</a></li>
+        <li><a href="#book-demo">Book Free Demo</a></li>
+        <li><a href="#book-demo">Enroll Now</a></li>
       </ul>
     </div>
   </div>
@@ -1305,6 +874,38 @@ function calcCI(){
     `<strong style="color:var(--gold)">A = ₹ ${fmt(A)}</strong>`;
 }
 calcCI();
+
+/* ─── BOOK-A-DEMO FORM (We The Mind partnership) ─── */
+function wireSheetForm(formId, successId, subjectLine, submittingLabel, defaultLabel) {
+  const form = document.getElementById(formId);
+  if (!form) return;
+  const successDiv = document.getElementById(successId);
+  const endpoint = form.dataset.endpoint;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!endpoint || endpoint.includes('YOUR_GOOGLE_APPS_SCRIPT_URL')) {
+      window.location.href = 'mailto:hello@savoringmoney.com?subject=' + encodeURIComponent(subjectLine);
+      return;
+    }
+    const btn = form.querySelector('.form-submit');
+    const originalLabel = btn.textContent;
+    btn.textContent = submittingLabel;
+    btn.disabled = true;
+    const formData = new FormData(form);
+    fetch(endpoint, { method: 'POST', mode: 'no-cors', body: formData })
+      .then(function () {
+        form.style.display = 'none';
+        if (successDiv) successDiv.style.display = 'block';
+      })
+      .catch(function () {
+        btn.textContent = originalLabel;
+        btn.disabled = false;
+      });
+  });
+}
+document.addEventListener('DOMContentLoaded', function () {
+  wireSheetForm('demo-form', 'form-success', 'New free math demo request — Savoring Money', 'Booking…', 'Book My Free Session');
+});
 </script>
 </body>
 </html>
